@@ -39,7 +39,11 @@
                 jQuery.each(data, function(name, value) {
                     Xe.data[name] = value;
                     $("#form_Xe input[name="+ name +"]").setValue(value);
+                    if(name == "url_image"){
+                        Xe.setImageVehicle(value);
+                    }
                 });
+
             }
 
 
@@ -136,6 +140,11 @@
                 Xe.currentRowID = id;
             }
 
+            Xe.setImageVehicle = function(src){
+                $("#xe_url_image").setValue(src);
+                $("#IMAGE_VEHICLE").attr("src", src);
+            }
+
 
 
         </script>
@@ -171,9 +180,12 @@
                             <span>the_tich_that</span>
                             <input type="text" name="the_tich_that" value="" id="xe_the_tich_that" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
+           
                         <label>
-                            <span>url_image</span>
-                            <input type="text" name="url_image" value="" id="xe_url_image" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
+                            <span>Hình ảnh xe</span>
+                            <input type="hidden" name="url_image" value="" id="xe_url_image"/>
+                            <img id="IMAGE_VEHICLE" class="img_with_max" src="http://localhost/vehicle1/resources/images/no-image.jpg" />
+                            <iframe name='image_vehicle_iframe' id='image_vehicle_iframe' scrolling="auto" style="border: 0px none; width: 400px; height: 60px;" src="http://localhost/vehicle1/index.php/upload/"></iframe>
                         </label>
                         <label>
                             <span>so_suon</span>
