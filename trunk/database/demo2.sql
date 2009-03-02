@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: demo2
 Target Host: localhost
 Target Database: demo2
-Date: 3/3/2009 3:58:44 AM
+Date: 3/3/2009 4:36:33 AM
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -94,6 +94,7 @@ CREATE TABLE `hang_hoa` (
   `ms_hanghoa` varchar(50) collate utf8_bin NOT NULL,
   `stt_khachhang` int(20) NOT NULL,
   `ten_hanghoa` varchar(100) collate utf8_bin NOT NULL,
+  `soluong` int(11) default NULL,
   `donvitinh` varchar(50) collate utf8_bin NOT NULL,
   `loaihang` varchar(50) collate utf8_bin default NULL,
   PRIMARY KEY  (`ms_hanghoa`),
@@ -135,7 +136,7 @@ CREATE TABLE `khach_hang` (
   `dienthoai` varchar(30) collate utf8_bin NOT NULL,
   `diachi_lienhe` varchar(100) collate utf8_bin default NULL,
   PRIMARY KEY  (`stt_khachhang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for lich_su_cap_nhat_xe
@@ -252,6 +253,9 @@ INSERT INTO `chi_nhanh` VALUES ('cn3', '1', 'chi nhanh binh duong', 'Thi xa Thu 
 INSERT INTO `hop_dong_thue_xe` VALUES ('51-K18142', '1231', '1', 'cn1', 'loại 1', 'Nguyen van A', '0', '10000000', '0', '2009-03-25', '2009-04-17', '156 Thich Quang Duc, quan Go Vap, Thanh pho Ho Chi Minh', 'cho hang', 0x62616F6869656D31, '0', 0x6B686F6E6720636F);
 INSERT INTO `hop_dong_thue_xe` VALUES ('51-K18142', '1232', '2', 'cn1', 'loại 2', 'Nguyen van A', '0', '10000000', '0', '2009-03-25', '2009-04-17', '156 Thich Quang Duc, quan Go Vap, Thanh pho Ho Chi Minh', 'cho hang', 0x62616F6869656D31, '0', 0x6B686F6E6720636F);
 INSERT INTO `hop_dong_thue_xe` VALUES ('51-K3775', '1236', '3', 'cn1', 'loại 3', 'Nguyen van C', '0', '10000000', '0', '2009-03-25', '2009-04-17', '156 Thich Quang Duc, quan Go Vap, Thanh pho Ho Chi Minh', 'chở bưu phẩm', 0x62616F6869656D31, '0', 0x6B686F6E6720636F);
+INSERT INTO `khach_hang` VALUES ('1', 'khach hang a', '89919191', 'so 5 Dinh Bộ Lĩnh');
+INSERT INTO `khach_hang` VALUES ('2', 'khach hang b', '212121', '91 thi xã Long Xuyên, ');
+INSERT INTO `khach_hang` VALUES ('3', 'khach hang c', '2423423', 'Binh Duong,');
 INSERT INTO `metadata` VALUES ('154', 'bao_duong_xe', '1');
 INSERT INTO `metadata` VALUES ('155', 'bat_thuong', '1');
 INSERT INTO `metadata` VALUES ('156', 'chi_nhanh', '1');
@@ -275,7 +279,7 @@ INSERT INTO `nhan_vien` VALUES ('1', 'Nguyen Van A', 'nhanvien_a', '1234', '0', 
 INSERT INTO `nhan_vien` VALUES ('2', 'Nguyen Van B', 'nhanvien_b', '1234', '0', 'lái xe');
 INSERT INTO `nhan_vien` VALUES ('3', 'Nguyen Van C', 'nhanvien_c', '1234', '0', 'lái xe');
 INSERT INTO `nhan_vien` VALUES ('4', 'Nguyen Van D', 'nhanvien_d', '1234', '0', 'Quản lý');
-INSERT INTO `xe` VALUES ('51-K18142', 'model1', '10', '', '18881882', '1000');
-INSERT INTO `xe` VALUES ('51-K3775', 'model1', '10', '', '18881881', '1000');
-INSERT INTO `xe` VALUES ('51-K3778', 'model2', '30', '', '1888111', '100');
-INSERT INTO `xe` VALUES ('51-KA 8865', '4455', '10', '', '34566', '100');
+INSERT INTO `xe` VALUES ('51-K18142', 'model2', '10', 'http://localhost/vehicle1/resources/images/0d11cad2aee7acc198926436f4a228a1.jpg', '18881882', '1000');
+INSERT INTO `xe` VALUES ('51-K3775', 'model1', '10', 'http://localhost/vehicle1/resources/images/678456eb6be980a745d251f3f5d1199c.jpg', '18881881', '1000');
+INSERT INTO `xe` VALUES ('51-K3778', 'model1', '30', 'http://localhost/vehicle1/resources/images/b0716d25ebe651f226f39e6ec8bbcf05.jpg', '1888111', '100');
+INSERT INTO `xe` VALUES ('51-KA 8865', 'model4', '10', 'http://localhost/vehicle1/resources/images/0124f1b9665fb8c55889a2ed149fd683.jpg', '34566', '100');
