@@ -333,18 +333,18 @@ Nhat_ki_hanh_trinh.setData(jQuery("#list2").getRowData(id));
             return  value;
         }
     });
-    $("#nhat_ki_hanh_trinh_so_dang_ky_xe").autocomplete("<?php echo site_url('c_nhat_ki_hanh_trinh/keyAutoComplete/so_dang_ky_xe')?>", {
-        width: 200,
-        max: 5,
-        highlight: false,
-        scroll: true,
-        scrollHeight: 300,
-        formatItem: function(data, i, n, value) {
-            return value;
-        },
-        formatResult: function(data, value) {
-            return  value;
-        }
+    $("#nhat_ki_hanh_trinh_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
+            width: 200,
+            max: 4,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return "<img width=90 height=60 src='" + value.split("$$")[1] + "'/> " +  value.split("$$")[0];
+            },
+            formatResult: function(data, value) {
+                return  value.split("$$")[0];
+            }
     });
     $("#nhat_ki_hanh_trinh_ngay_khoi_hanh").autocomplete("<?php echo site_url('c_nhat_ki_hanh_trinh/keyAutoComplete/ngay_khoi_hanh')?>", {
         width: 200,

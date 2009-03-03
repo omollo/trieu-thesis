@@ -169,18 +169,18 @@
 
                     <form method="POST" id="form_Xe" action="">
                         <label>
-                            <span>so_dang_ky_xe</span>
+                            <span>Số đăng ký xe</span>
                             <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text " onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>ms_model_xe</span>
+                            <span>MS Model xe</span>
                             <input type="text" name="ms_model_xe" value="" id="xe_ms_model_xe" class="input-text " onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>the_tich_that</span>
+                            <span>Thể tích thật</span>
                             <input type="text" name="the_tich_that" value="" id="xe_the_tich_that" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
-           
+
                         <label>
                             <span>Hình ảnh xe</span>
                             <input type="hidden" name="url_image" value="" id="xe_url_image"/>
@@ -188,11 +188,11 @@
                             <iframe name='image_vehicle_iframe' id='image_vehicle_iframe' scrolling="auto" style="border: 0px none; width: 400px; height: 60px;" src="http://localhost/vehicle1/index.php/upload/"></iframe>
                         </label>
                         <label>
-                            <span>so_suon</span>
+                            <span>Số sườn</span>
                             <input type="text" name="so_suon" value="" id="xe_so_suon" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>speedometer</span>
+                            <span>Speedometer</span>
                             <input type="text" name="speedometer" value="" id="xe_speedometer" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
                     </form>
@@ -292,6 +292,8 @@
 
         var inputDate = {};
         $( function() {
+            //init input mask
+            $("#xe_so_dang_ky_xe").mask("**-**9999");
         });
 
 
@@ -323,15 +325,15 @@
 
         $("#xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
             width: 200,
-            max: 5,
+            max: 4,
             highlight: false,
             scroll: true,
             scrollHeight: 300,
             formatItem: function(data, i, n, value) {
-                return value;
+                return "<img width=90 height=60 src='" + value.split("$$")[1] + "'/> " +  value.split("$$")[0];
             },
             formatResult: function(data, value) {
-                return  value;
+                return  value.split("$$")[0];
             }
         });
 

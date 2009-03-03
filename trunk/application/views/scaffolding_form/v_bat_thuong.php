@@ -28,113 +28,113 @@
         <script  type="text/javascript">
             var Bat_thuong = {};
 
-Bat_thuong.data = {};
-Bat_thuong.setDataField = function(fieldName,fieldValue)
-    {
-Bat_thuong.data[fieldName] = fieldValue;
-    }
-
-Bat_thuong.setData = function(data)
-    {
-        jQuery.each(data, function(name, value) {
-Bat_thuong.data[name] = value;
-            $("#form_Bat_thuong input[name="+ name +"]").setValue(value);
-        });
-    }
-
-
-Bat_thuong.getData = function()
-    {
-        var obj = {};
-        $.each( $("#form_Bat_thuong").formSerialize().split("&"), function(i,n)
-        {
-            var toks = n.split("=");
-            obj[toks[0]] = toks[1];
-        }
-    );
-Bat_thuong.data = obj;
-        return Bat_thuong.data;
-    }
-
-    //create
-Bat_thuong.Create = function()
-    {
-        if(!$("#form_Bat_thuong").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_bat_thuong/create')?>", $("#form_Bat_thuong").formToArray() ,
-        function(message){
-            if(message != null){
-                InlineBox.hideAjaxLoader();
-                $("#list2").trigger("reloadGrid");
-                InlineBox.showModalBox("Tạo Bat_thuong " + message);
+            Bat_thuong.data = {};
+            Bat_thuong.setDataField = function(fieldName,fieldValue)
+            {
+                Bat_thuong.data[fieldName] = fieldValue;
             }
-        });
-    }
 
-    //refresh grid
-Bat_thuong.Read = function()
-    {
-        InlineBox.showAjaxLoader();
-        jQuery.post("http://localhost/vehicle1/index.php/c_bat_thuong/read_json_format", {},
-        function(data){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-        });
-    }
-
-    // Filter the Grid and refresh
-Bat_thuong.Filter = function()
-    {
-        //var name_field = $("#"+id).attr("name");
-        //var value_field =  $("#"+id).val();
-        //jQuery("#list2").setPostData({name_field:value_field});
-        var post_data = Bat_thuong.getData();
-
-        for(var e in post_data){
-            if($.trim(post_data[e]) == "")
-                delete post_data[e];
-        }
-        jQuery("#list2").setPostData(post_data);
-        $("#list2").trigger("reloadGrid");
-    }
-
-    //update
-Bat_thuong.Update = function()
-    {
-        if(!$("#form_Bat_thuong").valid())
-        return;
-
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_bat_thuong/update')?>", $("#form_Bat_thuong").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Cập nhật Bat_thuong " + message);
-        });
-    }
+            Bat_thuong.setData = function(data)
+            {
+                jQuery.each(data, function(name, value) {
+                    Bat_thuong.data[name] = value;
+                    $("#form_Bat_thuong input[name="+ name +"]").setValue(value);
+                });
+            }
 
 
-    //delete
-Bat_thuong.Delete = function()
-    {
-        if(!$("#form_Bat_thuong").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_bat_thuong/delete')?>",$("#form_Bat_thuong").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Xoá Bat_thuong " + message);
-        });
-    }
+            Bat_thuong.getData = function()
+            {
+                var obj = {};
+                $.each( $("#form_Bat_thuong").formSerialize().split("&"), function(i,n)
+                {
+                    var toks = n.split("=");
+                    obj[toks[0]] = toks[1];
+                }
+            );
+                Bat_thuong.data = obj;
+                return Bat_thuong.data;
+            }
 
-Bat_thuong.currentRowID = null;
+            //create
+            Bat_thuong.Create = function()
+            {
+                if(!$("#form_Bat_thuong").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_bat_thuong/create')?>", $("#form_Bat_thuong").formToArray() ,
+                function(message){
+                    if(message != null){
+                        InlineBox.hideAjaxLoader();
+                        $("#list2").trigger("reloadGrid");
+                        InlineBox.showModalBox("Tạo Bat_thuong " + message);
+                    }
+                });
+            }
 
-Bat_thuong.setSelectedRow = function(id)
-    {
-Bat_thuong.currentRowID = id;
-    }
+            //refresh grid
+            Bat_thuong.Read = function()
+            {
+                InlineBox.showAjaxLoader();
+                jQuery.post("http://localhost/vehicle1/index.php/c_bat_thuong/read_json_format", {},
+                function(data){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                });
+            }
+
+            // Filter the Grid and refresh
+            Bat_thuong.Filter = function()
+            {
+                //var name_field = $("#"+id).attr("name");
+                //var value_field =  $("#"+id).val();
+                //jQuery("#list2").setPostData({name_field:value_field});
+                var post_data = Bat_thuong.getData();
+
+                for(var e in post_data){
+                    if($.trim(post_data[e]) == "")
+                        delete post_data[e];
+                }
+                jQuery("#list2").setPostData(post_data);
+                $("#list2").trigger("reloadGrid");
+            }
+
+            //update
+            Bat_thuong.Update = function()
+            {
+                if(!$("#form_Bat_thuong").valid())
+                    return;
+
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_bat_thuong/update')?>", $("#form_Bat_thuong").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Cập nhật Bat_thuong " + message);
+                });
+            }
+
+
+            //delete
+            Bat_thuong.Delete = function()
+            {
+                if(!$("#form_Bat_thuong").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_bat_thuong/delete')?>",$("#form_Bat_thuong").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Xoá Bat_thuong " + message);
+                });
+            }
+
+            Bat_thuong.currentRowID = null;
+
+            Bat_thuong.setSelectedRow = function(id)
+            {
+                Bat_thuong.currentRowID = id;
+            }
 
 
 
@@ -157,29 +157,29 @@ Bat_thuong.currentRowID = id;
                 <div class="box">
                     <h1> Bat_thuong </h1>
                     <hr>
-
+                    
                     <form method="POST" id="form_Bat_thuong" action="">
-                                                                        <label>
+                        <label>
                             <span>stt_bt</span>
                             <input type="text" name="stt_bt" value="" id="bat_thuong_stt_bt" class="input-text " onchange="Bat_thuong.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>so_dang_ky_xe</span>
-                            <input type="text" name="so_dang_ky_xe" value="" id="bat_thuong_so_dang_ky_xe" class="input-text keyAutoComplete" onchange="Bat_thuong.setDataField(this.name,this.value);"  />
+                            <input type="text" name="so_dang_ky_xe" value="" id="bat_thuong_so_dang_ky_xe" class="input-text " onchange="Bat_thuong.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>loai_bat_thuong</span>
                             <input type="text" name="loai_bat_thuong" value="" id="bat_thuong_loai_bat_thuong" class="input-text keyAutoComplete" onchange="Bat_thuong.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>mo_ta_bat_thuong</span>
                             <input type="text" name="mo_ta_bat_thuong" value="" id="bat_thuong_mo_ta_bat_thuong" class="input-text keyAutoComplete" onchange="Bat_thuong.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>speedometer</span>
                             <input type="text" name="speedometer" value="" id="bat_thuong_speedometer" class="input-text keyAutoComplete" onchange="Bat_thuong.setDataField(this.name,this.value);"  />
                         </label>
-                                                                    </form>
+                    </form>
 
                     <div class="spacer" id="form_control" >
                         <a href="javascript:void(0)" onclick="Bat_thuong.Create()" class="green"> Thêm </a>
@@ -215,65 +215,65 @@ Bat_thuong.currentRowID = id;
         var colModelT = new Array();
         var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
 
-    colNamesT.push('stt_bt');
-    colModelT.push({name:'stt_bt',index:'stt_bt', editable: false});
-
-  
-    colNamesT.push('so_dang_ky_xe');
-    colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
-
-    colNamesT.push('loai_bat_thuong');
-    colModelT.push({name:'loai_bat_thuong',index:'loai_bat_thuong', editable: false});
-
-    colNamesT.push('mo_ta_bat_thuong');
-    colModelT.push({name:'mo_ta_bat_thuong',index:'mo_ta_bat_thuong', editable: false});
-
-    colNamesT.push('speedometer');
-    colModelT.push({name:'speedometer',index:'speedometer', editable: false});
+        colNamesT.push('stt_bt');
+        colModelT.push({name:'stt_bt',index:'stt_bt', editable: false});
 
 
-    var loadView = function()
-    {
-        jGrid = jQuery("#list2").jqGrid(
+        colNamesT.push('so_dang_ky_xe');
+        colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
+
+        colNamesT.push('loai_bat_thuong');
+        colModelT.push({name:'loai_bat_thuong',index:'loai_bat_thuong', editable: false});
+
+        colNamesT.push('mo_ta_bat_thuong');
+        colModelT.push({name:'mo_ta_bat_thuong',index:'mo_ta_bat_thuong', editable: false});
+
+        colNamesT.push('speedometer');
+        colModelT.push({name:'speedometer',index:'speedometer', editable: false});
+
+
+        var loadView = function()
         {
-            url:'<?php echo site_url('c_bat_thuong/read_json_format')?>',
-            mtype : "POST",
-            datatype: "json",
-            colNames: colNamesT ,
-            colModel: colModelT ,
-            rowNum:10,
-            height: 270,
-            rowList:[10,20,30],
-            imgpath: gridimgpath,
-            pager: jQuery('#pager2'),
-            sortname: colNamesT[0],
-            viewrecords: true,
-            caption:"bat_thuong",
-            onSelectRow: function(){
-                var id = jQuery("#list2").getGridParam('selrow');
-Bat_thuong.setData(jQuery("#list2").getRowData(id));
-            }
+            jGrid = jQuery("#list2").jqGrid(
+            {
+                url:'<?php echo site_url('c_bat_thuong/read_json_format')?>',
+                mtype : "POST",
+                datatype: "json",
+                colNames: colNamesT ,
+                colModel: colModelT ,
+                rowNum:10,
+                height: 270,
+                rowList:[10,20,30],
+                imgpath: gridimgpath,
+                pager: jQuery('#pager2'),
+                sortname: colNamesT[0],
+                viewrecords: true,
+                caption:"bat_thuong",
+                onSelectRow: function(){
+                    var id = jQuery("#list2").getGridParam('selrow');
+                    Bat_thuong.setData(jQuery("#list2").getRowData(id));
+                }
+            });
+            jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
+            $("#alertmod").remove();//FIXME
+        }
+        jQuery("#list2").ready(loadView);
+
+
+        var initForm = function(){
+            //init validation form
+            $("#form_Bat_thuong").validate();
+            $('#container-1 > ul').tabs();
+
+        }
+        jQuery("#form_Bat_thuong").ready(initForm);
+
+
+
+
+        var inputDate = {};
+        $( function() {
         });
-        jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
-        $("#alertmod").remove();//FIXME
-    }
-    jQuery("#list2").ready(loadView);
-
-
-    var initForm = function(){
-        //init validation form
-        $("#form_Bat_thuong").validate();
-        $('#container-1 > ul').tabs();
-
-    }
-    jQuery("#form_Bat_thuong").ready(initForm);
-
-
-
-
-    var inputDate = {};
-    $( function() {
-    });
 
 
     </script>
@@ -302,19 +302,33 @@ Bat_thuong.setData(jQuery("#list2").getRowData(id));
             });
         });
 
-    $("#bat_thuong_stt_bt").autocomplete("<?php echo site_url('c_bat_thuong/keyAutoComplete/stt_bt')?>", {
-        width: 200,
-        max: 5,
-        highlight: false,
-        scroll: true,
-        scrollHeight: 300,
-        formatItem: function(data, i, n, value) {
-            return value;
-        },
-        formatResult: function(data, value) {
-            return  value;
-        }
-    });
+        $("#bat_thuong_stt_bt").autocomplete("<?php echo site_url('c_bat_thuong/keyAutoComplete/stt_bt')?>", {
+            width: 200,
+            max: 5,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return value;
+            },
+            formatResult: function(data, value) {
+                return  value;
+            }
+        });
+        $("#bat_thuong_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
+            width: 200,
+            max: 4,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return "<img width=90 height=60 src='" + value.split("$$")[1] + "'/> " +  value.split("$$")[0];
+            },
+            formatResult: function(data, value) {
+                return  value.split("$$")[0];
+            }
+        });
+
 
     </script>
 

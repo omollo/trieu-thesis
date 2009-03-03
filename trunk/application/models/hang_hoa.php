@@ -19,6 +19,9 @@ class Hang_hoa extends Model {
 	  //Type: String
     var $ten_hanghoa = '';
 
+	  //Type: Integer
+    var $soluong = '';
+
 	  //Type: String
     var $donvitinh = '';
 
@@ -36,6 +39,7 @@ class Hang_hoa extends Model {
                 $this->hang_hoa->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
                 $this->hang_hoa->stt_khachhang = $this->input->xss_clean($this->input->post('stt_khachhang'));
                 $this->hang_hoa->ten_hanghoa = $this->input->xss_clean($this->input->post('ten_hanghoa'));
+                $this->hang_hoa->soluong = $this->input->xss_clean($this->input->post('soluong'));
                 $this->hang_hoa->donvitinh = $this->input->xss_clean($this->input->post('donvitinh'));
                 $this->hang_hoa->loaihang = $this->input->xss_clean($this->input->post('loaihang'));
         
@@ -55,6 +59,10 @@ class Hang_hoa extends Model {
                 if ($this->ten_hanghoa)
         {
             $this->db->where("ten_hanghoa", $this->ten_hanghoa);
+        }
+                if ($this->soluong)
+        {
+            $this->db->where("soluong", $this->soluong);
         }
                 if ($this->donvitinh)
         {
@@ -132,6 +140,7 @@ class Hang_hoa extends Model {
                             array_push($cell, $obj->ms_hanghoa);
                             array_push($cell, $obj->stt_khachhang);
                             array_push($cell, $obj->ten_hanghoa);
+                            array_push($cell, $obj->soluong);
                             array_push($cell, $obj->donvitinh);
                             array_push($cell, $obj->loaihang);
                         $row = new stdClass();
@@ -165,6 +174,7 @@ class Hang_hoa extends Model {
                 "ms_hanghoa" => $this->ms_hanghoa,
                     "stt_khachhang" => $this->stt_khachhang,
                     "ten_hanghoa" => $this->ten_hanghoa,
+                    "soluong" => $this->soluong,
                     "donvitinh" => $this->donvitinh,
                     "loaihang" => $this->loaihang,
           );
@@ -186,7 +196,7 @@ class Hang_hoa extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-    
+     
         // If key was not set in the controller, then we will insert a new record.
         $this->db->trans_start();
         $this->db->insert("hang_hoa", $db_array);
@@ -205,6 +215,7 @@ class Hang_hoa extends Model {
                  $this->hang_hoa->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
                     $this->hang_hoa->stt_khachhang = $this->input->xss_clean($this->input->post('stt_khachhang'));
                     $this->hang_hoa->ten_hanghoa = $this->input->xss_clean($this->input->post('ten_hanghoa'));
+                    $this->hang_hoa->soluong = $this->input->xss_clean($this->input->post('soluong'));
                     $this->hang_hoa->donvitinh = $this->input->xss_clean($this->input->post('donvitinh'));
                     $this->hang_hoa->loaihang = $this->input->xss_clean($this->input->post('loaihang'));
         
@@ -216,6 +227,7 @@ class Hang_hoa extends Model {
             $this->hang_hoa->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
             $this->hang_hoa->stt_khachhang = $this->input->xss_clean($this->input->post('stt_khachhang'));
             $this->hang_hoa->ten_hanghoa = $this->input->xss_clean($this->input->post('ten_hanghoa'));
+            $this->hang_hoa->soluong = $this->input->xss_clean($this->input->post('soluong'));
             $this->hang_hoa->donvitinh = $this->input->xss_clean($this->input->post('donvitinh'));
             $this->hang_hoa->loaihang = $this->input->xss_clean($this->input->post('loaihang'));
     
@@ -225,7 +237,7 @@ class Hang_hoa extends Model {
     function delete()
     {
                 $this->hang_hoa->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                                        
+                                                
         $saveSuccess = false;
          // As long as hang_hoa->ms_hanghoa was set in the controller, we will delete the record.
         if ($this->ms_hanghoa) {
@@ -238,7 +250,7 @@ class Hang_hoa extends Model {
                 $saveSuccess = false;
             }
         }
-             return $saveSuccess;
+              return $saveSuccess;
     }
 }
 

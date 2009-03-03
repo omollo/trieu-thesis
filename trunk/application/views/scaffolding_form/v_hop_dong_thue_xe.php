@@ -406,15 +406,15 @@
 
         $("#hop_dong_thue_xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
             width: 200,
-            max: 5,
+            max: 4,
             highlight: false,
             scroll: true,
             scrollHeight: 300,
             formatItem: function(data, i, n, value) {
-                return value;
+                return "<img width=90 height=60 src='" + value.split("$$")[1] + "'/> " +  value.split("$$")[0];
             },
             formatResult: function(data, value) {
-                return  value;
+                return  value.split("$$")[0];
             }
         });
         $("#hop_dong_thue_xe_stt_nhanvien").autocomplete("<?php echo site_url('c_nhan_vien/keyAutoComplete/stt_nhanvien')?>", {

@@ -172,6 +172,10 @@ Hang_hoa.currentRowID = id;
                             <input type="text" name="ten_hanghoa" value="" id="hang_hoa_ten_hanghoa" class="input-text keyAutoComplete" onchange="Hang_hoa.setDataField(this.name,this.value);"  />
                         </label>
                                                                                                 <label>
+                            <span>soluong</span>
+                            <input type="text" name="soluong" value="" id="hang_hoa_soluong" class="input-text keyAutoComplete" onchange="Hang_hoa.setDataField(this.name,this.value);"  />
+                        </label>
+                                                                                                <label>
                             <span>donvitinh</span>
                             <input type="text" name="donvitinh" value="" id="hang_hoa_donvitinh" class="input-text keyAutoComplete" onchange="Hang_hoa.setDataField(this.name,this.value);"  />
                         </label>
@@ -224,6 +228,9 @@ Hang_hoa.currentRowID = id;
 
     colNamesT.push('ten_hanghoa');
     colModelT.push({name:'ten_hanghoa',index:'ten_hanghoa', editable: false});
+
+    colNamesT.push('soluong');
+    colModelT.push({name:'soluong',index:'soluong', editable: false});
 
     colNamesT.push('donvitinh');
     colModelT.push({name:'donvitinh',index:'donvitinh', editable: false});

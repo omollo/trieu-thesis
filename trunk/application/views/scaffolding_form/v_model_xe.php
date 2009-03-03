@@ -28,113 +28,113 @@
         <script  type="text/javascript">
             var Model_xe = {};
 
-Model_xe.data = {};
-Model_xe.setDataField = function(fieldName,fieldValue)
-    {
-Model_xe.data[fieldName] = fieldValue;
-    }
-
-Model_xe.setData = function(data)
-    {
-        jQuery.each(data, function(name, value) {
-Model_xe.data[name] = value;
-            $("#form_Model_xe input[name="+ name +"]").setValue(value);
-        });
-    }
-
-
-Model_xe.getData = function()
-    {
-        var obj = {};
-        $.each( $("#form_Model_xe").formSerialize().split("&"), function(i,n)
-        {
-            var toks = n.split("=");
-            obj[toks[0]] = toks[1];
-        }
-    );
-Model_xe.data = obj;
-        return Model_xe.data;
-    }
-
-    //create
-Model_xe.Create = function()
-    {
-        if(!$("#form_Model_xe").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_model_xe/create')?>", $("#form_Model_xe").formToArray() ,
-        function(message){
-            if(message != null){
-                InlineBox.hideAjaxLoader();
-                $("#list2").trigger("reloadGrid");
-                InlineBox.showModalBox("Tạo Model_xe " + message);
+            Model_xe.data = {};
+            Model_xe.setDataField = function(fieldName,fieldValue)
+            {
+                Model_xe.data[fieldName] = fieldValue;
             }
-        });
-    }
 
-    //refresh grid
-Model_xe.Read = function()
-    {
-        InlineBox.showAjaxLoader();
-        jQuery.post("http://localhost/vehicle1/index.php/c_model_xe/read_json_format", {},
-        function(data){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-        });
-    }
-
-    // Filter the Grid and refresh
-Model_xe.Filter = function()
-    {
-        //var name_field = $("#"+id).attr("name");
-        //var value_field =  $("#"+id).val();
-        //jQuery("#list2").setPostData({name_field:value_field});
-        var post_data = Model_xe.getData();
-
-        for(var e in post_data){
-            if($.trim(post_data[e]) == "")
-                delete post_data[e];
-        }
-        jQuery("#list2").setPostData(post_data);
-        $("#list2").trigger("reloadGrid");
-    }
-
-    //update
-Model_xe.Update = function()
-    {
-        if(!$("#form_Model_xe").valid())
-        return;
-
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_model_xe/update')?>", $("#form_Model_xe").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Cập nhật Model_xe " + message);
-        });
-    }
+            Model_xe.setData = function(data)
+            {
+                jQuery.each(data, function(name, value) {
+                    Model_xe.data[name] = value;
+                    $("#form_Model_xe input[name="+ name +"]").setValue(value);
+                });
+            }
 
 
-    //delete
-Model_xe.Delete = function()
-    {
-        if(!$("#form_Model_xe").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_model_xe/delete')?>",$("#form_Model_xe").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Xoá Model_xe " + message);
-        });
-    }
+            Model_xe.getData = function()
+            {
+                var obj = {};
+                $.each( $("#form_Model_xe").formSerialize().split("&"), function(i,n)
+                {
+                    var toks = n.split("=");
+                    obj[toks[0]] = toks[1];
+                }
+            );
+                Model_xe.data = obj;
+                return Model_xe.data;
+            }
 
-Model_xe.currentRowID = null;
+            //create
+            Model_xe.Create = function()
+            {
+                if(!$("#form_Model_xe").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_model_xe/create')?>", $("#form_Model_xe").formToArray() ,
+                function(message){
+                    if(message != null){
+                        InlineBox.hideAjaxLoader();
+                        $("#list2").trigger("reloadGrid");
+                        InlineBox.showModalBox("Tạo Model_xe " + message);
+                    }
+                });
+            }
 
-Model_xe.setSelectedRow = function(id)
-    {
-Model_xe.currentRowID = id;
-    }
+            //refresh grid
+            Model_xe.Read = function()
+            {
+                InlineBox.showAjaxLoader();
+                jQuery.post("http://localhost/vehicle1/index.php/c_model_xe/read_json_format", {},
+                function(data){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                });
+            }
+
+            // Filter the Grid and refresh
+            Model_xe.Filter = function()
+            {
+                //var name_field = $("#"+id).attr("name");
+                //var value_field =  $("#"+id).val();
+                //jQuery("#list2").setPostData({name_field:value_field});
+                var post_data = Model_xe.getData();
+
+                for(var e in post_data){
+                    if($.trim(post_data[e]) == "")
+                        delete post_data[e];
+                }
+                jQuery("#list2").setPostData(post_data);
+                $("#list2").trigger("reloadGrid");
+            }
+
+            //update
+            Model_xe.Update = function()
+            {
+                if(!$("#form_Model_xe").valid())
+                    return;
+
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_model_xe/update')?>", $("#form_Model_xe").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Cập nhật Model_xe " + message);
+                });
+            }
+
+
+            //delete
+            Model_xe.Delete = function()
+            {
+                if(!$("#form_Model_xe").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_model_xe/delete')?>",$("#form_Model_xe").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Xoá Model_xe " + message);
+                });
+            }
+
+            Model_xe.currentRowID = null;
+
+            Model_xe.setSelectedRow = function(id)
+            {
+                Model_xe.currentRowID = id;
+            }
 
 
 
@@ -159,39 +159,39 @@ Model_xe.currentRowID = id;
                     <hr>
 
                     <form method="POST" id="form_Model_xe" action="">
-                                                                        <label>
+                        <label>
                             <span>ms_model_xe</span>
                             <input type="text" name="ms_model_xe" value="" id="model_xe_ms_model_xe" class="input-text " onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>loai_model</span>
                             <input type="text" name="loai_model" value="" id="model_xe_loai_model" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>nhan_hieu</span>
                             <input type="text" name="nhan_hieu" value="" id="model_xe_nhan_hieu" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>ms_thue</span>
                             <input type="text" name="ms_thue" value="" id="model_xe_ms_thue" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>nhienlieu</span>
                             <input type="text" name="nhienlieu" value="" id="model_xe_nhienlieu" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>trongtai</span>
                             <input type="text" name="trongtai" value="" id="model_xe_trongtai" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>dientich_san</span>
                             <input type="text" name="dientich_san" value="" id="model_xe_dientich_san" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>loaixe</span>
                             <input type="text" name="loaixe" value="" id="model_xe_loaixe" class="input-text keyAutoComplete" onchange="Model_xe.setDataField(this.name,this.value);"  />
                         </label>
-                                                                    </form>
+                    </form>
 
                     <div class="spacer" id="form_control" >
                         <a href="javascript:void(0)" onclick="Model_xe.Create()" class="green"> Thêm </a>
@@ -227,74 +227,74 @@ Model_xe.currentRowID = id;
         var colModelT = new Array();
         var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
 
-    colNamesT.push('ms_model_xe');
-    colModelT.push({name:'ms_model_xe',index:'ms_model_xe', editable: false});
-
-  
-    colNamesT.push('loai_model');
-    colModelT.push({name:'loai_model',index:'loai_model', editable: false});
-
-    colNamesT.push('nhan_hieu');
-    colModelT.push({name:'nhan_hieu',index:'nhan_hieu', editable: false});
-
-    colNamesT.push('ms_thue');
-    colModelT.push({name:'ms_thue',index:'ms_thue', editable: false});
-
-    colNamesT.push('nhienlieu');
-    colModelT.push({name:'nhienlieu',index:'nhienlieu', editable: false});
-
-    colNamesT.push('trongtai');
-    colModelT.push({name:'trongtai',index:'trongtai', editable: false});
-
-    colNamesT.push('dientich_san');
-    colModelT.push({name:'dientich_san',index:'dientich_san', editable: false});
-
-    colNamesT.push('loaixe');
-    colModelT.push({name:'loaixe',index:'loaixe', editable: false});
+        colNamesT.push('ms_model_xe');
+        colModelT.push({name:'ms_model_xe',index:'ms_model_xe', editable: false});
 
 
-    var loadView = function()
-    {
-        jGrid = jQuery("#list2").jqGrid(
+        colNamesT.push('loai_model');
+        colModelT.push({name:'loai_model',index:'loai_model', editable: false});
+
+        colNamesT.push('nhan_hieu');
+        colModelT.push({name:'nhan_hieu',index:'nhan_hieu', editable: false});
+
+        colNamesT.push('ms_thue');
+        colModelT.push({name:'ms_thue',index:'ms_thue', editable: false});
+
+        colNamesT.push('nhienlieu');
+        colModelT.push({name:'nhienlieu',index:'nhienlieu', editable: false});
+
+        colNamesT.push('trongtai');
+        colModelT.push({name:'trongtai',index:'trongtai', editable: false});
+
+        colNamesT.push('dientich_san');
+        colModelT.push({name:'dientich_san',index:'dientich_san', editable: false});
+
+        colNamesT.push('loaixe');
+        colModelT.push({name:'loaixe',index:'loaixe', editable: false});
+
+
+        var loadView = function()
         {
-            url:'<?php echo site_url('c_model_xe/read_json_format')?>',
-            mtype : "POST",
-            datatype: "json",
-            colNames: colNamesT ,
-            colModel: colModelT ,
-            rowNum:10,
-            height: 270,
-            rowList:[10,20,30],
-            imgpath: gridimgpath,
-            pager: jQuery('#pager2'),
-            sortname: colNamesT[0],
-            viewrecords: true,
-            caption:"Model Xe",
-            onSelectRow: function(){
-                var id = jQuery("#list2").getGridParam('selrow');
-Model_xe.setData(jQuery("#list2").getRowData(id));
-            }
+            jGrid = jQuery("#list2").jqGrid(
+            {
+                url:'<?php echo site_url('c_model_xe/read_json_format')?>',
+                mtype : "POST",
+                datatype: "json",
+                colNames: colNamesT ,
+                colModel: colModelT ,
+                rowNum:10,
+                height: 270,
+                rowList:[10,20,30],
+                imgpath: gridimgpath,
+                pager: jQuery('#pager2'),
+                sortname: colNamesT[0],
+                viewrecords: true,
+                caption:"Model Xe",
+                onSelectRow: function(){
+                    var id = jQuery("#list2").getGridParam('selrow');
+                    Model_xe.setData(jQuery("#list2").getRowData(id));
+                }
+            });
+            jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
+            $("#alertmod").remove();//FIXME
+        }
+        jQuery("#list2").ready(loadView);
+
+
+        var initForm = function(){
+            //init validation form
+            $("#form_Model_xe").validate();
+            $('#container-1 > ul').tabs();
+
+        }
+        jQuery("#form_Model_xe").ready(initForm);
+
+
+
+
+        var inputDate = {};
+        $( function() {
         });
-        jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
-        $("#alertmod").remove();//FIXME
-    }
-    jQuery("#list2").ready(loadView);
-
-
-    var initForm = function(){
-        //init validation form
-        $("#form_Model_xe").validate();
-        $('#container-1 > ul').tabs();
-
-    }
-    jQuery("#form_Model_xe").ready(initForm);
-
-
-
-
-    var inputDate = {};
-    $( function() {
-    });
 
 
     </script>
@@ -323,19 +323,19 @@ Model_xe.setData(jQuery("#list2").getRowData(id));
             });
         });
 
-    $("#model_xe_ms_model_xe").autocomplete("<?php echo site_url('c_model_xe/keyAutoComplete/ms_model_xe')?>", {
-        width: 200,
-        max: 5,
-        highlight: false,
-        scroll: true,
-        scrollHeight: 300,
-        formatItem: function(data, i, n, value) {
-            return value;
-        },
-        formatResult: function(data, value) {
-            return  value;
-        }
-    });
+        $("#model_xe_ms_model_xe").autocomplete("<?php echo site_url('c_model_xe/keyAutoComplete/ms_model_xe')?>", {
+            width: 200,
+            max: 5,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return value;
+            },
+            formatResult: function(data, value) {
+                return  value;
+            }
+        });
 
     </script>
 
