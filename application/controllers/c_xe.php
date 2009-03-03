@@ -19,38 +19,38 @@ class c_Xe extends Controller
 
     function c_Xe()
     {
-         parent::Controller();
-         $this->load->model('xe');
-         $this->load->model('VehicleDBUtils');
+        parent::Controller();
+        $this->load->model('xe');
+        $this->load->model('VehicleDBUtils');
 
-         $this->load->helper('form');
-         $this->load->helper('object2array');
-         $this->load->helper('url');
-         $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('object2array');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
     }
 
     function index()
-    {       
-        $this->load->view('scaffolding_form/v_xe');        
-    }  
+    {
+        $this->load->view('scaffolding_form/v_xe');
+    }
 
     function readXe($priKey)
     {
         if(isset ($priKey))
         {
-                   $this->xe->so_dang_ky_xe = $priKey;
-                                                                                                
+            $this->xe->so_dang_ky_xe = $priKey;
+
             $rows = $this->xe->read();
             foreach($rows as $row)
             {
-                        echo $row->so_dang_ky_xe."<br>";
-                        echo $row->ms_model_xe."<br>";
-                        echo $row->the_tich_that."<br>";
-                        echo $row->url_image."<br>";
-                        echo $row->so_suon."<br>";
-                        echo $row->speedometer."<br>";
-                        }
-         }
+                echo $row->so_dang_ky_xe."<br>";
+                echo $row->ms_model_xe."<br>";
+                echo $row->the_tich_that."<br>";
+                echo $row->url_image."<br>";
+                echo $row->so_suon."<br>";
+                echo $row->speedometer."<br>";
+            }
+        }
     }
 
     function keyAutoComplete($field_name = "")
@@ -58,15 +58,15 @@ class c_Xe extends Controller
         if($field_name != "")
         $this->xe->keyAutoComplete($field_name);
         else
-         echo "";
+        echo "";
     }
 
     function create()
     {
         if($this->xe->create())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
     function read()
@@ -80,22 +80,22 @@ class c_Xe extends Controller
     }
 
     function update()
-    {       
+    {
         if($this->xe->update())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;        
+        echo $this->messageFail;
     }
 
     function delete()
     {
         if($this->xe->delete())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
 
-    
+
 }
 ?>

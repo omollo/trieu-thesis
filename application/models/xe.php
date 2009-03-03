@@ -99,7 +99,10 @@ class Xe extends Model {
 
         foreach($objects as $obj)
         {
-            echo $obj[$field_name]."\n";
+            if($field_name == "so_dang_ky_xe")
+                echo $obj['so_dang_ky_xe']."$$".$obj['url_image']. "\n";
+            else
+                echo $obj[$field_name]."\n";
         }
     }
 

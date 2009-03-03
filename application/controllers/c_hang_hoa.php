@@ -39,13 +39,14 @@ class c_Hang_hoa extends Controller
         if(isset ($priKey))
         {
                    $this->hang_hoa->ms_hanghoa = $priKey;
-                                                                                
+                                                                                                
             $rows = $this->hang_hoa->read();
             foreach($rows as $row)
             {
                         echo $row->ms_hanghoa."<br>";
                         echo $row->stt_khachhang."<br>";
                         echo $row->ten_hanghoa."<br>";
+                        echo $row->soluong."<br>";
                         echo $row->donvitinh."<br>";
                         echo $row->loaihang."<br>";
                         }

@@ -21,18 +21,18 @@ class create_scaffolding extends Controller{
         if(isset ($tablename))  {
             $this->metadata->tablename = $tablename;
             $rows = $this->metadata->read();
-            foreach($rows as $row) {                
+            foreach($rows as $row) {
                 return $row->use_scaffolding == 1;
             }
         }
         return false;
     }
 
-     function isInMetadata($tablename) {
+    function isInMetadata($tablename) {
         if(isset ($tablename))  {
             $this->metadata->tablename = $tablename;
             $rows = $this->metadata->read();
-             if(sizeof($rows)>0) {
+            if(sizeof($rows)>0) {
                 return true;
             }
         }
@@ -64,7 +64,17 @@ class create_scaffolding extends Controller{
             while($row = mysql_fetch_array($result))
             {
                 $tableName = $row[0];
-                if( $tableName== "metadata" ){ //|| $tableName== "xe") {
+                $table_object = new Table($tableName);//create table object
+                if($this->lang->line($tableName)) {
+                    $table_object->table_fullname = $this->lang->line($tableName);
+                } else {
+                    $table_object->table_fullname = $tableName;
+                }
+                echo "<h1> <a href='".site_url("c_$tableName")."'>".$table_object->table_fullname."</a></h1>";
+
+
+                // ============================================================
+                if( $tableName== "metadata" ){ 
                     echo $tableName." <b>Skipped</b><br>";
                     continue;
                 }
@@ -76,15 +86,10 @@ class create_scaffolding extends Controller{
                 else if(!$this->use_scaffolding($tableName)){
                     echo $tableName." <b>Skipped</b><br>";
                     continue;
-                }       
-
-                $table_object = new Table($tableName);//create table object
-                if($this->lang->line($tableName)) {
-                    $table_object->table_fullname = $this->lang->line($tableName);
-                } else {
-                    $table_object->table_fullname = $tableName;
                 }
-                echo "<h1> <a href='".site_url("c_$tableName")."'>".$table_object->table_fullname."</a></h1>";
+
+
+
 
                 // Get meta data
                 $cols = mysql_query("SHOW COLUMNS FROM $tableName", $conn);
@@ -175,7 +180,7 @@ class create_scaffolding extends Controller{
                         // $this->createCI_Language($table_object);
                     }
 
-//                    $this->createMenu($table_object);
+                    //                    $this->createMenu($table_object);
 
                     echo "<hr/>";
                 }
@@ -480,33 +485,33 @@ class DBUtils {
         //echo "<br/>type_sign: ".$mysqlType;
         switch ($mysqlType) {
             case "char": case "varchar": case "longvarchar": case "text":
-            {
-                return "String";
-            }
-            case "tinyint":
-                {
-                    return "Byte";
-                }
-            case "int": case "integer":
-                    {
-                        return "Integer";
-                    }
-            case "bigint":
-                {
-                    return "Long";
-                }
-            case "real": case "float":
-                    {
-                        return "Float";
-                    }
-            case "double":
-                {
-                    return "Double";
-                }
-                default:
-                    break;
-        }
-        }
-    }
+                            {
+                                return "String";
+                            }
+                            case "tinyint":
+                                {
+                                    return "Byte";
+                                }
+                                case "int": case "integer":
+                                        {
+                                            return "Integer";
+                                        }
+                                        case "bigint":
+                                            {
+                                                return "Long";
+                                            }
+                                            case "real": case "float":
+                                                    {
+                                                        return "Float";
+                                                    }
+                                                    case "double":
+                                                        {
+                                                            return "Double";
+                                                        }
+                                                        default:
+                                                            break;
+                                                }
+                                            }
+                                        }
 
-?>
+                                        ?>
