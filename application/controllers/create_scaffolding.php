@@ -74,7 +74,7 @@ class create_scaffolding extends Controller{
 
 
                 // ============================================================
-                if( $tableName== "metadata" ){ 
+                if( $tableName== "metadata" ){
                     echo $tableName." <b>Skipped</b><br>";
                     continue;
                 }
@@ -165,22 +165,22 @@ class create_scaffolding extends Controller{
                     }
                     //  else if($option === "ci_model")
                     {
-                        $this->createCIModel($table_object);
+//                        $this->createCIModel($table_object);
                     }
                     //  else if($option === "ci_controller")
                     {
-                        $this->createCIController($table_object);
+//                        $this->createCIController($table_object);
                     }
 
                     {
-                        $this->createCIView($table_object);
+//                        $this->createCIView($table_object);
                     }
 
                     {
                         // $this->createCI_Language($table_object);
                     }
 
-                    //                    $this->createMenu($table_object);
+                    $this->createMenu($table_object);
 
                     echo "<hr/>";
                 }
@@ -282,7 +282,7 @@ class create_scaffolding extends Controller{
      * @return unknown_type
      */
     function appendJavaFile($filename,$stringData) {
-        $ourFileName = "javaORmapping/menu.java";
+        $ourFileName = "system/application/views/scaffolding_form/menu.java";
         $fh = fopen($ourFileName, 'a') or die("can't open file");
         fwrite($fh, $stringData);
         fclose($fh);

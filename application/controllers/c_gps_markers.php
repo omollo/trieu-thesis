@@ -19,40 +19,59 @@ class c_Gps_markers extends Controller
 
     function c_Gps_markers()
     {
-         parent::Controller();
-         $this->load->model('gps_markers');
-         $this->load->model('VehicleDBUtils');
+        parent::Controller();
+        $this->load->model('gps_markers');
+        $this->load->model('VehicleDBUtils');
 
-         $this->load->helper('form');
-         $this->load->helper('object2array');
-         $this->load->helper('url');
-         $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('object2array');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
+    }
+
+    function parseGPSRawMessage($raw_msg){
+        if($raw_msg){
+            $words = split(",", $raw_msg);
+            //    for($i=0; $i<sizeof($words); $i++)
+            //    {
+            //        echo $words[$i]."<br>";
+            //
+            //    }
+
+            echo format_time_string($words[0]);
+            echo "<br>";
+            echo get_latitude($words[1], $words[2]);
+            echo "<br>";
+            echo get_longitude($words[3], $words[4]);
+        }
+        else
+        echo "null";
     }
 
     function index()
-    {       
-        $this->load->view('scaffolding_form/v_gps_markers');        
-    }  
+    {
+        $this->load->view('scaffolding_form/v_gps_markers');
+    }
 
     function readGps_markers($priKey)
     {
         if(isset ($priKey))
         {
-                   $this->gps_markers->stt_diem = $priKey;
-                                                                                                                                
+            $this->gps_markers->stt_diem = $priKey;
+
             $rows = $this->gps_markers->read();
             foreach($rows as $row)
             {
-                        echo $row->stt_diem."<br>";
-                        echo $row->stt_nkht."<br>";
-                        echo $row->so_dang_ky_xe."<br>";
-                        echo $row->ngay_khoi_hanh."<br>";
-                        echo $row->lat."<br>";
-                        echo $row->lng."<br>";
-                        echo $row->type."<br>";
-                        echo $row->gps_time."<br>";
-                        }
-         }
+                echo $row->stt_diem."<br>";
+                echo $row->stt_nkht."<br>";
+                echo $row->so_dang_ky_xe."<br>";
+                echo $row->ngay_khoi_hanh."<br>";
+                echo $row->lat."<br>";
+                echo $row->lng."<br>";
+                echo $row->type."<br>";
+                echo $row->gps_time."<br>";
+            }
+        }
     }
 
     function keyAutoComplete($field_name = "")
@@ -60,15 +79,15 @@ class c_Gps_markers extends Controller
         if($field_name != "")
         $this->gps_markers->keyAutoComplete($field_name);
         else
-         echo "";
+        echo "";
     }
 
     function create()
     {
         if($this->gps_markers->create())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
     function read()
@@ -82,22 +101,63 @@ class c_Gps_markers extends Controller
     }
 
     function update()
-    {       
+    {
         if($this->gps_markers->update())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;        
+        echo $this->messageFail;
     }
 
     function delete()
     {
         if($this->gps_markers->delete())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
 
-    
+
+    function get_longitude($long,$long_dir) {
+        // lines of logitude go from pole to pole and so tell you how far east or west you are
+
+        $long_deg = substr($long, 0, 3);
+        $long_min = substr($long, 3);
+        $longitude = $long_deg + minutes_to_decimal($long_min);
+
+        if ( $long_dir == "W" ) {
+            $longitude = $longitude * -1;
+        }
+
+        return($longitude);
+    }
+
+    function get_latitude($lat,$lat_dir) {
+        // Lines of latitude go around the earth so tell you how far north or south you are
+
+        $lat_deg = substr($lat, 0, 2);
+        $lat_min = substr($lat, 2);
+        $latitude = $lat_deg + minutes_to_decimal($lat_min);
+
+        if ( $long_dir == "S" ) {
+            $latitude = $latitude * -1;
+        }
+
+        return($latitude);
+    }
+
+    function format_time_string($time_string) {
+        $hrs = substr($time_string ,0,2);
+        $min = substr($time_string ,2,2);
+        $sec = substr($time_string ,4,2);
+        $formatted_string = $hrs . ":" . $min . ":" . $sec;
+        return($formatted_string);
+    }
+
+    function minutes_to_decimal($minutes)
+    {
+        return ($minutes / 60);
+    }
+
 }
 ?>
