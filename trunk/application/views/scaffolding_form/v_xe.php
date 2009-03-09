@@ -325,7 +325,7 @@
 
         $("#xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
             width: 200,
-            max: 4,
+            max: 10,
             highlight: false,
             scroll: true,
             scrollHeight: 300,

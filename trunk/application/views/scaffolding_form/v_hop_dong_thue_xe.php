@@ -3,7 +3,7 @@
         <base href="http://localhost/vehicle1/">
         <title>Hop_dong_thue_xe</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        
+
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/jqGrid/themes/basic/grid.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/theme/ui.all.css"  />
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/css/main-app.css"  />
@@ -12,11 +12,11 @@
             #drop { width: 240px; height: 105px; padding: 0.4em; }
             #drop .ui-widget-header { margin: 0; padding: 0.4em; text-align: center; }
         </style>
-        
+
         <script type="text/javascript" src="<?php echo base_url()?>resources/jquery-1.3.1.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/jqGrid/jquery.jqGrid.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/jquery.ui.all.js"></script>
-        
+
         <!--  Utils for Page -->
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/inlinebox.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.validate.js"></script>
@@ -24,7 +24,7 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.form.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.field.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.autocomplete.js"></script>
-        
+
         <script  type="text/javascript">
             var Hop_dong_thue_xe = {};
 
@@ -147,7 +147,7 @@
 
         </script>
     </head>
-    
+
     <body>
         <div id="container-1">
             <ul>
@@ -158,13 +158,13 @@
                     <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
                     <div id="pager2" class="scroll" style="text-align:center;"></div>
                 </div>
-                
+
                 <hr>
-                
+
                 <div class="box">
                     <h1> Hợp đồng Thuê Xe </h1>
                     <hr>
-                    
+
                     <form method="POST" id="form_Hop_dong_thue_xe" action="">
                         <label>
                             <span>so_dang_ky_xe</span>
@@ -184,14 +184,15 @@
                         </label>
                         <label>
                             <span>loai_hop_dong</span>
-                            
+
                             <select name="loai_hop_dong" id="hop_dong_thue_xe_loai_hop_dong" onchange="Hop_dong_thue_xe.setDataField(this.name,this.value);">
+                                <option></option>
                                 <option>loại 1</option>
                                 <option>loại 2</option>
                                 <option>loại 3</option>
                                 <option>loại 4</option>
                                 <option>loại 5</option>
-                                <option>loại 6</option>                                
+                                <option>loại 6</option>
                             </select>
                         </label>
                         <label>
@@ -219,7 +220,7 @@
                             <input type="text" name="ngay_ket_thuc" value="" id="hop_dong_thue_xe_ngay_ket_thuc" class="input-text keyAutoComplete" onchange="Hop_dong_thue_xe.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>vi_tri</span>                           
+                            <span>vi_tri</span>
                             <textarea name="" name="vi_tri" value="" id="hop_dong_thue_xe_vi_tri" rows="4" cols="20">
                             </textarea>
                         </label>
@@ -240,7 +241,7 @@
                             <input type="text" name="nhuong_quyen_thuong_mai" value="" id="hop_dong_thue_xe_nhuong_quyen_thuong_mai" class="input-text keyAutoComplete" onchange="Hop_dong_thue_xe.setDataField(this.name,this.value);"  />
                         </label>
                     </form>
-                    
+
                     <div class="spacer" id="form_control" >
                         <a href="javascript:void(0)" onclick="Hop_dong_thue_xe.Create()" class="green"> Thêm </a>
                         <a href="javascript:void(0)" onclick="Hop_dong_thue_xe.Update()" class="green">Cập nhập</a>
@@ -251,7 +252,7 @@
                         <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div class="info-box" id="info-box" style="display:none">
@@ -268,7 +269,7 @@
             </div>
         </div>
     </body>
-    
+
     <script type="text/javascript">
         var jGrid = null;
         var colNamesT = new Array();
@@ -379,8 +380,8 @@
 
 
     </script>
-    
-    
+
+
     <script type="text/javascript">
         var keyAutoComplete_fields = {};
         $(".keyAutoComplete").each(function(i,e)
@@ -406,7 +407,7 @@
 
         $("#hop_dong_thue_xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
             width: 200,
-            max: 4,
+            max: 10,
             highlight: false,
             scroll: true,
             scrollHeight: 300,
@@ -458,5 +459,5 @@
         });
 
     </script>
-    
+
 </html>
