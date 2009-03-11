@@ -6,26 +6,28 @@
         <title>Tracking Vehicle</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-        <link rel="stylesheet" type="text/css" media="screen" href="http://localhost/vehicle/resources/jqGrid/themes/basic/grid.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="http://localhost/vehicle/resources/theme/ui.all.css"  />
-        <link rel="stylesheet" type="text/css" media="screen" href="http://localhost/vehicle/resources/css/main-app.css"  />
-
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/jqGrid/themes/basic/grid.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/theme/ui.all.css"  />
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/css/main-app.css"  />
         <style type="text/css">
             .toggler { width: 250px; height: 125px; }
             #drop { width: 240px; height: 105px; padding: 0.4em; }
             #drop .ui-widget-header { margin: 0; padding: 0.4em; text-align: center; }
         </style>
 
-        <script type="text/javascript" src="http://localhost/vehicle/resources/jquery-1.3.1.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/jquery.ui.all.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/jquery-1.3.1.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/jqGrid/jquery.jqGrid.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/jquery.ui.all.js"></script>
 
         <!--  Utils for Page -->
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/inlinebox.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/jquery.validate.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/jquery.maskedinput-1.2.1.pack.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/jquery.form.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/jquery.field.min.js"></script>
-        <script type="text/javascript" src="http://localhost/vehicle/resources/utils/jquery.autocomplete.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/inlinebox.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.validate.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.maskedinput-1.2.1.pack.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.form.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.field.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.autocomplete.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
+
 
         <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhTOZcpRi3x4ZlxAD9RZHN-OsRMWtxSQpid_-Bah1NKhpWC5zY29rrD77g"
                 type="text/javascript"></script>
@@ -124,12 +126,6 @@
                 Xe.currentRowID = id;
             }
 
-            var inputDate = {};
-            $( function() {
-                inputDate['NGAY_CAP_NHAT'] = $("#NGAY_CAP_NHAT").datepicker({dateFormat:"yy/mm/dd"});
-                $('#NGAY_CAP_NHAT').mask('9999/99/99');
-                $('#NGAY_CAP_NHAT').validate({rules:{ require: true, date: true}});
-            });
 
 
 
@@ -143,20 +139,22 @@
                 <h1> Xe </h1>
                 <hr>
 
-                <form method="POST" id="main_form" action="http://localhost/vehicle/index.php/c_xe/">
-
-
+                <form method="POST" id="main_form" action="">
                     <label>
-                        <span>Số Đang ky Xe</span>
-                        <input type="text" name="SO_DANG_KY_XE" value="" id="SO_DANG_KY_XE" class="input-text" onchange="Xe.setDataField(this.name,this.value);"  />
+                        <span>Số đăng ký xe</span>
+                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text" onchange="Xe.setDataField(this.name,this.value);"  />
                     </label>
                 </form>
+
+                <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+
+                </div>
 
                 <div class="spacer" id="form_control" >
                     <input type="button" value="Tìm" onclick="test();"/>
                 </div>
                 <div id="ajaxloader" style="display:none" >
-                    <img  src="http://localhost/vehicle/resources/css/img/ajax-loader.gif" />
+                    <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
                 </div>
             </div>
             <hr>
@@ -166,12 +164,13 @@
             <table border="0">
                 <tbody>
                     <tr>
-                        <td>
+                        <td width="50%" >
                             <div id="map_canvas" style="width: 550px; height: 550px;">
 
                             </div>
                         </td>
-                        <td VALIGN="top">
+                        <td VALIGN="top" width="50%">
+
                             <div id="hanghoa" >
                                 <div id="map_details1" style="width: 40%; height: 550px; display:none">
                                     <table border="1">
@@ -188,19 +187,19 @@
                                                 <td>H001-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-BD1</td>
                                                 <td>Buu pham</td>
                                                 <td>Da chuyen xong</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -212,7 +211,7 @@
                                                 <th>Mã hãng</th>
                                                 <th>Loai hang</th>
                                                 <th>Tinh trang</th>
-                                                 <th>So luong</th>
+                                                <th>So luong</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -226,13 +225,13 @@
                                                 <td>H006-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H004-BD1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -244,7 +243,7 @@
                                                 <th>Mã hãng</th>
                                                 <th>Loai hang</th>
                                                 <th>Tinh trang</th>
-                                                 <th>So luong</th>
+                                                <th>So luong</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -252,19 +251,19 @@
                                                 <td>H001-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-BD1</td>
                                                 <td>Buu pham</td>
                                                 <td>Da chuyen xong</td>
-                                                 <td>1</td>
+                                                <td>1</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -276,6 +275,7 @@
                                                 <th>Mã hãng</th>
                                                 <th>Loai hang</th>
                                                 <th>Tinh trang</th>
+                                                <th>So luong</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -283,21 +283,25 @@
                                                 <td>H001-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-SG1</td>
                                                 <td>Buu pham</td>
                                                 <td>Dang chuyen</td>
+                                                <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>H002-BD1</td>
                                                 <td>Buu pham</td>
                                                 <td>Da chuyen xong</td>
+                                                <td>1</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
                 </tbody>
@@ -316,9 +320,36 @@
 
     <script type="text/javascript">
         var xe = 1;
+        var listPoint ;
+
+        function updateGPSData(){
+            var callback = function(msg){
+                //var logs = msg.split("\r\n")[12];
+                listPoint = eval( msg.split("\r\n")[12]  );
+                $("#gps_msg_logs").html($.toJSON(listPoint[0]));
+                
+                point = new  GLatLng(listPoint[0].lat,listPoint[0].lng);
+                marker = new GMarker(point, {draggable: true});
+                map.addOverlay(marker);
+                map.setCenter(point , 17, G_HYBRID_MAP);
+
+                console.log(listPoint);
+                //  initForm();
+                setTimeout("updateGPSData()", 5088);
+            };
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost/vehicle1/index.php/c_Vehicle_Tracking/getGPSDATA/" + $("#xe_so_dang_ky_xe").val(),
+                success: callback
+            });
+        }
+
 
         function test(){
-            if($("#SO_DANG_KY_XE").val() == "51-K12167"){
+            setTimeout("updateGPSData()", 5088);
+
+            if($("#xe_so_dang_ky_xe").val() == "51-K12167"){
                 xe = 1;
 
                 $("#map_details1").show();
@@ -326,21 +357,21 @@
                 $("#map_details3").hide();
                 $("#map_details4").hide();
             }
-            else if($("#SO_DANG_KY_XE").val() == "55-M18818"){
+            else if($("#xe_so_dang_ky_xe").val() == "55-M18818"){
                 xe = 2;
                 $("#map_details2").show();
                 $("#map_details1").hide();
                 $("#map_details3").hide();
                 $("#map_details4").hide();
             }
-            else if($("#SO_DANG_KY_XE").val() == "51-K18142"){
+            else if($("#xe_so_dang_ky_xe").val() == "51-K18142"){
                 xe = 3;
                 $("#map_details3").show();
                 $("#map_details1").hide();
                 $("#map_details2").hide();
                 $("#map_details4").hide();
             }
-            else if($("#SO_DANG_KY_XE").val() == "51-M83998"){
+            else if($("#xe_so_dang_ky_xe").val() == "52-KA3775"){
                 xe = 4;
                 $("#map_details4").show();
                 $("#map_details2").hide();
@@ -352,14 +383,15 @@
             initForm();
         }
 
-
+        var map;
         var initForm = function(){
             //init validation form
             $("#main_form").validate();
 
-            $("#SO_DANG_KY_XE").autocomplete("http://localhost/vehicle/index.php/c_xe/SO_DANG_KY_XE_suggestion", {
+
+            $("#xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
                 width: 200,
-                max: 4,
+                max: 10,
                 highlight: false,
                 scroll: true,
                 scrollHeight: 300,
@@ -374,10 +406,10 @@
             //init input mask
 
             if (GBrowserIsCompatible()) {
-                var map = new GMap2(document.getElementById("map_canvas"));
+                map = new GMap2(document.getElementById("map_canvas"));
 
                 if(xe == 1){
-                    map.setCenter(new  GLatLng(10.7534,106.6290), 13, G_SATELLITE_MAP);
+                    map.setCenter(new  GLatLng(10.7534,106.6290), 15, G_HYBRID_MAP);
 
 
 
@@ -461,8 +493,9 @@
                     map.addOverlay(marker);
                 }
                 else if(xe == 4){
-                    point = new  GLatLng(10.759681,106.6728687);
-                    marker = new GMarker(point, {draggable: true});
+                    // point = new  GLatLng(10.759681,106.6728687);
+                    // marker = new GMarker(point, {draggable: true});
+                    console.log("xe 4");
                     map.setCenter(point , 16, G_SATELLITE_MAP);
 
                     map.addOverlay(marker);
@@ -478,7 +511,7 @@
                     map.addControl(new GScaleControl());
 
 
-                    var img = "<img width='83'  src='http://localhost/vehicle/resources/images/3e0cab7bb222a646f4f9c5903439e106.jpg' />"
+                    var img = "<img width='83'  src='http://localhost/vehicle1/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
                     var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'> xe 4"+ img +"</span>";
 
                     GEvent.addListener(marker, "dragstart", function() {
@@ -493,7 +526,7 @@
                 };
                 map.addControl(new GLargeMapControl());
                 map.addControl(new GMapTypeControl());
-                map.setMapType(G_SATELLITE_MAP);
+                map.setMapType(G_HYBRID_MAP);
 
                 map.openInfoWindow(point, text);
             }

@@ -10,28 +10,28 @@
 
 class Chuyenhang extends Model {
 
-      //Type: String
+    //Type: String
     var $so_dang_ky_xe = '';
 
-	  //Type: String
+    //Type: String
     var $ms_hanghoa = '';
 
-	  //Type: 
+    //Type:
     var $ngay_nhanhang = '';
 
-	  //Type: String
+    //Type: String
     var $diachi_nhanhang = '';
 
-	  //Type: String
+    //Type: String
     var $diachi_trahang = '';
 
-	  //Type: Integer
+    //Type: Integer
     var $soluong = '';
 
-	  //Type: 
+    //Type:
     var $trang_thai = '';
 
-	
+
     function Chuyenhang()
     {
         parent::Model();
@@ -39,48 +39,48 @@ class Chuyenhang extends Model {
 
     function setFilterField()
     {
-                $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-                $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
-                $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
-                $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
-                $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
-                $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
-        
+        $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
+        $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
+        $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
+        $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
+        $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
+
 
         // BEGIN FILTER CRITERIA CHECK
         // If any of the following properties are set before Chuyenhang->get() is called from the controller then we will include
         // a where statement for each of the properties that have been set.
 
-                if ($this->so_dang_ky_xe)
+        if ($this->so_dang_ky_xe)
         {
             $this->db->where("so_dang_ky_xe", $this->so_dang_ky_xe);
         }
-                if ($this->ms_hanghoa)
+        if ($this->ms_hanghoa)
         {
             $this->db->where("ms_hanghoa", $this->ms_hanghoa);
         }
-                if ($this->ngay_nhanhang)
+        if ($this->ngay_nhanhang)
         {
             $this->db->where("ngay_nhanhang", $this->ngay_nhanhang);
         }
-                if ($this->diachi_nhanhang)
+        if ($this->diachi_nhanhang)
         {
             $this->db->where("diachi_nhanhang", $this->diachi_nhanhang);
         }
-                if ($this->diachi_trahang)
+        if ($this->diachi_trahang)
         {
             $this->db->where("diachi_trahang", $this->diachi_trahang);
         }
-                if ($this->soluong)
+        if ($this->soluong)
         {
             $this->db->where("soluong", $this->soluong);
         }
-                if ($this->trang_thai)
+        if ($this->trang_thai)
         {
             $this->db->where("trang_thai", $this->trang_thai);
         }
-        
+
         // END FILTER CRITERIA CHECK
     }
 
@@ -104,7 +104,7 @@ class Chuyenhang extends Model {
 
 
         if(true  )
-          $this->db->like($field_name, $term);     
+        $this->db->like($field_name, $term);
 
         $objects = $this->db->get("chuyenhang")->result_array();
 
@@ -132,7 +132,7 @@ class Chuyenhang extends Model {
             $total_pages = 0;
         }
         if ($page > $total_pages)
-            $page=$total_pages;
+        $page=$total_pages;
         $start = $limit * $page - $limit;
 
         $this->db->limit($limit, $start);
@@ -145,14 +145,14 @@ class Chuyenhang extends Model {
         foreach($objects as $obj)
         {
             $cell = array();
-                            array_push($cell, $obj->so_dang_ky_xe);
-                            array_push($cell, $obj->ms_hanghoa);
-                            array_push($cell, $obj->ngay_nhanhang);
-                            array_push($cell, $obj->diachi_nhanhang);
-                            array_push($cell, $obj->diachi_trahang);
-                            array_push($cell, $obj->soluong);
-                            array_push($cell, $obj->trang_thai);
-                        $row = new stdClass();
+            array_push($cell, $obj->so_dang_ky_xe);
+            array_push($cell, $obj->ms_hanghoa);
+            array_push($cell, $obj->ngay_nhanhang);
+            array_push($cell, $obj->diachi_nhanhang);
+            array_push($cell, $obj->diachi_trahang);
+            array_push($cell, $obj->soluong);
+            array_push($cell, $obj->trang_thai);
+            $row = new stdClass();
             $row->id = $cell[0];
             $row->cell = $cell;
             array_push($rows, $row);
@@ -187,11 +187,11 @@ class Chuyenhang extends Model {
                     "diachi_trahang" => $this->diachi_trahang,
                     "soluong" => $this->soluong,
                     "trang_thai" => $this->trang_thai,
-          );
+        );
 
-      $saveSuccess = false;
+        $saveSuccess = false;
 
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("chuyenhang","so_dang_ky_xe", $this->so_dang_ky_xe))
         {
             $this->db->trans_start();
@@ -206,7 +206,7 @@ class Chuyenhang extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("chuyenhang","ms_hanghoa", $this->ms_hanghoa))
         {
             $this->db->trans_start();
@@ -221,7 +221,7 @@ class Chuyenhang extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("chuyenhang","ngay_nhanhang", $this->ngay_nhanhang))
         {
             $this->db->trans_start();
@@ -236,7 +236,7 @@ class Chuyenhang extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-    
+
         // If key was not set in the controller, then we will insert a new record.
         $this->db->trans_start();
         $this->db->insert("chuyenhang", $db_array);
@@ -252,38 +252,38 @@ class Chuyenhang extends Model {
 
     function create()
     {
-                 $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-                    $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                    $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
-                    $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
-                    $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
-                    $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
-                    $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
-        
+        $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
+        $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
+        $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
+        $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
+        $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
+
         return $this->save();
     }
 
     function update()
     {
-            $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-            $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-            $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
-            $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
-            $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
-            $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
-            $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
-    
+        $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
+        $this->chuyenhang->diachi_nhanhang = $this->input->xss_clean($this->input->post('diachi_nhanhang'));
+        $this->chuyenhang->diachi_trahang = $this->input->xss_clean($this->input->post('diachi_trahang'));
+        $this->chuyenhang->soluong = $this->input->xss_clean($this->input->post('soluong'));
+        $this->chuyenhang->trang_thai = $this->input->xss_clean($this->input->post('trang_thai'));
+
         return $this->save();
     }
 
     function delete()
     {
-                $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-                    $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                    $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
-                                        
+        $this->chuyenhang->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->chuyenhang->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chuyenhang->ngay_nhanhang = $this->input->xss_clean($this->input->post('ngay_nhanhang'));
+
         $saveSuccess = false;
-         // As long as chuyenhang->so_dang_ky_xe was set in the controller, we will delete the record.
+        // As long as chuyenhang->so_dang_ky_xe was set in the controller, we will delete the record.
         if ($this->so_dang_ky_xe) {
             $this->db->where("so_dang_ky_xe", $this->so_dang_ky_xe);
             $this->db->delete("chuyenhang");
@@ -294,7 +294,7 @@ class Chuyenhang extends Model {
                 $saveSuccess = false;
             }
         }
-          // As long as chuyenhang->ms_hanghoa was set in the controller, we will delete the record.
+        // As long as chuyenhang->ms_hanghoa was set in the controller, we will delete the record.
         if ($this->ms_hanghoa) {
             $this->db->where("ms_hanghoa", $this->ms_hanghoa);
             $this->db->delete("chuyenhang");
@@ -305,7 +305,7 @@ class Chuyenhang extends Model {
                 $saveSuccess = false;
             }
         }
-          // As long as chuyenhang->ngay_nhanhang was set in the controller, we will delete the record.
+        // As long as chuyenhang->ngay_nhanhang was set in the controller, we will delete the record.
         if ($this->ngay_nhanhang) {
             $this->db->where("ngay_nhanhang", $this->ngay_nhanhang);
             $this->db->delete("chuyenhang");
@@ -316,7 +316,7 @@ class Chuyenhang extends Model {
                 $saveSuccess = false;
             }
         }
-             return $saveSuccess;
+        return $saveSuccess;
     }
 }
 
