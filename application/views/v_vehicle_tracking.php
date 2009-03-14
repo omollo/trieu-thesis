@@ -9,6 +9,9 @@
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/jqGrid/themes/basic/grid.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/theme/ui.all.css"  />
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/css/main-app.css"  />
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/css/jquery.timepickr.css"  />
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/css/jquery.utils.css"  />
+
         <style type="text/css">
             .toggler { width: 250px; height: 125px; }
             #drop { width: 240px; height: 105px; padding: 0.4em; }
@@ -27,147 +30,86 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.field.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.utils.ui.min.js"></script>
 
 
         <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhTOZcpRi3x4ZlxAD9RZHN-OsRMWtxSQpid_-Bah1NKhpWC5zY29rrD77g"
                 type="text/javascript"></script>
         <script  type="text/javascript">
-            var Xe = {};
-
-            Xe.data = {};
-            Xe.setDataField = function(fieldName,fieldValue)
-            {
-                Xe.data[fieldName] = fieldValue;
-            }
-
-            Xe.setData = function(data)
-            {
-                jQuery.each(data, function(name, value) {
-                    Xe.data[name] = value;
-                    $("#main_form input[name="+ name +"]").setValue(value);
-                });
-            }
-
-
-            Xe.getData = function()
-            {
-                var obj = {};
-                $.each( $("#main_form").formSerialize().split("&"), function(i,n)
-                {
-                    var toks = n.split("=");
-                    obj[toks[0]] = toks[1];
-                }
-            );
-                Xe.data = obj;
-                return Xe.data;
-            }
-
-            //create
-            Xe.Create = function()
-            {
-                if(!$("#main_form").valid())
-                    return;
-                InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle/index.php/c_xe/create", Xe.getData() ,
-                function(message){
-                    if(message != null){
-                        InlineBox.hideAjaxLoader();
-                        $("#list2").trigger("reloadGrid");
-                        InlineBox.showModalBox("Tạo Xe " + message);
-                    }
-                });
-            }
-
-            //refresh grid
-            Xe.Read = function()
-            {
-                InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle/index.php/c_xe/read_json_format", {},
-                function(data){
-                    InlineBox.hideAjaxLoader();
-                    $("#list2").trigger("reloadGrid");
-                });
-            }
-
-            //update
-            Xe.Update = function()
-            {
-                if(!$("#main_form").valid())
-                    return;
-
-                InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle/index.php/c_xe/update", Xe.getData() ,
-                function(message){
-                    InlineBox.hideAjaxLoader();
-                    $("#list2").trigger("reloadGrid");
-                    InlineBox.showModalBox("Cập nhật Xe " + message);
-                });
-            }
-
-
-            //delete
-            Xe.Delete = function()
-            {
-                if(!$("#main_form").valid())
-                    return;
-                InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle/index.php/c_xe/delete",Xe.getData() ,
-                function(message){
-                    InlineBox.hideAjaxLoader();
-                    $("#list2").trigger("reloadGrid");
-                    InlineBox.showModalBox("Xoá Xe " + message);
-                });
-            }
-
-            Xe.currentRowID = null;
-
-            Xe.setSelectedRow = function(id)
-            {
-                Xe.currentRowID = id;
-            }
-
-
-
 
         </script>
     </head>
 
     <body>
 
-        <div style="width: 930px;">
-            <div class="box">
-                <h1> Xe </h1>
-                <hr>
+        <table border="0" cellspacing="1" cellpadding="1">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td VALIGN="top" width="40%">
+                        <div>
+                            <span>Thời gian từ ngày </span>
+                            <input type="text" id="filter_from_date" class="input-text"  />
+                            <span>Giờ</span>
+                            <input type="text" id="filter_from_time" class="input-text "  />
+                        </div>
+                        <div style="margin-top:5px;" >
+                            <span>Đến ngày </span>
+                            <input type="text" id="filter_to_date" class="input-text"  />
+                            <span>Giờ</span>
+                            <input type="text" id="filter_to_time" class="input-text "  />
+                        </div>
+                        <br>
+                        <div >
+                            <div class="box">
+                                <h1> Xe </h1>
+                                <hr>
 
-                <form method="POST" id="main_form" action="">
-                    <label>
-                        <span>Số đăng ký xe</span>
-                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text" onchange="Xe.setDataField(this.name,this.value);"  />
-                    </label>
-                </form>
+                                <form method="POST" id="main_form" action="">
+                                    <label>
+                                        <span>Số đăng ký xe</span>
+                                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text" onchange="Xe.setDataField(this.name,this.value);"  />
+                                    </label>
 
-                <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+                                </form>
 
-                </div>
+                                <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+                                </div>
 
-                <div class="spacer" id="form_control" >
-                    <input type="button" value="Tìm" onclick="test();"/>
-                </div>
-                <div id="ajaxloader" style="display:none" >
-                    <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
-                </div>
-            </div>
-            <hr>
+                                <div class="spacer" id="form_control" >
+                                    <input type="button" value="Tìm" onclick="test();"/>
+                                </div>
+                                <div id="ajaxloader" style="display:none" >
+                                    <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
 
-        </div>
-        <div id="map_container" style="width: 100%" >
+                    </td>
+                    <td VALIGN="top" width="60%">
+                        <div id="map_canvas" style="width: 690px; height: 550px;">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+        <div id="map_container" style="width: 60%; display:inline;"  >
             <table border="0">
                 <tbody>
                     <tr>
                         <td width="50%" >
-                            <div id="map_canvas" style="width: 550px; height: 550px;">
 
-                            </div>
                         </td>
                         <td VALIGN="top" width="50%">
 
@@ -314,7 +256,7 @@
         <br>
 
 
-
+        <input type="button" value="tt" id="calendar1_alert" />
 
     </body>
 
@@ -327,20 +269,26 @@
                 //var logs = msg.split("\r\n")[12];
                 listPoint = eval( msg.split("\r\n")[12]  );
                 $("#gps_msg_logs").html($.toJSON(listPoint[0]));
-                
-                point = new  GLatLng(listPoint[0].lat,listPoint[0].lng);
-                marker = new GMarker(point, {draggable: true});
+
+                var pps = toGoogleMapPoints(listPoint);
+                marker = new GMarker(pps[0]);
                 map.addOverlay(marker);
-                map.setCenter(point , 17, G_HYBRID_MAP);
+                map.setCenter(pps[0] , 14, G_HYBRID_MAP);
+                markAllPoints(pps);
+                drawPolyline(pps);
 
                 console.log(listPoint);
                 //  initForm();
-                setTimeout("updateGPSData()", 5088);
+                //setTimeout("updateGPSData()", 5088);
             };
+
+            var sdkxe = $("#xe_so_dang_ky_xe").val();
+            var from_datetime = $("#filter_from_date").val()+ "time" + $("#filter_from_time").val();
+            var to_datetime = $("#filter_to_date").val()+ "time" + $("#filter_to_time").val();
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost/vehicle1/index.php/c_Vehicle_Tracking/getGPSDATA/" + $("#xe_so_dang_ky_xe").val(),
+                url: "http://localhost/vehicle1/index.php/c_Vehicle_Tracking/getGPSDATA/" + sdkxe + "/" + from_datetime + "/" + to_datetime,
                 success: callback
             });
         }
@@ -378,16 +326,18 @@
                 $("#map_details3").hide();
                 $("#map_details1").hide();
             }
-
-
             initForm();
         }
 
         var map;
         var initForm = function(){
-            //init validation form
-            $("#main_form").validate();
+            $("#filter_from_date").datepicker({dateFormat:"yy-mm-dd"});
+            $("#filter_to_date").datepicker({dateFormat:"yy-mm-dd"});
 
+            $('#filter_from_time').timepickr({convention:24});
+            $('#filter_from_time').mask('99:99');
+            $('#filter_to_time').timepickr({convention:24});
+            $('#filter_to_time').mask('99:99');
 
             $("#xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
                 width: 200,
@@ -552,6 +502,37 @@
             $("#vehicle_marker").effect("bounce", { times: 3,distance:25 }, 400);
         }
 
+        var testdata = [{"so_dang_ky_xe":"52-KA3775","lat":"10.8111","lng":"106.67619","gps_time":"11:33:51"},{"so_dang_ky_xe":"52-KA3775","lat":"10.8111","lng":"106.676193333","gps_time":"11:33:49"}];
+
+        function toGoogleMapPoints(list){
+            var points = new Array();
+            for(var i = 0 ; i< list.length; i++){
+                points.push(new GLatLng(list[i].lat,list[i].lng));
+            }
+            return points;
+        }
+
+        function drawPolyline(pps){
+            map.addOverlay(new GPolyline(pps, "#FF0000", 10));
+        }
+
+        function markAllPoints(pps){
+            for(var i = 0 ; i< pps.length; i++){
+                marker = new GMarker(pps[i]);
+
+
+                GEvent.addListener(marker, "click", function() {
+                    showInfoBox(this);
+                });
+                map.addOverlay(marker);
+            }
+        }
+
+        function showInfoBox(p){
+            var img = "<img width='83'  src='http://localhost/vehicle1/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
+            var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + $("#xe_so_dang_ky_xe").val() + "-" + img +"</span>";
+            map.openInfoWindow(p, text);
+        }
 
 
     </script>

@@ -37,9 +37,11 @@ class c_Vehicle_Tracking extends Controller
         $this->load->view('v_vehicle_tracking');
     }
 
-    function getGPSDATA($sdkxe){
+    function getGPSDATA($sdkxe,$from_datetime,$to_datetime){
         ini_set ('allow_url_fopen', '1');
         $url = "http://tantrieuf31.summerhost.info/getGPSByVehicle.php?so_dang_ky_xe=".$sdkxe;
+        $url = $url."&from_datetime=".$from_datetime."&to_datetime=".$to_datetime;
+        echo $url;
         $str = $this->loadHtml(($url));
         echo $str;
     }
