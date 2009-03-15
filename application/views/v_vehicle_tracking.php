@@ -55,25 +55,35 @@
                         <div>
                             <span>Thời gian từ ngày </span>
                             <input type="text" id="filter_from_date" class="input-text"  />
-                            <span>Giờ</span>
+                            <span>Giờ GMT</span>
                             <input type="text" id="filter_from_time" class="input-text "  />
                         </div>
                         <div style="margin-top:5px;" >
                             <span>Đến ngày </span>
                             <input type="text" id="filter_to_date" class="input-text"  />
-                            <span>Giờ</span>
+                            <span>Giờ GMT</span>
                             <input type="text" id="filter_to_time" class="input-text "  />
                         </div>
                         <br>
                         <div >
                             <div class="box">
-                                <h1> Xe </h1>
+                                <h1> Thông tin GPS của Xe </h1>
                                 <hr>
 
                                 <form method="POST" id="main_form" action="">
                                     <label>
                                         <span>Số đăng ký xe</span>
-                                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text" onchange="Xe.setDataField(this.name,this.value);"  />
+                                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text"  />
+                                        <div class="spacer" id="form_control" >
+                                            <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
+                                        </div>
+                                        <div id="ajaxloader" style="display:none" >
+                                            <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
+                                        </div>
+                                    </label>
+                                    <label>
+                                        <span>Theo dõi thời gian thực:</span>
+                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" checked="false" />
                                     </label>
 
                                 </form>
@@ -81,12 +91,26 @@
                                 <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
                                 </div>
 
-                                <div class="spacer" id="form_control" >
-                                    <input type="button" value="Tìm" onclick="test();"/>
+                                <div  style="background-color: gray;color:yellow" >
+                                    Tổng số điểm GPS nhận: <strong><span id="total_gps_points_of_vehicle" >0</span></strong>
                                 </div>
-                                <div id="ajaxloader" style="display:none" >
-                                    <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
-                                </div>
+
+                                <fieldset>
+                                    <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
+                                    </div>
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Longitude (Kinh độ): <strong><span id="current_lng_of_vehicle" >0</span></strong>
+                                    </div>
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Giờ GMT theo vệ tinh : <strong><span id="current_gpstime_of_vehicle" ></span></strong>
+                                    </div>
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Số Km đã đi: <strong><span id="current_totals_kms" >0</span></strong> Km
+                                    </div>
+                                </fieldset>
+
                             </div>
                             <hr>
                         </div>
@@ -263,29 +287,42 @@
     <script type="text/javascript">
         var xe = 1;
         var listPoint ;
+        var map;
+        var point ;
+        var rootPoint = new GLatLng(10.75340,106.62900);
+        var marker = new GMarker(rootPoint, {draggable: true});
+
 
         function updateGPSData(){
             var callback = function(msg){
-                //var logs = msg.split("\r\n")[12];
+                $("#ajaxloader").hide();
+
+                initForm();
+
                 listPoint = eval( msg.split("\r\n")[12]  );
-                $("#gps_msg_logs").html($.toJSON(listPoint[0]));
 
                 var pps = toGoogleMapPoints(listPoint);
                 marker = new GMarker(pps[0]);
                 map.addOverlay(marker);
-                map.setCenter(pps[0] , 14, G_HYBRID_MAP);
+                map.setCenter(pps[0] , 17, G_HYBRID_MAP);
                 markAllPoints(pps);
-                drawPolyline(pps);
 
-                console.log(listPoint);
-                //  initForm();
-                //setTimeout("updateGPSData()", 5088);
+                //                 $("#gps_msg_logs").html($.toJSON(listPoint[0]));
+                $("#current_lat_of_vehicle").html(listPoint[0].lat);
+                $("#current_lng_of_vehicle").html(listPoint[0].lng);
+                $("#current_gpstime_of_vehicle").html(listPoint[0].gps_time);
+                $("#current_totals_kms").html(drawPolyline(pps));
+
+                //console.log(listPoint);
+
+                if($("#real_time_tracking").attr("checked"))
+                    setTimeout("updateGPSData()", 9999);
             };
 
             var sdkxe = $("#xe_so_dang_ky_xe").val();
             var from_datetime = $("#filter_from_date").val()+ "time" + $("#filter_from_time").val();
             var to_datetime = $("#filter_to_date").val()+ "time" + $("#filter_to_time").val();
-
+            $("#ajaxloader").show();
             $.ajax({
                 type: "GET",
                 url: "http://localhost/vehicle1/index.php/c_Vehicle_Tracking/getGPSDATA/" + sdkxe + "/" + from_datetime + "/" + to_datetime,
@@ -295,7 +332,7 @@
 
 
         function test(){
-            setTimeout("updateGPSData()", 5088);
+            setTimeout("updateGPSData()", 1088);
 
             if($("#xe_so_dang_ky_xe").val() == "51-K12167"){
                 xe = 1;
@@ -329,7 +366,7 @@
             initForm();
         }
 
-        var map;
+
         var initForm = function(){
             $("#filter_from_date").datepicker({dateFormat:"yy-mm-dd"});
             $("#filter_to_date").datepicker({dateFormat:"yy-mm-dd"});
@@ -357,135 +394,22 @@
 
             if (GBrowserIsCompatible()) {
                 map = new GMap2(document.getElementById("map_canvas"));
+                //                GEvent.bind(map, "click", this, function(overlay, latlng) {
+                //                        alert(latlng);
+                //                        if (latlng) {
+                //                            this.map.addOverlay(new GMarker(latlng));
+                //                        }
+                //                });
 
-                if(xe == 1){
-                    map.setCenter(new  GLatLng(10.7534,106.6290), 15, G_HYBRID_MAP);
-
-
-
-                    map.addControl(new GScaleControl())
-
-
-                    var img = "<img width='83'  src='http://localhost/vehicle/resources/images/80cd2fce08f6e4fccbd64c2f4bf1f4c9.jpg' />"
-                    var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'> xe 1"+ img +"</span>";
-
-                    GEvent.addListener(marker, "dragstart", function() {
-                        logLatLon();
-                    });
-
-                    GEvent.addListener(marker, "dragend", function() {
-                        logLatLon();
-                    });
-
-                    map.addOverlay(marker);
-                    var polyline = new GPolyline([
-                        new GLatLng(10.75340,106.62900),
-                        new GLatLng(10.754811,106.6305971),
-                        new GLatLng(10.753926,106.6344165802002),
-                        new GLatLng(10.75253,106.632270),
-                        new GLatLng(10.741656,106.619009),
-                        new GLatLng(10.72909,106.608581)
-                    ], "#FF0000", 10);
-                    map.addOverlay(polyline);
-                }
-                else  if(xe == 2){
-                    point = new  GLatLng(10.778337,106.686516);
-                    marker = new GMarker(point, {draggable: true});
-                    map.setCenter(point , 13, G_SATELLITE_MAP);
-
-
-                    map.addControl(new GScaleControl())
-
-
-                    var img = "<img width='83'  src='http://www.t-shn.com/images.php?type=3&f=xeCarrytruck1226561269.jpg' />"
-                    var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'> xe 2"+ img +"</span>";
-
-                    GEvent.addListener(marker, "dragstart", function() {
-                        logLatLon();
-                    });
-
-                    GEvent.addListener(marker, "dragend", function() {
-                        logLatLon();
-                    });
-
-                    map.addOverlay(marker);
-                    var polyline = new GPolyline([
-                        new  GLatLng(10.778337,106.686516),
-                        new GLatLng(10.754811,106.6305971),
-                        new GLatLng(10.753926,106.6344165802002),
-                        new GLatLng(10.75253,106.632270),
-                        new GLatLng(10.741656,106.619009),
-                        new GLatLng(10.72909,106.608581)
-                    ], "#FF0000", 10);
-                    map.addOverlay(polyline);
-                }
-                else if(xe == 3){
-                    point = new  GLatLng(10.778337,106.686516);
-                    marker = new GMarker(point, {draggable: true});
-                    map.setCenter(point , 13, G_SATELLITE_MAP);
-
-
-
-                    map.addControl(new GScaleControl());
-
-
-                    var img = "<img width='83'  src='http://localhost/vehicle/resources/images/images.jpg' />"
-                    var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'> xe 3"+ img +"</span>";
-
-                    GEvent.addListener(marker, "dragstart", function() {
-                        logLatLon();
-                    });
-
-                    GEvent.addListener(marker, "dragend", function() {
-                        logLatLon();
-                    });
-
-                    map.addOverlay(marker);
-                }
-                else if(xe == 4){
-                    // point = new  GLatLng(10.759681,106.6728687);
-                    // marker = new GMarker(point, {draggable: true});
-                    console.log("xe 4");
-                    map.setCenter(point , 16, G_SATELLITE_MAP);
-
-                    map.addOverlay(marker);
-                    var polyline = new GPolyline([
-                        new  GLatLng(10.75675088,106.685400009),
-                        new GLatLng(10.754811,106.6305971),
-                        new GLatLng(10.76145183,106.6899061),
-                        new GLatLng(10.764466298,106.692502)
-
-                    ], "#FF0000", 10);
-                    map.addOverlay(polyline);
-
-                    map.addControl(new GScaleControl());
-
-
-                    var img = "<img width='83'  src='http://localhost/vehicle1/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
-                    var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'> xe 4"+ img +"</span>";
-
-                    GEvent.addListener(marker, "dragstart", function() {
-                        logLatLon();
-                    });
-
-                    GEvent.addListener(marker, "dragend", function() {
-                        logLatLon();
-                    });
-
-                    map.addOverlay(marker);
-                };
+                map.setCenter(rootPoint, 15, G_NORMAL_MAP);
                 map.addControl(new GLargeMapControl());
                 map.addControl(new GMapTypeControl());
                 map.setMapType(G_HYBRID_MAP);
-
-                map.openInfoWindow(point, text);
+                //map.openInfoWindow(point, text);
             }
 
         }
         jQuery("#main_form").ready(initForm);
-
-        var point = new GLatLng(10.75340,106.62900);
-        var marker = new GMarker(point, {draggable: true});
 
         function logLatLon(){
             if( console != null )
@@ -503,36 +427,50 @@
         }
 
         var testdata = [{"so_dang_ky_xe":"52-KA3775","lat":"10.8111","lng":"106.67619","gps_time":"11:33:51"},{"so_dang_ky_xe":"52-KA3775","lat":"10.8111","lng":"106.676193333","gps_time":"11:33:49"}];
-
+        var times = {};
         function toGoogleMapPoints(list){
             var points = new Array();
             for(var i = 0 ; i< list.length; i++){
                 points.push(new GLatLng(list[i].lat,list[i].lng));
+                marker = new GMarker(new GLatLng(list[i].lat,list[i].lng));
+                times[marker.getLatLng()] = list[i].gps_time;
+                GEvent.addListener(marker,"click", function() {
+                    showInfoBox(this.getLatLng());
+                });
+                map.addOverlay(marker);
+                // console.log(list[i].gps_time);
             }
+            $("#total_gps_points_of_vehicle").html(points.length)
             return points;
         }
 
         function drawPolyline(pps){
-            map.addOverlay(new GPolyline(pps, "#FF0000", 10));
+            var polyline = new GPolyline(pps, "#FF0000", 10);
+            map.addOverlay(polyline);
+            var distance = (polyline.getLength()/1000 )+"";
+            console.log(distance);
+            distance = distance.substring(0, distance.indexOf(".") +5 );
+
+
+            return distance;
         }
 
         function markAllPoints(pps){
             for(var i = 0 ; i< pps.length; i++){
-                marker = new GMarker(pps[i]);
 
-
-                GEvent.addListener(marker, "click", function() {
-                    showInfoBox(this);
-                });
-                map.addOverlay(marker);
             }
         }
 
-        function showInfoBox(p){
+        function drawGreatCircle(p1,p2){
+            //(10.77578609275558, 106.69043576752301)
+        };
+
+        function showInfoBox(p,time){
             var img = "<img width='83'  src='http://localhost/vehicle1/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
-            var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + $("#xe_so_dang_ky_xe").val() + "-" + img +"</span>";
-            map.openInfoWindow(p, text);
+            var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + $("#xe_so_dang_ky_xe").val() +  times[p] + "-" + img +"</span>";
+            map.openInfoWindowHtml(p, text);
         }
+        //pps[0].distanceFrom(pps[1])
 
 
     </script>
