@@ -186,7 +186,7 @@
                             <span>loai_hop_dong</span>
 
                             <select name="loai_hop_dong" id="hop_dong_thue_xe_loai_hop_dong" onchange="Hop_dong_thue_xe.setDataField(this.name,this.value);">
-                                <option></option>
+                                <option selected></option>
                                 <option>loại 1</option>
                                 <option>loại 2</option>
                                 <option>loại 3</option>

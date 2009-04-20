@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <base href="http://localhost/vehicle/">
-        <title>Tracking Vehicle</title>
+        <title>Theo dõi hàng hoá</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/jqGrid/themes/basic/grid.css" />
@@ -32,7 +32,6 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.utils.ui.min.js"></script>
 
-
         <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhTOZcpRi3x4ZlxAD9RZHN-OsRMWtxSQpid_-Bah1NKhpWC5zY29rrD77g"
                 type="text/javascript"></script>
         <script  type="text/javascript">
@@ -52,13 +51,13 @@
             <tbody>
                 <tr>
                     <td VALIGN="top" width="40%">
-                        <div>
+                        <div style="display:none">
                             <span>Thời gian từ ngày </span>
                             <input type="text" id="filter_from_date" class="input-text"  />
                             <span>Giờ GMT</span>
                             <input type="text" id="filter_from_time" class="input-text "  />
                         </div>
-                        <div style="margin-top:5px;" >
+                        <div style="margin-top:5px;display:none" >
                             <span>Đến ngày </span>
                             <input type="text" id="filter_to_date" class="input-text"  />
                             <span>Giờ GMT</span>
@@ -66,14 +65,14 @@
                         </div>
                         <br>
                         <div >
-                            <div class="box">
-                                <h1> Thông tin GPS của Xe </h1>
+                            <div class="box" style="width:460px">
+                                <h1> Thông tin hàng hoá </h1>
                                 <hr>
 
                                 <form method="POST" id="main_form" action="">
                                     <label>
-                                        <span>Số đăng ký xe</span>
-                                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text"  />
+                                        <span>Số vận đơn</span>
+                                        <input type="text" name="van_don_so_van_don" value="" id="van_don_so_van_don" class="input-text"  />
                                         <div class="spacer" id="form_control" >
                                             <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
                                         </div>
@@ -83,20 +82,26 @@
                                     </label>
                                     <label>
                                         <span>Theo dõi thời gian thực:</span>
-                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" checked="false" />
+                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" />
                                     </label>
-
                                 </form>
 
                                 <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
                                 </div>
 
-                                <div  style="background-color: gray;color:yellow" >
-                                    Tổng số điểm GPS nhận: <strong><span id="total_gps_points_of_vehicle" >0</span></strong>
+                                <div  style="overflow: auto; width: 455px; height: 390px;" >
+                                    <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
+                                    <div id="pager2" class="scroll" style="text-align:center;"></div>
                                 </div>
+
+
 
                                 <fieldset>
                                     <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Danh sách chuyến xe <strong><span id="c" >0</span></strong>
+                                    </div>
+
                                     <div  style="background-color: gray;color:yellow" >
                                         Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
                                     </div>
@@ -125,157 +130,6 @@
         </table>
 
 
-
-
-
-        <div id="map_container" style="width: 60%; display:inline;"  >
-            <table border="0">
-                <tbody>
-                    <tr>
-                        <td width="50%" >
-
-                        </td>
-                        <td VALIGN="top" width="50%">
-
-                            <div id="hanghoa" >
-                                <div id="map_details1" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details2" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H078-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H006-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H004-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details3" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details4" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-
-        </div>
 
         <br>
 
@@ -335,38 +189,10 @@
 
         function test(){
             setTimeout("updateGPSData()", 1088);
-
-            if($("#xe_so_dang_ky_xe").val() == "51-K12167"){
-                xe = 1;
-
-                $("#map_details1").show();
-                $("#map_details2").hide();
-                $("#map_details3").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "55-M18818"){
-                xe = 2;
-                $("#map_details2").show();
-                $("#map_details1").hide();
-                $("#map_details3").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "51-K18142"){
-                xe = 3;
-                $("#map_details3").show();
-                $("#map_details1").hide();
-                $("#map_details2").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "52-KA3775"){
-                xe = 4;
-                $("#map_details4").show();
-                $("#map_details2").hide();
-                $("#map_details3").hide();
-                $("#map_details1").hide();
-            }
             initForm();
         }
+
+
 
 
         var initForm = function(){
@@ -445,7 +271,7 @@
                 map.addOverlay(marker);
                 // console.log(list[i].gps_time);
             }
-            $("#total_gps_points_of_vehicle").html(points.length)
+            //$("#total_gps_points_of_vehicle").html(points.length)
             return points;
         }
 
@@ -477,8 +303,71 @@
         }
         //pps[0].distanceFrom(pps[1])
 
+        $("#van_don_so_van_don").autocomplete("<?php echo site_url('c_van_don/keyAutoComplete/so_van_don')?>", {
+            width: 200,
+            max: 5,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return value;
+            },
+            formatResult: function(data, value) {
+                return  value;
+            }
+        });
 
+        var jGrid = null;
+        var colNamesT = new Array();
+        var colModelT = new Array();
+        var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
+
+        colNamesT.push('ma_chuyen');
+        colModelT.push({name:'ma_chuyen',index:'ma_chuyen', editable: false});
+
+
+        colNamesT.push('so_dang_ky_xe');
+        colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
+
+        colNamesT.push('ms_hanhtrinh');
+        colModelT.push({name:'ms_hanhtrinh',index:'ms_hanhtrinh', editable: false});
+
+        colNamesT.push('ngay_khoi_hanh');
+        colModelT.push({name:'ngay_khoi_hanh',index:'ngay_khoi_hanh', editable: false});
+
+        colNamesT.push('ngay_ket_thuc_dukien');
+        colModelT.push({name:'ngay_ket_thuc_dukien',index:'ngay_ket_thuc_dukien', editable: false});
+
+        colNamesT.push('ngay_ket_thuc_thucte');
+        colModelT.push({name:'ngay_ket_thuc_thucte',index:'ngay_ket_thuc_thucte', editable: false});
+
+        var loadView = function()
+        {
+            jGrid = jQuery("#list2").jqGrid(
+            {
+                url:'<?php echo site_url('c_van_chuyen/read_json_format')?>',
+                mtype : "POST",
+                datatype: "json",
+                colNames: colNamesT ,
+                colModel: colModelT ,
+                rowNum:10,
+                height: 270,
+                rowList:[10,20,30],
+                imgpath: gridimgpath,
+                pager: jQuery('#pager2'),
+                sortname: colNamesT[0],
+                viewrecords: true,
+                caption:"van_chuyen",
+                onSelectRow: function(){
+                    var id = jQuery("#list2").getGridParam('selrow');
+                    Van_chuyen.setData(jQuery("#list2").getRowData(id));
+                }
+            });
+            jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
+            $("#alertmod").remove();//FIXME
+        }
+        jQuery("#list2").ready(loadView);
     </script>
 
-    
+
 </html>

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <base href="<?php echo base_url()?>">
+        <base href="<?php echo ("<?php echo base_url()?>")?>">
         <title><?=ucwords($object_name)?></title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -76,7 +76,7 @@
 <?=ucwords($object_name)?>.Read = function()
     {
         InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url("c_$object_name")?>/read_json_format", {},
+        jQuery.post("<?php echo ("<?php echo site_url('c_$object_name/read_json_format')?>")?>", {},
         function(data){
             InlineBox.hideAjaxLoader();
             $("#list2").trigger("reloadGrid");
@@ -181,7 +181,7 @@
                         <a href="javascript:void(0)" onclick="<?=ucwords($object_name)?>.Delete()" class="green"> Xoá </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
-                        <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
+                        <img  src="<?php echo ("<?php echo base_url()?>")?>resources/css/img/ajax-loader.gif" />
                     </div>
                 </div>
 
