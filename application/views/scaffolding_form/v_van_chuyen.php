@@ -1,7 +1,7 @@
 <html>
     <head>
-        <base href="http://localhost/vehicle1/">
-        <title>Thiet_bi</title>
+        <base href="<?php echo base_url()?>">
+        <title>Van_chuyen</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url()?>resources/jqGrid/themes/basic/grid.css" />
@@ -26,57 +26,57 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.autocomplete.js"></script>
 
         <script  type="text/javascript">
-            var Thiet_bi = {};
+            var Van_chuyen = {};
 
-            Thiet_bi.data = {};
-            Thiet_bi.setDataField = function(fieldName,fieldValue)
+            Van_chuyen.data = {};
+            Van_chuyen.setDataField = function(fieldName,fieldValue)
             {
-                Thiet_bi.data[fieldName] = fieldValue;
+                Van_chuyen.data[fieldName] = fieldValue;
             }
 
-            Thiet_bi.setData = function(data)
+            Van_chuyen.setData = function(data)
             {
                 jQuery.each(data, function(name, value) {
-                    Thiet_bi.data[name] = value;
-                    $("#form_Thiet_bi input[name="+ name +"]").setValue(value);
+                    Van_chuyen.data[name] = value;
+                    $("#form_Van_chuyen input[name="+ name +"]").setValue(value);
                 });
             }
 
 
-            Thiet_bi.getData = function()
+            Van_chuyen.getData = function()
             {
                 var obj = {};
-                $.each( $("#form_Thiet_bi").formSerialize().split("&"), function(i,n)
-                    {
-                        var toks = n.split("=");
-                        obj[toks[0]] = toks[1];
-                    }
-                );
-                Thiet_bi.data = obj;
-                return Thiet_bi.data;
+                $.each( $("#form_Van_chuyen").formSerialize().split("&"), function(i,n)
+                {
+                    var toks = n.split("=");
+                    obj[toks[0]] = toks[1];
+                }
+            );
+                Van_chuyen.data = obj;
+                return Van_chuyen.data;
             }
 
             //create
-            Thiet_bi.Create = function()
+            Van_chuyen.Create = function()
             {
-                if(!$("#form_Thiet_bi").valid())
+                if(!$("#form_Van_chuyen").valid())
                     return;
                 InlineBox.showAjaxLoader();
-                jQuery.post("<?php echo site_url('c_thiet_bi/create')?>", $("#form_Thiet_bi").formToArray() ,
+                jQuery.post("<?php echo site_url('c_van_chuyen/create')?>", $("#form_Van_chuyen").formToArray() ,
                 function(message){
                     if(message != null){
                         InlineBox.hideAjaxLoader();
                         $("#list2").trigger("reloadGrid");
-                        InlineBox.showModalBox("Tạo Thiet_bi " + message);
+                        InlineBox.showModalBox("Tạo Van_chuyen " + message);
                     }
                 });
             }
 
             //refresh grid
-            Thiet_bi.Read = function()
+            Van_chuyen.Read = function()
             {
                 InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle1/index.php/c_thiet_bi/read_json_format", {},
+                jQuery.post("<?php echo site_url('c_van_chuyen/read_json_format')?>", {},
                 function(data){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
@@ -84,12 +84,12 @@
             }
 
             // Filter the Grid and refresh
-            Thiet_bi.Filter = function()
+            Van_chuyen.Filter = function()
             {
                 //var name_field = $("#"+id).attr("name");
                 //var value_field =  $("#"+id).val();
                 //jQuery("#list2").setPostData({name_field:value_field});
-                var post_data = Thiet_bi.getData();
+                var post_data = Van_chuyen.getData();
 
                 for(var e in post_data){
                     if($.trim(post_data[e]) == "")
@@ -100,40 +100,40 @@
             }
 
             //update
-            Thiet_bi.Update = function()
+            Van_chuyen.Update = function()
             {
-                if(!$("#form_Thiet_bi").valid())
+                if(!$("#form_Van_chuyen").valid())
                     return;
 
                 InlineBox.showAjaxLoader();
-                jQuery.post("<?php echo site_url('c_thiet_bi/update')?>", $("#form_Thiet_bi").formToArray() ,
+                jQuery.post("<?php echo site_url('c_van_chuyen/update')?>", $("#form_Van_chuyen").formToArray() ,
                 function(message){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
-                    InlineBox.showModalBox("Cập nhật Thiet_bi " + message);
+                    InlineBox.showModalBox("Cập nhật Van_chuyen " + message);
                 });
             }
 
 
             //delete
-            Thiet_bi.Delete = function()
+            Van_chuyen.Delete = function()
             {
-                if(!$("#form_Thiet_bi").valid())
+                if(!$("#form_Van_chuyen").valid())
                     return;
                 InlineBox.showAjaxLoader();
-                jQuery.post("<?php echo site_url('c_thiet_bi/delete')?>",$("#form_Thiet_bi").formToArray() ,
+                jQuery.post("<?php echo site_url('c_van_chuyen/delete')?>",$("#form_Van_chuyen").formToArray() ,
                 function(message){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
-                    InlineBox.showModalBox("Xoá Thiet_bi " + message);
+                    InlineBox.showModalBox("Xoá Van_chuyen " + message);
                 });
             }
 
-            Thiet_bi.currentRowID = null;
+            Van_chuyen.currentRowID = null;
 
-            Thiet_bi.setSelectedRow = function(id)
+            Van_chuyen.setSelectedRow = function(id)
             {
-                Thiet_bi.currentRowID = id;
+                Van_chuyen.currentRowID = id;
             }
 
 
@@ -144,7 +144,8 @@
     <body>
         <div id="container-1">
             <ul>
-                <li><a href="#fragment-1"><span>Thông tin chung</span></a></li>
+                <li><a href="#fragment-1"><span>Danh sách chuyến hàng</span></a></li>
+                <li><a href="#fragment-2"><span>Danh mục hành trình</span></a></li>
             </ul>
             <div id="fragment-1" style="width: 930px;">
                 <div>
@@ -155,40 +156,52 @@
                 <hr>
 
                 <div class="box">
-                    <h1> Thiết Bị </h1>
+                    <h1> Van_chuyen </h1>
                     <hr>
 
-                    <form method="POST" id="form_Thiet_bi" action="">
+                    <form method="POST" id="form_Van_chuyen" action="">
                         <label>
-                            <span>stt_thiet_bi</span>
-                            <input type="text" name="stt_thiet_bi" value="" id="thiet_bi_stt_thiet_bi" class="input-text " onchange="Thiet_bi.setDataField(this.name,this.value);"  />
+                            <span>ma_chuyen</span>
+                            <input type="text" name="ma_chuyen" value="" id="van_chuyen_ma_chuyen" class="input-text " onchange="Van_chuyen.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
                             <span>so_dang_ky_xe</span>
-                            <input type="text" name="so_dang_ky_xe" value="" id="thiet_bi_so_dang_ky_xe" class="input-text " onchange="Thiet_bi.setDataField(this.name,this.value);"  />
+                            <input type="text" name="so_dang_ky_xe" value="" id="van_chuyen_so_dang_ky_xe" class="input-text keyAutoComplete" onchange="Van_chuyen.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>ten_thiet_bi</span>
-                            <input type="text" name="ten_thiet_bi" value="" id="thiet_bi_ten_thiet_bi" class="input-text keyAutoComplete" onchange="Thiet_bi.setDataField(this.name,this.value);"  />
+                            <span>ms_hanhtrinh</span>
+                            <input type="text" name="ms_hanhtrinh" value="" id="van_chuyen_ms_hanhtrinh" class="input-text keyAutoComplete" onchange="Van_chuyen.setDataField(this.name,this.value);"  />
                         </label>
                         <label>
-                            <span>loai_thiet_bi</span>
-                            <input type="text" name="loai_thiet_bi" value="" id="thiet_bi_loai_thiet_bi" class="input-text keyAutoComplete" onchange="Thiet_bi.setDataField(this.name,this.value);"  />
+                            <span>ngay_khoi_hanh</span>
+                            <input type="text" name="ngay_khoi_hanh" value="" id="van_chuyen_ngay_khoi_hanh" class="input-text keyAutoComplete" onchange="Van_chuyen.setDataField(this.name,this.value);"  />
+                        </label>
+                        <label>
+                            <span>ngay_ket_thuc_dukien</span>
+                            <input type="text" name="ngay_ket_thuc_dukien" value="" id="van_chuyen_ngay_ket_thuc_dukien" class="input-text keyAutoComplete" onchange="Van_chuyen.setDataField(this.name,this.value);"  />
+                        </label>
+                        <label>
+                            <span>ngay_ket_thuc_thucte</span>
+                            <input type="text" name="ngay_ket_thuc_thucte" value="" id="van_chuyen_ngay_ket_thuc_thucte" class="input-text keyAutoComplete" onchange="Van_chuyen.setDataField(this.name,this.value);"  />
                         </label>
                     </form>
 
                     <div class="spacer" id="form_control" >
-                        <a href="javascript:void(0)" onclick="Thiet_bi.Create()" class="green"> Thêm </a>
-                        <a href="javascript:void(0)" onclick="Thiet_bi.Update()" class="green">Cập nhập</a>
-                        <a href="javascript:void(0)" onclick="Thiet_bi.Filter()" class="green"> Tìm </a>
-                        <a href="javascript:void(0)" onclick="Thiet_bi.Delete()" class="green"> Xoá </a>
+                        <a href="javascript:void(0)" onclick="Van_chuyen.Create()" class="green"> Thêm </a>
+                        <a href="javascript:void(0)" onclick="Van_chuyen.Update()" class="green">Cập nhập</a>
+                        <a href="javascript:void(0)" onclick="Van_chuyen.Filter()" class="green"> Tìm </a>
+                        <a href="javascript:void(0)" onclick="Van_chuyen.Delete()" class="green"> Xoá </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
-                        <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
+                        <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
                     </div>
                 </div>
 
             </div>
+            <div id="fragment-2">
+                <iframe scrolling="auto" name="c_chuyenhang" id="c_chuyenhang" style="border: 0px none; width: 1222px; height: 950px;" src="<?php echo site_url('c_dm_hanhtrinh')?>"></iframe>
+            </div>
+
         </div>
         <div class="info-box" id="info-box" style="display:none">
             <div class="toggler">
@@ -211,25 +224,31 @@
         var colModelT = new Array();
         var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
 
-        colNamesT.push('stt_thiet_bi');
-        colModelT.push({name:'stt_thiet_bi',index:'stt_thiet_bi', editable: false});
+        colNamesT.push('ma_chuyen');
+        colModelT.push({name:'ma_chuyen',index:'ma_chuyen', editable: false});
 
 
         colNamesT.push('so_dang_ky_xe');
         colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
 
-        colNamesT.push('ten_thiet_bi');
-        colModelT.push({name:'ten_thiet_bi',index:'ten_thiet_bi', editable: false});
+        colNamesT.push('ms_hanhtrinh');
+        colModelT.push({name:'ms_hanhtrinh',index:'ms_hanhtrinh', editable: false});
 
-        colNamesT.push('loai_thiet_bi');
-        colModelT.push({name:'loai_thiet_bi',index:'loai_thiet_bi', editable: false});
+        colNamesT.push('ngay_khoi_hanh');
+        colModelT.push({name:'ngay_khoi_hanh',index:'ngay_khoi_hanh', editable: false});
+
+        colNamesT.push('ngay_ket_thuc_dukien');
+        colModelT.push({name:'ngay_ket_thuc_dukien',index:'ngay_ket_thuc_dukien', editable: false});
+
+        colNamesT.push('ngay_ket_thuc_thucte');
+        colModelT.push({name:'ngay_ket_thuc_thucte',index:'ngay_ket_thuc_thucte', editable: false});
 
 
         var loadView = function()
         {
             jGrid = jQuery("#list2").jqGrid(
             {
-                url:'<?php echo site_url('c_thiet_bi/read_json_format')?>',
+                url:'<?php echo site_url('c_van_chuyen/read_json_format')?>',
                 mtype : "POST",
                 datatype: "json",
                 colNames: colNamesT ,
@@ -241,10 +260,10 @@
                 pager: jQuery('#pager2'),
                 sortname: colNamesT[0],
                 viewrecords: true,
-                caption:"Thiết bị",
+                caption:"van_chuyen",
                 onSelectRow: function(){
                     var id = jQuery("#list2").getGridParam('selrow');
-                    Thiet_bi.setData(jQuery("#list2").getRowData(id));
+                    Van_chuyen.setData(jQuery("#list2").getRowData(id));
                 }
             });
             jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
@@ -255,17 +274,26 @@
 
         var initForm = function(){
             //init validation form
-            $("#form_Thiet_bi").validate();
+            $("#form_Van_chuyen").validate();
             $('#container-1 > ul').tabs();
 
         }
-        jQuery("#form_Thiet_bi").ready(initForm);
+        jQuery("#form_Van_chuyen").ready(initForm);
 
 
 
 
         var inputDate = {};
         $( function() {
+            inputDate['van_chuyen_ngay_khoi_hanh'] = $("#van_chuyen_ngay_khoi_hanh").datepicker({dateFormat:"yy/mm/dd"});
+            $('#van_chuyen_ngay_khoi_hanh').mask('9999/99/99');
+            $('#van_chuyen_ngay_khoi_hanh').validate({rules:{ require: true, date: true}});
+            inputDate['van_chuyen_ngay_ket_thuc_dukien'] = $("#van_chuyen_ngay_ket_thuc_dukien").datepicker({dateFormat:"yy/mm/dd"});
+            $('#van_chuyen_ngay_ket_thuc_dukien').mask('9999/99/99');
+            $('#van_chuyen_ngay_ket_thuc_dukien').validate({rules:{ require: true, date: true}});
+            inputDate['van_chuyen_ngay_ket_thuc_thucte'] = $("#van_chuyen_ngay_ket_thuc_thucte").datepicker({dateFormat:"yy/mm/dd"});
+            $('#van_chuyen_ngay_ket_thuc_thucte').mask('9999/99/99');
+            $('#van_chuyen_ngay_ket_thuc_thucte').validate({rules:{ require: true, date: true}});
         });
 
 
@@ -274,28 +302,8 @@
 
     <script type="text/javascript">
         var keyAutoComplete_fields = {};
-        $(".keyAutoComplete").each(function(i,e)
-        {
-            keyAutoComplete_fields[$(e).attr('id')] = $(e).autocomplete("<?php echo site_url('c_thiet_bi/keyAutoComplete')?>", {
-                width: 200,
-                max: 5,
-                highlight: false,
-                scroll: true,
-                scrollHeight: 300,
-                formatItem: function(data, i, n, value) {
-                    return value;
-                },
-                formatResult: function(data, value) {
-                    return  value;
-                }
-            });
-            $(e).focus(function()   {
-                var id = $(this).attr('id');
-                keyAutoComplete_fields[id].setOptions({url : "<?php echo site_url('c_thiet_bi/keyAutoComplete')?>/"+$('#'+id).attr("name")});
-            });
-        });
 
-        $("#thiet_bi_stt_thiet_bi").autocomplete("<?php echo site_url('c_thiet_bi/keyAutoComplete/stt_thiet_bi')?>", {
+        $("#van_chuyen_ma_chuyen").autocomplete("<?php echo site_url('c_van_chuyen/keyAutoComplete/ma_chuyen')?>", {
             width: 200,
             max: 5,
             highlight: false,
@@ -308,9 +316,10 @@
                 return  value;
             }
         });
-        $("#thiet_bi_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
+
+        $("#van_chuyen_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
             width: 200,
-            max: 4,
+            max: 10,
             highlight: false,
             scroll: true,
             scrollHeight: 300,
@@ -322,6 +331,19 @@
             }
         });
 
+        $("#van_chuyen_ms_hanhtrinh").autocomplete("<?php echo site_url('c_dm_hanhtrinh/keyAutoComplete/ms_hanhtrinh')?>", {
+            width: 250,
+            max: 5,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                 return "<strong>" + value.split("$$")[1] + "</strong> (MS: " +  value.split("$$")[0] + ")";
+            },
+            formatResult: function(data, value) {
+                return  value.split("$$")[0];
+            }
+        });
 
     </script>
 
