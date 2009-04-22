@@ -24,12 +24,7 @@
 
         <!--  Utils for Page -->
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/inlinebox.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.validate.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.maskedinput-1.2.1.pack.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.form.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.field.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.autocomplete.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.utils.ui.min.js"></script>
 
         <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhTOZcpRi3x4ZlxAD9RZHN-OsRMWtxSQpid_-Bah1NKhpWC5zY29rrD77g"
@@ -42,91 +37,81 @@
     <body>
 
         <table border="0" cellspacing="1" cellpadding="1">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td VALIGN="top" width="40%">
-                        <div style="display:none">
-                            <span>Thời gian từ ngày </span>
-                            <input type="text" id="filter_from_date" class="input-text"  />
-                            <span>Giờ GMT</span>
-                            <input type="text" id="filter_from_time" class="input-text "  />
-                        </div>
-                        <div style="margin-top:5px;display:none" >
-                            <span>Đến ngày </span>
-                            <input type="text" id="filter_to_date" class="input-text"  />
-                            <span>Giờ GMT</span>
-                            <input type="text" id="filter_to_time" class="input-text "  />
-                        </div>
-                        <br>
-                        <div >
-                            <div class="box" style="width:460px">
-                                <h1> Thông tin hàng hoá </h1>
-                                <hr>
-
-                                <form method="POST" id="main_form" action="">
-                                    <label>
-                                        <span>Số vận đơn</span>
-                                        <input type="text" name="van_don_so_van_don" value="" id="van_don_so_van_don" class="input-text"  />
-                                        <div class="spacer" id="form_control" >
-                                            <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
-                                        </div>
-                                        <div id="ajaxloader" style="display:none" >
-                                            <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
-                                        </div>
-                                    </label>
-                                    <label>
-                                        <span>Theo dõi thời gian thực:</span>
-                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" />
-                                    </label>
-                                </form>
-
-                                <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
-                                </div>
-
-                                <div  style="overflow: auto; width: 455px; height: 390px;" >
-                                    <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
-                                    <div id="pager2" class="scroll" style="text-align:center;"></div>
-                                </div>
-
-
-
-                                <fieldset>
-                                    <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Danh sách chuyến xe <strong><span id="c" >0</span></strong>
-                                    </div>
-
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Longitude (Kinh độ): <strong><span id="current_lng_of_vehicle" >0</span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Giờ GMT theo vệ tinh : <strong><span id="current_gpstime_of_vehicle" ></span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Số Km đã đi: <strong><span id="current_totals_kms" >0</span></strong> Km
-                                    </div>
-                                </fieldset>
-
-                            </div>
+            <tr>
+                <td VALIGN="top" width="40%">
+                    <div style="display:none">
+                        <span>Thời gian từ ngày </span>
+                        <input type="text" id="filter_from_date" class="input-text"  />
+                        <span>Giờ GMT</span>
+                        <input type="text" id="filter_from_time" class="input-text "  />
+                    </div>
+                    <div style="margin-top:5px;display:none" >
+                        <span>Đến ngày </span>
+                        <input type="text" id="filter_to_date" class="input-text"  />
+                        <span>Giờ GMT</span>
+                        <input type="text" id="filter_to_time" class="input-text "  />
+                    </div>
+                    <br>
+                    <div >
+                        <div class="box" style="width:460px">
+                            <h1> Thông tin hàng hoá </h1>
                             <hr>
-                        </div>
 
-                    </td>
-                    <td VALIGN="top" width="60%">
-                        <div id="map_canvas" style="width: 690px; height: 550px;">
+                            <form method="POST" id="main_form" action="">
+                                <label>
+                                    <span>Số vận đơn</span>
+                                    <input type="text" name="van_don_so_van_don" value="" id="van_don_so_van_don" class="input-text"  />
+                                    <div class="spacer" id="form_control" >
+                                        <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
+                                    </div>
+                                    <div id="ajaxloader" style="display:none" >
+                                        <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
+                                    </div>
+                                </label>
+                                <label>
+                                    <span>Theo dõi thời gian thực:</span>
+                                    <input type="checkbox" name="real_time_tracking" id="real_time_tracking" />
+                                </label>
+                            </form>
+
+                            <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+                            </div>
+
+                            <div  style="overflow: auto; width: 455px; height: 390px;" >
+                                <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
+                                <div id="pager2" class="scroll" style="text-align:center;"></div>
+                            </div>
+
+                            <fieldset>
+                                <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
+                                <div  style="background-color: gray;color:yellow" >
+                                    Danh sách chuyến xe <strong><span id="c" >0</span></strong>
+                                </div>
+
+                                <div  style="background-color: gray;color:yellow" >
+                                    Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
+                                </div>
+                                <div  style="background-color: gray;color:yellow" >
+                                    Longitude (Kinh độ): <strong><span id="current_lng_of_vehicle" >0</span></strong>
+                                </div>
+                                <div  style="background-color: gray;color:yellow" >
+                                    Giờ GMT theo vệ tinh : <strong><span id="current_gpstime_of_vehicle" ></span></strong>
+                                </div>
+                                <div  style="background-color: gray;color:yellow" >
+                                    Số Km đã đi: <strong><span id="current_totals_kms" >0</span></strong> Km
+                                </div>
+                            </fieldset>
+
                         </div>
-                    </td>
-                </tr>
-            </tbody>
+                        <hr>
+                    </div>
+
+                </td>
+                <td VALIGN="top" width="60%">
+                    <div id="map_canvas" style="width: 690px; height: 550px;">
+                    </div>
+                </td>
+            </tr>
         </table>
 
 
@@ -325,7 +310,6 @@
         colNamesT.push('ma_chuyen');
         colModelT.push({name:'ma_chuyen',index:'ma_chuyen', editable: false});
 
-
         colNamesT.push('so_dang_ky_xe');
         colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
 
@@ -368,6 +352,5 @@
         }
         jQuery("#list2").ready(loadView);
     </script>
-
 
 </html>

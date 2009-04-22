@@ -19,36 +19,39 @@ class c_Khach_hang extends Controller
 
     function c_Khach_hang()
     {
-         parent::Controller();
-         $this->load->model('khach_hang');
-         $this->load->model('VehicleDBUtils');
+        parent::Controller();
+        $this->load->model('khach_hang');
+        $this->load->model('VehicleDBUtils');
 
-         $this->load->helper('form');
-         $this->load->helper('object2array');
-         $this->load->helper('url');
-         $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('object2array');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
     }
 
     function index()
-    {       
-        $this->load->view('scaffolding_form/v_khach_hang');        
-    }  
+    {
+        if(!$this->redux_auth->logged_in()){
+            redirect("welcome/login");
+        }
+        $this->load->view('scaffolding_form/v_khach_hang');
+    }
 
     function readKhach_hang($priKey)
     {
         if(isset ($priKey))
         {
-                   $this->khach_hang->stt_khachhang = $priKey;
-                                                                
+            $this->khach_hang->stt_khachhang = $priKey;
+
             $rows = $this->khach_hang->read();
             foreach($rows as $row)
             {
-                        echo $row->stt_khachhang."<br>";
-                        echo $row->ten_khachhang."<br>";
-                        echo $row->dienthoai."<br>";
-                        echo $row->diachi_lienhe."<br>";
-                        }
-         }
+                echo $row->stt_khachhang."<br>";
+                echo $row->ten_khachhang."<br>";
+                echo $row->dienthoai."<br>";
+                echo $row->diachi_lienhe."<br>";
+            }
+        }
     }
 
     function keyAutoComplete($field_name = "")
@@ -56,15 +59,15 @@ class c_Khach_hang extends Controller
         if($field_name != "")
         $this->khach_hang->keyAutoComplete($field_name);
         else
-         echo "";
+        echo "";
     }
 
     function create()
     {
         if($this->khach_hang->create())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
     function read()
@@ -78,22 +81,22 @@ class c_Khach_hang extends Controller
     }
 
     function update()
-    {       
+    {
         if($this->khach_hang->update())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;        
+        echo $this->messageFail;
     }
 
     function delete()
     {
         if($this->khach_hang->delete())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
 
-    
+
 }
 ?>
