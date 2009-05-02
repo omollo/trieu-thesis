@@ -10,43 +10,43 @@
 
 class Chi_tiet_van_don extends Model {
 
-      //Type: Long
+    //Type: Long
     var $so_van_don = '';
 
-	  //Type: Long
+    //Type: Long
     var $ms_hanghoa = '';
 
-	  //Type: String
+    //Type: String
     var $ma_chuyen = '';
 
-	  //Type: Long
+    //Type: Long
     var $ms_loaihang = '';
 
-	  //Type: String
+    //Type: String
     var $ten_hang = '';
 
-	  //Type: Integer
+    //Type: Integer
     var $so_luong = '';
 
-	  //Type: Double
+    //Type: Double
     var $khoi_luong = '';
 
-	  //Type: 
+    //Type:
     var $quy_cach_dong_goi = '';
 
-	  //Type: 
+    //Type:
     var $trangthai_hanghoa = '';
 
-	  //Type: String
+    //Type: String
     var $nguoinhan = '';
 
-	  //Type: String
+    //Type: String
     var $diachi_nhan = '';
 
-	  //Type: Double
+    //Type: Double
     var $cuoc = '';
 
-	
+
     function Chi_tiet_van_don()
     {
         parent::Model();
@@ -54,73 +54,73 @@ class Chi_tiet_van_don extends Model {
 
     function setFilterField()
     {
-                $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
-                $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-                $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
-                $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
-                $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
-                $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
-                $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
-                $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
-                $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
-                $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
-                $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
-        
+        $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
+        $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
+        $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
+        $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
+        $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
+        $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
+        $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
+        $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
+        $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
+        $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
+
 
         // BEGIN FILTER CRITERIA CHECK
         // If any of the following properties are set before Chi_tiet_van_don->get() is called from the controller then we will include
         // a where statement for each of the properties that have been set.
 
-                if ($this->so_van_don)
+        if ($this->so_van_don)
         {
             $this->db->where("so_van_don", $this->so_van_don);
         }
-                if ($this->ms_hanghoa)
+        if ($this->ms_hanghoa)
         {
             $this->db->where("ms_hanghoa", $this->ms_hanghoa);
         }
-                if ($this->ma_chuyen)
+        if ($this->ma_chuyen)
         {
             $this->db->where("ma_chuyen", $this->ma_chuyen);
         }
-                if ($this->ms_loaihang)
+        if ($this->ms_loaihang)
         {
             $this->db->where("ms_loaihang", $this->ms_loaihang);
         }
-                if ($this->ten_hang)
+        if ($this->ten_hang)
         {
             $this->db->where("ten_hang", $this->ten_hang);
         }
-                if ($this->so_luong)
+        if ($this->so_luong)
         {
             $this->db->where("so_luong", $this->so_luong);
         }
-                if ($this->khoi_luong)
+        if ($this->khoi_luong)
         {
             $this->db->where("khoi_luong", $this->khoi_luong);
         }
-                if ($this->quy_cach_dong_goi)
+        if ($this->quy_cach_dong_goi)
         {
             $this->db->where("quy_cach_dong_goi", $this->quy_cach_dong_goi);
         }
-                if ($this->trangthai_hanghoa)
+        if ($this->trangthai_hanghoa)
         {
             $this->db->where("trangthai_hanghoa", $this->trangthai_hanghoa);
         }
-                if ($this->nguoinhan)
+        if ($this->nguoinhan)
         {
             $this->db->where("nguoinhan", $this->nguoinhan);
         }
-                if ($this->diachi_nhan)
+        if ($this->diachi_nhan)
         {
             $this->db->where("diachi_nhan", $this->diachi_nhan);
         }
-                if ($this->cuoc)
+        if ($this->cuoc)
         {
             $this->db->where("cuoc", $this->cuoc);
         }
-        
+
         // END FILTER CRITERIA CHECK
     }
 
@@ -129,9 +129,15 @@ class Chi_tiet_van_don extends Model {
         $this->setFilterField();
 
         // This will execute the query and collect the results and other properties of the query into an object.
+
         $query = $this->db->get("chi_tiet_van_don");
 
-        return $query->result();
+        $this->load->library('table');
+        $tmpl = array ( 'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">' );
+        $this->table->set_template($tmpl);
+        echo $this->table->generate($query);
+
+        // return $query->result();
     }
 
     //please remove this if you need more security
@@ -144,7 +150,7 @@ class Chi_tiet_van_don extends Model {
 
 
         if(true  )
-          $this->db->like($field_name, $term);     
+        $this->db->like($field_name, $term);
 
         $objects = $this->db->get("chi_tiet_van_don")->result_array();
 
@@ -172,7 +178,7 @@ class Chi_tiet_van_don extends Model {
             $total_pages = 0;
         }
         if ($page > $total_pages)
-            $page=$total_pages;
+        $page=$total_pages;
         $start = $limit * $page - $limit;
 
         $this->db->limit($limit, $start);
@@ -185,19 +191,19 @@ class Chi_tiet_van_don extends Model {
         foreach($objects as $obj)
         {
             $cell = array();
-                            array_push($cell, $obj->so_van_don);
-                            array_push($cell, $obj->ms_hanghoa);
-                            array_push($cell, $obj->ma_chuyen);
-                            array_push($cell, $obj->ms_loaihang);
-                            array_push($cell, $obj->ten_hang);
-                            array_push($cell, $obj->so_luong);
-                            array_push($cell, $obj->khoi_luong);
-                            array_push($cell, $obj->quy_cach_dong_goi);
-                            array_push($cell, $obj->trangthai_hanghoa);
-                            array_push($cell, $obj->nguoinhan);
-                            array_push($cell, $obj->diachi_nhan);
-                            array_push($cell, $obj->cuoc);
-                        $row = new stdClass();
+            array_push($cell, $obj->so_van_don);
+            array_push($cell, $obj->ms_hanghoa);
+            array_push($cell, $obj->ma_chuyen);
+            array_push($cell, $obj->ms_loaihang);
+            array_push($cell, $obj->ten_hang);
+            array_push($cell, $obj->so_luong);
+            array_push($cell, $obj->khoi_luong);
+            array_push($cell, $obj->quy_cach_dong_goi);
+            array_push($cell, $obj->trangthai_hanghoa);
+            array_push($cell, $obj->nguoinhan);
+            array_push($cell, $obj->diachi_nhan);
+            array_push($cell, $obj->cuoc);
+            $row = new stdClass();
             $row->id = $cell[0];
             $row->cell = $cell;
             array_push($rows, $row);
@@ -237,11 +243,11 @@ class Chi_tiet_van_don extends Model {
                     "nguoinhan" => $this->nguoinhan,
                     "diachi_nhan" => $this->diachi_nhan,
                     "cuoc" => $this->cuoc,
-          );
+        );
 
-      $saveSuccess = false;
+        $saveSuccess = false;
 
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("chi_tiet_van_don","so_van_don", $this->so_van_don))
         {
             $this->db->trans_start();
@@ -256,7 +262,7 @@ class Chi_tiet_van_don extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("chi_tiet_van_don","ms_hanghoa", $this->ms_hanghoa))
         {
             $this->db->trans_start();
@@ -271,7 +277,7 @@ class Chi_tiet_van_don extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-          
+
         // If key was not set in the controller, then we will insert a new record.
         $this->db->trans_start();
         $this->db->insert("chi_tiet_van_don", $db_array);
@@ -287,47 +293,47 @@ class Chi_tiet_van_don extends Model {
 
     function create()
     {
-                 $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
-                    $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                    $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-                    $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
-                    $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
-                    $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
-                    $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
-                    $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
-                    $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
-                    $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
-                    $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
-                    $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
-        
+        $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
+        $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
+        $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
+        $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
+        $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
+        $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
+        $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
+        $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
+        $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
+        $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
+
         return $this->save();
     }
 
     function update()
     {
-            $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
-            $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-            $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-            $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
-            $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
-            $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
-            $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
-            $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
-            $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
-            $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
-            $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
-            $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
-    
+        $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
+        $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+        $this->chi_tiet_van_don->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->chi_tiet_van_don->ms_loaihang = $this->input->xss_clean($this->input->post('ms_loaihang'));
+        $this->chi_tiet_van_don->ten_hang = $this->input->xss_clean($this->input->post('ten_hang'));
+        $this->chi_tiet_van_don->so_luong = $this->input->xss_clean($this->input->post('so_luong'));
+        $this->chi_tiet_van_don->khoi_luong = $this->input->xss_clean($this->input->post('khoi_luong'));
+        $this->chi_tiet_van_don->quy_cach_dong_goi = $this->input->xss_clean($this->input->post('quy_cach_dong_goi'));
+        $this->chi_tiet_van_don->trangthai_hanghoa = $this->input->xss_clean($this->input->post('trangthai_hanghoa'));
+        $this->chi_tiet_van_don->nguoinhan = $this->input->xss_clean($this->input->post('nguoinhan'));
+        $this->chi_tiet_van_don->diachi_nhan = $this->input->xss_clean($this->input->post('diachi_nhan'));
+        $this->chi_tiet_van_don->cuoc = $this->input->xss_clean($this->input->post('cuoc'));
+
         return $this->save();
     }
 
     function delete()
     {
-                $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
-                    $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
-                                                                                        
+        $this->chi_tiet_van_don->so_van_don = $this->input->xss_clean($this->input->post('so_van_don'));
+        $this->chi_tiet_van_don->ms_hanghoa = $this->input->xss_clean($this->input->post('ms_hanghoa'));
+
         $saveSuccess = false;
-         // As long as chi_tiet_van_don->so_van_don was set in the controller, we will delete the record.
+        // As long as chi_tiet_van_don->so_van_don was set in the controller, we will delete the record.
         if ($this->so_van_don) {
             $this->db->where("so_van_don", $this->so_van_don);
             $this->db->delete("chi_tiet_van_don");
@@ -338,7 +344,7 @@ class Chi_tiet_van_don extends Model {
                 $saveSuccess = false;
             }
         }
-          // As long as chi_tiet_van_don->ms_hanghoa was set in the controller, we will delete the record.
+        // As long as chi_tiet_van_don->ms_hanghoa was set in the controller, we will delete the record.
         if ($this->ms_hanghoa) {
             $this->db->where("ms_hanghoa", $this->ms_hanghoa);
             $this->db->delete("chi_tiet_van_don");
@@ -349,7 +355,7 @@ class Chi_tiet_van_don extends Model {
                 $saveSuccess = false;
             }
         }
-                   return $saveSuccess;
+        return $saveSuccess;
     }
 }
 

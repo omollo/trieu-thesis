@@ -39,6 +39,13 @@
                 jQuery.each(data, function(name, value) {
                     Van_don.data[name] = value;
                     $("#form_Van_don input[name="+ name +"]").setValue(value);
+
+                    if(name == "so_van_don"){
+                        $.post("http://localhost/vehicle1/index.php/c_Chi_tiet_van_don/readChi_tiet_van_don/", { so_van_don: value },
+                        function(data){
+                            $("#chi_tiet_van_don").html(data);
+                        });
+                    }
                 });
             }
 
@@ -59,6 +66,12 @@
             //create
             Van_don.Create = function()
             {
+                if($("#form_Van_don_input:hidden").length >0){
+                    $("#form_Van_don_input:hidden").show();
+                   Van_don.Clear();
+                    return;
+                }
+
                 if(!$("#form_Van_don").valid())
                     return;
                 InlineBox.showAjaxLoader();
@@ -102,6 +115,11 @@
             //update
             Van_don.Update = function()
             {
+                if($("#form_Van_don_input:hidden").length >0){
+                    $("#form_Van_don_input:hidden").show();
+                    return;
+                }
+                
                 if(!$("#form_Van_don").valid())
                     return;
 
@@ -129,6 +147,10 @@
                 });
             }
 
+            Van_don.Clear = function(){
+                 $("#form_Van_don :input").each(function(i,e){$(e).val("");});
+            }
+
             Van_don.currentRowID = null;
 
             Van_don.setSelectedRow = function(id)
@@ -144,18 +166,11 @@
     <body>
         <div id="container-1">
             <ul>
-                <li><a href="#fragment-1"><span>Quản lý vận đơn</span></a></li>
-                <li><a href="#fragment-2"><span>Chi tiết vận đơn</span></a></li>
+                <li><a href="#fragment-1"><span>Vận đơn</span></a></li>
+                <li><a href="#fragment-2"><span>Danh sách các vận đơn</span></a></li>
                 <li><a href="#fragment-3"><span>Biên bản giao nhận</span></a></li>
             </ul>
-            <div id="fragment-1" style="width: 930px;">
-                <div>
-                    <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
-                    <div id="pager2" class="scroll" style="text-align:center;"></div>
-                </div>
-
-                <hr>
-
+            <div id="fragment-1" style="width: 100%;">
                 <div class="box">
                     <h1> Van_don </h1>
                     <hr>
@@ -165,26 +180,29 @@
                             <span>Số vận đơn</span>
                             <input type="text" name="so_van_don" value="" id="van_don_so_van_don" class="input-text " onchange="Van_don.setDataField(this.name,this.value);"  />
                         </label>
-                        <label>
-                            <span>STT Khách hàng</span>
-                            <input type="text" name="stt_khachhang" value="" id="van_don_stt_khachhang" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
-                        </label>
-                        <label>
-                            <span>Ngày vận đơn</span>
-                            <input type="text" name="ngay_van_don" value="" id="van_don_ngay_van_don" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
-                        </label>
-                        <label>
-                            <span>Tổng khối lượng</span>
-                            <input type="text" name="tong_khoi_luong" value="" id="van_don_tong_khoi_luong" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
-                        </label>
-                        <label>
-                            <span>Tổng cước</span>
-                            <input type="text" name="tong_cuoc" value="" id="van_don_tong_cuoc" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
-                        </label>
-                        <label>
-                            <span>Chú thích</span>
-                            <input type="text" name="chuthich" value="" id="van_don_chuthich" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
-                        </label>
+
+                        <div id="form_Van_don_input" style="display:none">
+                            <label>
+                                <span>STT Khách hàng</span>
+                                <input type="text" name="stt_khachhang" value="" id="van_don_stt_khachhang" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
+                            </label>
+                            <label>
+                                <span>Ngày vận đơn</span>
+                                <input type="text" name="ngay_van_don" value="" id="van_don_ngay_van_don" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
+                            </label>
+                            <label>
+                                <span>Tổng khối lượng</span>
+                                <input type="text" name="tong_khoi_luong" value="" id="van_don_tong_khoi_luong" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
+                            </label>
+                            <label>
+                                <span>Tổng cước</span>
+                                <input type="text" name="tong_cuoc" value="" id="van_don_tong_cuoc" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
+                            </label>
+                            <label>
+                                <span>Chú thích</span>
+                                <input type="text" name="chuthich" value="" id="van_don_chuthich" class="input-text keyAutoComplete" onchange="Van_don.setDataField(this.name,this.value);"  />
+                            </label>
+                        </div>
                     </form>
 
                     <div class="spacer" id="form_control" >
@@ -192,21 +210,34 @@
                         <a href="javascript:void(0)" onclick="Van_don.Update()" class="green">Cập nhập</a>
                         <a href="javascript:void(0)" onclick="Van_don.Filter()" class="green"> Tìm </a>
                         <a href="javascript:void(0)" onclick="Van_don.Delete()" class="green"> Xoá </a>
+                        <a href="javascript:void(0)" onclick="Van_don.Clear()" class="green"> Refresh form </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
                         <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
                     </div>
+
+                    <div>
+                        <table id="list2" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
+                        <div id="pager2" class="scroll" style="text-align:center;"></div>
+                    </div>
+
+                    <br>
+                    <hr>
+                    <br>
+
+                    <div id="chi_tiet_van_don">
+                    </div>
                 </div>
 
             </div>
-             <div id="fragment-2">
-                <iframe scrolling="auto" name="c_chuyenhang" id="c_chuyenhang" style="border: 0px none; width: 1222px; height: 950px;" src="<?php echo site_url('c_chi_tiet_van_don')?>"></iframe>
-             </div>
-              <div id="fragment-3">
-                <iframe scrolling="auto" name="c_chuyenhang" id="c_chuyenhang" style="border: 0px none; width: 1222px; height: 950px;" src="<?php echo site_url('c_bienban_giaonhan')?>"></iframe>
-             </div>
+            <div id="fragment-2" style="width: 100%;">
+                <iframe scrolling="auto" name="c_Chi_tiet_van_don" id="c_Chi_tiet_van_don" style="border: 0px none; width: 100%; height: 950px;" src="<?php echo site_url('c_Chi_tiet_van_don')?>"></iframe>
+            </div>
+            <div id="fragment-3" style="width: 100%;">
+                <iframe scrolling="auto" name="c_bienban_giaonhan" id="c_bienban_giaonhan" style="border: 0px none; width: 100%; height: 950px;" src="<?php echo site_url('c_bienban_giaonhan')?>"></iframe>
+            </div>
         </div>
-        
+
         <div class="info-box" id="info-box" style="display:none">
             <div class="toggler">
                 <div id="drop" class="ui-widget-content ui-corner-all">

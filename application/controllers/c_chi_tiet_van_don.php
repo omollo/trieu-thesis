@@ -19,45 +19,45 @@ class c_Chi_tiet_van_don extends Controller
 
     function c_Chi_tiet_van_don()
     {
-         parent::Controller();
-         $this->load->model('chi_tiet_van_don');
-         $this->load->model('VehicleDBUtils');
+        parent::Controller();
+        $this->load->model('chi_tiet_van_don');
+        $this->load->model('VehicleDBUtils');
 
-         $this->load->helper('form');
-         $this->load->helper('object2array');
-         $this->load->helper('url');
-         $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('object2array');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
     }
 
     function index()
-    {       
-        $this->load->view('scaffolding_form/v_chi_tiet_van_don');        
-    }  
-
-    function readChi_tiet_van_don($priKey)
     {
-        if(isset ($priKey))
+        $this->load->view('scaffolding_form/v_chi_tiet_van_don');
+    }
+
+    function readChi_tiet_van_don()
+    {
+        //if(isset ($priKey))
         {
-                   $this->chi_tiet_van_don->so_van_don = $priKey;
-                           $this->chi_tiet_van_don->ms_hanghoa = $priKey;
-                                                                                                                                                                                
-            $rows = $this->chi_tiet_van_don->read();
-            foreach($rows as $row)
-            {
-                        echo $row->so_van_don."<br>";
-                        echo $row->ms_hanghoa."<br>";
-                        echo $row->ma_chuyen."<br>";
-                        echo $row->ms_loaihang."<br>";
-                        echo $row->ten_hang."<br>";
-                        echo $row->so_luong."<br>";
-                        echo $row->khoi_luong."<br>";
-                        echo $row->quy_cach_dong_goi."<br>";
-                        echo $row->trangthai_hanghoa."<br>";
-                        echo $row->nguoinhan."<br>";
-                        echo $row->diachi_nhan."<br>";
-                        echo $row->cuoc."<br>";
-                        }
-         }
+          //  $this->chi_tiet_van_don->so_van_don = $priKey;
+           
+            $this->chi_tiet_van_don->read();
+           
+//            foreach($rows as $row)
+//            {
+//                echo $row->so_van_don."<br>";
+//                echo $row->ms_hanghoa."<br>";
+//                echo $row->ma_chuyen."<br>";
+//                echo $row->ms_loaihang."<br>";
+//                echo $row->ten_hang."<br>";
+//                echo $row->so_luong."<br>";
+//                echo $row->khoi_luong."<br>";
+//                echo $row->quy_cach_dong_goi."<br>";
+//                echo $row->trangthai_hanghoa."<br>";
+//                echo $row->nguoinhan."<br>";
+//                echo $row->diachi_nhan."<br>";
+//                echo $row->cuoc."<br>";
+//            }
+        }
     }
 
     function keyAutoComplete($field_name = "")
@@ -65,15 +65,15 @@ class c_Chi_tiet_van_don extends Controller
         if($field_name != "")
         $this->chi_tiet_van_don->keyAutoComplete($field_name);
         else
-         echo "";
+        echo "";
     }
 
     function create()
     {
         if($this->chi_tiet_van_don->create())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
     function read()
@@ -87,22 +87,22 @@ class c_Chi_tiet_van_don extends Controller
     }
 
     function update()
-    {       
+    {
         if($this->chi_tiet_van_don->update())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;        
+        echo $this->messageFail;
     }
 
     function delete()
     {
         if($this->chi_tiet_van_don->delete())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
 
-    
+
 }
 ?>
