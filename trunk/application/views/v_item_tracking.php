@@ -331,6 +331,7 @@
             {
                 url:'<?php echo site_url('c_van_chuyen/read_json_format')?>',
                 mtype : "POST",
+            //    postData: {'so_van_don':$("#van_don_so_van_don").val()},
                 datatype: "json",
                 colNames: colNamesT ,
                 colModel: colModelT ,

@@ -10,25 +10,25 @@
 
 class Van_chuyen extends Model {
 
-      //Type: String
+    //Type: String
     var $ma_chuyen = '';
 
-	  //Type: String
+    //Type: String
     var $so_dang_ky_xe = '';
 
-	  //Type: Long
+    //Type: Long
     var $ms_hanhtrinh = '';
 
-	  //Type: 
+    //Type:
     var $ngay_khoi_hanh = '';
 
-	  //Type: 
+    //Type:
     var $ngay_ket_thuc_dukien = '';
 
-	  //Type: 
+    //Type:
     var $ngay_ket_thuc_thucte = '';
 
-	
+
     function Van_chuyen()
     {
         parent::Model();
@@ -36,43 +36,43 @@ class Van_chuyen extends Model {
 
     function setFilterField()
     {
-                $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-                $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-                $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
-                $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
-                $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
-                $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
-        
+        $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
+        $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
+        $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
+        $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
+
 
         // BEGIN FILTER CRITERIA CHECK
         // If any of the following properties are set before Van_chuyen->get() is called from the controller then we will include
         // a where statement for each of the properties that have been set.
 
-                if ($this->ma_chuyen)
+        if ($this->ma_chuyen)
         {
             $this->db->where("ma_chuyen", $this->ma_chuyen);
         }
-                if ($this->so_dang_ky_xe)
+        if ($this->so_dang_ky_xe)
         {
             $this->db->where("so_dang_ky_xe", $this->so_dang_ky_xe);
         }
-                if ($this->ms_hanhtrinh)
+        if ($this->ms_hanhtrinh)
         {
             $this->db->where("ms_hanhtrinh", $this->ms_hanhtrinh);
         }
-                if ($this->ngay_khoi_hanh)
+        if ($this->ngay_khoi_hanh)
         {
             $this->db->where("ngay_khoi_hanh", $this->ngay_khoi_hanh);
         }
-                if ($this->ngay_ket_thuc_dukien)
+        if ($this->ngay_ket_thuc_dukien)
         {
             $this->db->where("ngay_ket_thuc_dukien", $this->ngay_ket_thuc_dukien);
         }
-                if ($this->ngay_ket_thuc_thucte)
+        if ($this->ngay_ket_thuc_thucte)
         {
             $this->db->where("ngay_ket_thuc_thucte", $this->ngay_ket_thuc_thucte);
         }
-        
+
         // END FILTER CRITERIA CHECK
     }
 
@@ -94,7 +94,7 @@ class Van_chuyen extends Model {
         $this->db->limit($limit);
 
         if(true  )
-          $this->db->like($field_name, $term);     
+        $this->db->like($field_name, $term);
 
         $objects = $this->db->get("van_chuyen")->result_array();
 
@@ -112,6 +112,15 @@ class Van_chuyen extends Model {
         $page = $this->input->post('page');
         $sidx = $this->input->post('sidx');
         $sord = $this->input->post('sord');
+        $so_van_don =  $this->input->post('so_van_don');
+        if($so_van_don != null){
+            $sql = "SELECT * FROM van_chuyen WHERE ma_chuyen IN (SELECT ma_chuyen FROM chi_tiet_van_don WHERE so_van_don = ";
+            $sql = $sql . "'" . $so_van_don . "')";
+
+            echo $sql;
+
+        }
+
 
         if(!$sidx) $sidx =1;
         $count = $this->db->count_all('van_chuyen');
@@ -122,11 +131,11 @@ class Van_chuyen extends Model {
             $total_pages = 0;
         }
         if ($page > $total_pages)
-            $page=$total_pages;
+        $page=$total_pages;
         $start = $limit * $page - $limit;
 
         $this->db->limit($limit, $start);
-        $this->db->order_by("$sidx", "$sord");
+        $this->db->order_by("$sidx", "$sord");       
         $this->setFilterField();
 
         $objects = $this->db->get("van_chuyen")->result();
@@ -135,13 +144,13 @@ class Van_chuyen extends Model {
         foreach($objects as $obj)
         {
             $cell = array();
-                            array_push($cell, $obj->ma_chuyen);
-                            array_push($cell, $obj->so_dang_ky_xe);
-                            array_push($cell, $obj->ms_hanhtrinh);
-                            array_push($cell, $obj->ngay_khoi_hanh);
-                            array_push($cell, $obj->ngay_ket_thuc_dukien);
-                            array_push($cell, $obj->ngay_ket_thuc_thucte);
-                        $row = new stdClass();
+            array_push($cell, $obj->ma_chuyen);
+            array_push($cell, $obj->so_dang_ky_xe);
+            array_push($cell, $obj->ms_hanhtrinh);
+            array_push($cell, $obj->ngay_khoi_hanh);
+            array_push($cell, $obj->ngay_ket_thuc_dukien);
+            array_push($cell, $obj->ngay_ket_thuc_thucte);
+            $row = new stdClass();
             $row->id = $cell[0];
             $row->cell = $cell;
             array_push($rows, $row);
@@ -175,11 +184,11 @@ class Van_chuyen extends Model {
                     "ngay_khoi_hanh" => $this->ngay_khoi_hanh,
                     "ngay_ket_thuc_dukien" => $this->ngay_ket_thuc_dukien,
                     "ngay_ket_thuc_thucte" => $this->ngay_ket_thuc_thucte,
-          );
+        );
 
-      $saveSuccess = false;
+        $saveSuccess = false;
 
-         // If key was set in the controller, then we will update an existing record.
+        // If key was set in the controller, then we will update an existing record.
         if ($this->isUsedKey("van_chuyen","ma_chuyen", $this->ma_chuyen))
         {
             $this->db->trans_start();
@@ -194,7 +203,7 @@ class Van_chuyen extends Model {
             $this->db->trans_complete();
             return $saveSuccess;
         }
-     
+
         // If key was not set in the controller, then we will insert a new record.
         $this->db->trans_start();
         $this->db->insert("van_chuyen", $db_array);
@@ -210,34 +219,34 @@ class Van_chuyen extends Model {
 
     function create()
     {
-                 $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-                    $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-                    $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
-                    $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
-                    $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
-                    $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
-        
+        $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
+        $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
+        $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
+        $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
+
         return $this->save();
     }
 
     function update()
     {
-            $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-            $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
-            $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
-            $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
-            $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
-            $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
-    
+        $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+        $this->van_chuyen->so_dang_ky_xe = $this->input->xss_clean($this->input->post('so_dang_ky_xe'));
+        $this->van_chuyen->ms_hanhtrinh = $this->input->xss_clean($this->input->post('ms_hanhtrinh'));
+        $this->van_chuyen->ngay_khoi_hanh = $this->input->xss_clean($this->input->post('ngay_khoi_hanh'));
+        $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
+        $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
+
         return $this->save();
     }
 
     function delete()
     {
-                $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
-                                                
+        $this->van_chuyen->ma_chuyen = $this->input->xss_clean($this->input->post('ma_chuyen'));
+
         $saveSuccess = false;
-         // As long as van_chuyen->ma_chuyen was set in the controller, we will delete the record.
+        // As long as van_chuyen->ma_chuyen was set in the controller, we will delete the record.
         if ($this->ma_chuyen) {
             $this->db->where("ma_chuyen", $this->ma_chuyen);
             $this->db->delete("van_chuyen");
@@ -248,7 +257,7 @@ class Van_chuyen extends Model {
                 $saveSuccess = false;
             }
         }
-              return $saveSuccess;
+        return $saveSuccess;
     }
 }
 
