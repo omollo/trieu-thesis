@@ -1,6 +1,6 @@
 <html>
     <head>
-        <base href="http://localhost/vehicle1/">
+        <base href="<?php echo base_url()?>/">
         <title>Model_xe</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -76,7 +76,7 @@
             Model_xe.Read = function()
             {
                 InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle1/index.php/c_model_xe/read_json_format", {},
+                jQuery.post("<?php echo base_url()?>/index.php/c_model_xe/read_json_format", {},
                 function(data){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
@@ -200,7 +200,7 @@
                         <a href="javascript:void(0)" onclick="Model_xe.Delete()" class="green"> Xoá </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
-                        <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
+                        <img  src="<?php echo base_url()?>/resources/css/img/ajax-loader.gif" />
                     </div>
                 </div>
 

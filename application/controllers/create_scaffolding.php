@@ -162,15 +162,15 @@ class create_scaffolding extends Controller{
                     }
                     //  else if($option === "ci_model")
                     {
-                        $this->createCIModel($table_object);
+//                        $this->createCIModel($table_object);
                     }
                     //  else if($option === "ci_controller")
                     {
-                        $this->createCIController($table_object);
+//                        $this->createCIController($table_object);
                     }
 
                     {
-                        $this->createCIView($table_object);
+//                        $this->createCIView($table_object);
                     }
 
                     {

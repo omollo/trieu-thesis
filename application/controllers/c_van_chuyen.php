@@ -19,38 +19,38 @@ class c_Van_chuyen extends Controller
 
     function c_Van_chuyen()
     {
-         parent::Controller();
-         $this->load->model('van_chuyen');
-         $this->load->model('VehicleDBUtils');
+        parent::Controller();
+        $this->load->model('van_chuyen');
+        $this->load->model('VehicleDBUtils');
 
-         $this->load->helper('form');
-         $this->load->helper('object2array');
-         $this->load->helper('url');
-         $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('object2array');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
     }
 
     function index()
-    {       
-        $this->load->view('scaffolding_form/v_van_chuyen');        
-    }  
+    {
+        $this->load->view('scaffolding_form/v_van_chuyen');
+    }
 
     function readVan_chuyen($priKey)
     {
         if(isset ($priKey))
         {
-                   $this->van_chuyen->ma_chuyen = $priKey;
-                                                                                                
+            $this->van_chuyen->ma_chuyen = $priKey;
+
             $rows = $this->van_chuyen->read();
             foreach($rows as $row)
             {
-                        echo $row->ma_chuyen."<br>";
-                        echo $row->so_dang_ky_xe."<br>";
-                        echo $row->ms_hanhtrinh."<br>";
-                        echo $row->ngay_khoi_hanh."<br>";
-                        echo $row->ngay_ket_thuc_dukien."<br>";
-                        echo $row->ngay_ket_thuc_thucte."<br>";
-                        }
-         }
+                echo $row->ma_chuyen."<br>";
+                echo $row->so_dang_ky_xe."<br>";
+                echo $row->ms_hanhtrinh."<br>";
+                echo $row->ngay_khoi_hanh."<br>";
+                echo $row->ngay_ket_thuc_dukien."<br>";
+                echo $row->ngay_ket_thuc_thucte."<br>";
+            }
+        }
     }
 
     function keyAutoComplete($field_name = "")
@@ -58,20 +58,20 @@ class c_Van_chuyen extends Controller
         if($field_name != "")
         $this->van_chuyen->keyAutoComplete($field_name);
         else
-         echo "";
+        echo "";
     }
 
     function create()
     {
         if($this->van_chuyen->create())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
     function read()
     {
-        $this->load->view('v_van_chuyen');
+        $this->load->view('scaffolding_form/v_van_chuyen');
     }
 
     function read_json_format()
@@ -80,22 +80,22 @@ class c_Van_chuyen extends Controller
     }
 
     function update()
-    {       
+    {
         if($this->van_chuyen->update())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;        
+        echo $this->messageFail;
     }
 
     function delete()
     {
         if($this->van_chuyen->delete())
-            echo $this->messageSuccess;
+        echo $this->messageSuccess;
         else
-            echo $this->messageFail;
+        echo $this->messageFail;
     }
 
 
-    
+
 }
 ?>

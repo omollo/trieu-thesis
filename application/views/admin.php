@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <base href="http://localhost/vehicle1/" />
+        <base href="<?php echo base_url()?>" />
 
         <title></title>
         <script type="text/javascript" src="resources/jquery-1.3.1.js"></script>
@@ -85,7 +85,7 @@
         Menu = {};
         Menu.open = function(cmd){
 
-            var url = "http://localhost/vehicle1/index.php/" + cmd;
+            var url = "<?php echo base_url()?>/index.php/" + cmd;
             $("#main_content").attr("src", url);
 
         };
