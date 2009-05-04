@@ -41,7 +41,7 @@
                     $("#form_Van_don input[name="+ name +"]").setValue(value);
 
                     if(name == "so_van_don"){
-                        $.post("http://localhost/vehicle1/index.php/c_Chi_tiet_van_don/readChi_tiet_van_don/", { so_van_don: value },
+                        $.post("<?php echo base_url()?>/index.php/c_Chi_tiet_van_don/readChi_tiet_van_don/", { so_van_don: value },
                         function(data){
                             $("#chi_tiet_van_don").html(data);
                         });
@@ -89,7 +89,7 @@
             Van_don.Read = function()
             {
                 InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle1/index.php/c_van_don/read_json_format", {},
+                jQuery.post("<?php echo base_url()?>/index.php/c_van_don/read_json_format", {},
                 function(data){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
@@ -213,7 +213,7 @@
                         <a href="javascript:void(0)" onclick="Van_don.Clear()" class="green"> Refresh form </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
-                        <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
+                        <img  src="<?php echo base_url()?>/resources/css/img/ajax-loader.gif" />
                     </div>
 
                     <div>

@@ -15,7 +15,7 @@
                     $("#right").css("width","98%");
                 }
                 else if(cmd == "home"){
-                    window.location = "http://localhost/vehicle1/index.php/home";
+                    window.location = "<?php echo site_url("home") ?>";
                     $("#main_content").hide();
                 }
                 else {
@@ -23,7 +23,7 @@
                     $("#right").css("width","76%");
                 }
 
-                var url = "http://localhost/vehicle1/index.php/" + cmd;
+                var url = "<?php echo base_url()?>index.php/" + cmd;
                 $("#main_content").attr("src", url);
 
             };

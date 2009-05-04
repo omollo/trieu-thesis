@@ -1,6 +1,6 @@
 <html>
     <head>
-        <base href="http://localhost/vehicle1/">
+        <base href="<?php echo base_url()?>">
         <title>Xe</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -124,7 +124,7 @@
             Xe.Read = function()
             {
                 InlineBox.showAjaxLoader();
-                jQuery.post("http://localhost/vehicle1/index.php/c_xe/read_json_format", {},
+                jQuery.post("<?php echo base_url()?>/index.php/c_xe/read_json_format", {},
                 function(data){
                     InlineBox.hideAjaxLoader();
                     $("#list2").trigger("reloadGrid");
@@ -236,7 +236,7 @@
                             <span>Hình ảnh xe</span>
                             <input type="hidden" name="url_image" value="" id="xe_url_image"/>
                             <img id="IMAGE_VEHICLE" class="img_with_max" src="<?php echo base_url()?>resources/images/no-image.jpg" />
-                            <iframe name='image_vehicle_iframe' id='image_vehicle_iframe' scrolling="auto" style="border: 0px none; width: 400px; height: 60px;" src="http://localhost/vehicle1/index.php/upload/"></iframe>
+                            <iframe name='image_vehicle_iframe' id='image_vehicle_iframe' scrolling="auto" style="border: 0px none; width: 400px; height: 60px;" src="<?php echo base_url()?>/index.php/upload/"></iframe>
                         </label>
                         <label>
                             <span>Số sườn</span>

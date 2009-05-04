@@ -62,7 +62,7 @@
                                     <span>Số vận đơn</span>
                                     <input type="text" name="van_don_so_van_don" value="" id="van_don_so_van_don" class="input-text"  />
                                     <div class="spacer" id="form_control" >
-                                        <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
+                                        <input type="button" value="Đồng ý" style="width:70px; font: 14px bold"  onclick="trackMyItems();"/>
                                     </div>
                                     <div id="ajaxloader" style="display:none" >
                                         <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
@@ -175,6 +175,10 @@
         function test(){
             setTimeout("updateGPSData()", 1088);
             initForm();
+        }
+
+        function trackMyItems(){
+            jQuery("#list2").setGridParam({postData:{so_van_don :$("#van_don_so_van_don").val(), mode:"short"}}).trigger("reloadGrid"); 
         }
 
 
@@ -307,23 +311,23 @@
         var colModelT = new Array();
         var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
 
-        colNamesT.push('ma_chuyen');
+        colNamesT.push('Mã chuyến');
         colModelT.push({name:'ma_chuyen',index:'ma_chuyen', editable: false});
 
-        colNamesT.push('so_dang_ky_xe');
-        colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
+       // colNamesT.push('so_dang_ky_xe');
+        //colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
 
-        colNamesT.push('ms_hanhtrinh');
-        colModelT.push({name:'ms_hanhtrinh',index:'ms_hanhtrinh', editable: false});
+       // colNamesT.push('ms_hanhtrinh');
+       //colModelT.push({name:'ms_hanhtrinh',index:'ms_hanhtrinh', editable: false});
 
-        colNamesT.push('ngay_khoi_hanh');
+        colNamesT.push('Khởi hành');
         colModelT.push({name:'ngay_khoi_hanh',index:'ngay_khoi_hanh', editable: false});
 
-        colNamesT.push('ngay_ket_thuc_dukien');
+        colNamesT.push('Kết thúc');
         colModelT.push({name:'ngay_ket_thuc_dukien',index:'ngay_ket_thuc_dukien', editable: false});
 
-        colNamesT.push('ngay_ket_thuc_thucte');
-        colModelT.push({name:'ngay_ket_thuc_thucte',index:'ngay_ket_thuc_thucte', editable: false});
+      //  colNamesT.push('Kết thúc');
+       // colModelT.push({name:'ngay_ket_thuc_thucte',index:'ngay_ket_thuc_thucte', editable: false});
 
         var loadView = function()
         {
@@ -331,7 +335,7 @@
             {
                 url:'<?php echo site_url('c_van_chuyen/read_json_format')?>',
                 mtype : "POST",
-            //    postData: {'so_van_don':$("#van_don_so_van_don").val()},
+                postData: {mode:"short"},
                 datatype: "json",
                 colNames: colNamesT ,
                 colModel: colModelT ,
@@ -345,7 +349,7 @@
                 caption:"van_chuyen",
                 onSelectRow: function(){
                     var id = jQuery("#list2").getGridParam('selrow');
-                    Van_chuyen.setData(jQuery("#list2").getRowData(id));
+                    //Van_chuyen.setData(jQuery("#list2").getRowData(id));
                 }
             });
             jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});

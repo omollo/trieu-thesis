@@ -1,6 +1,6 @@
 <html>
     <head>
-        <base href="http://localhost/vehicle1/">
+        <base href="<?php echo base_url()?>/">
         <title>Thuoc_tinh_mo_rong_cua_xe</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -76,7 +76,7 @@ Thuoc_tinh_mo_rong_cua_xe.Create = function()
 Thuoc_tinh_mo_rong_cua_xe.Read = function()
     {
         InlineBox.showAjaxLoader();
-        jQuery.post("http://localhost/vehicle1/index.php/c_thuoc_tinh_mo_rong_cua_xe/read_json_format", {},
+        jQuery.post("<?php echo base_url()?>/index.php/c_thuoc_tinh_mo_rong_cua_xe/read_json_format", {},
         function(data){
             InlineBox.hideAjaxLoader();
             $("#list2").trigger("reloadGrid");
@@ -180,7 +180,7 @@ Thuoc_tinh_mo_rong_cua_xe.currentRowID = id;
                         <a href="javascript:void(0)" onclick="Thuoc_tinh_mo_rong_cua_xe.Delete()" class="green"> Xoá </a>
                     </div>
                     <div id="ajaxloader" style="display:none" >
-                        <img  src="http://localhost/vehicle1/resources/css/img/ajax-loader.gif" />
+                        <img  src="<?php echo base_url()?>/index.php/resources/css/img/ajax-loader.gif" />
                     </div>
                 </div>
 

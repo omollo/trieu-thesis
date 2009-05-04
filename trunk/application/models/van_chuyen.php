@@ -43,11 +43,6 @@ class Van_chuyen extends Model {
         $this->van_chuyen->ngay_ket_thuc_dukien = $this->input->xss_clean($this->input->post('ngay_ket_thuc_dukien'));
         $this->van_chuyen->ngay_ket_thuc_thucte = $this->input->xss_clean($this->input->post('ngay_ket_thuc_thucte'));
 
-
-        // BEGIN FILTER CRITERIA CHECK
-        // If any of the following properties are set before Van_chuyen->get() is called from the controller then we will include
-        // a where statement for each of the properties that have been set.
-
         if ($this->ma_chuyen)
         {
             $this->db->where("ma_chuyen", $this->ma_chuyen);
@@ -112,17 +107,9 @@ class Van_chuyen extends Model {
         $page = $this->input->post('page');
         $sidx = $this->input->post('sidx');
         $sord = $this->input->post('sord');
-        $so_van_don =  $this->input->post('so_van_don');
-        if($so_van_don != null){
-            $sql = "SELECT * FROM van_chuyen WHERE ma_chuyen IN (SELECT ma_chuyen FROM chi_tiet_van_don WHERE so_van_don = ";
-            $sql = $sql . "'" . $so_van_don . "')";
+        $mode = $this->input->post('mode');
 
-            echo $sql;
-
-        }
-
-
-        if(!$sidx) $sidx =1;
+        if(!$sidx) {$sidx =1;}
         $count = $this->db->count_all('van_chuyen');
 
         if( $count >0 ) {
@@ -135,21 +122,40 @@ class Van_chuyen extends Model {
         $start = $limit * $page - $limit;
 
         $this->db->limit($limit, $start);
-        $this->db->order_by("$sidx", "$sord");       
-        $this->setFilterField();
+        $this->db->order_by("$sidx", "$sord");
 
-        $objects = $this->db->get("van_chuyen")->result();
+        if($mode == "short"){
+            $so_van_don =  $this->input->post('so_van_don',TRUE);
+            $sql = "";
+            if($so_van_don != null){
+                $sql = "SELECT * FROM van_chuyen WHERE ma_chuyen IN (SELECT ma_chuyen FROM chi_tiet_van_don WHERE so_van_don = ";
+                $sql = $sql . "'" . $so_van_don . "')";
+            }
+            $objects = $this->db->query($sql)->result();
+        }
+        else {
+            $this->setFilterField();
+            $objects = $this->db->get("van_chuyen")->result();
+        }
+
         $rows =  array();
-
         foreach($objects as $obj)
         {
             $cell = array();
-            array_push($cell, $obj->ma_chuyen);
-            array_push($cell, $obj->so_dang_ky_xe);
-            array_push($cell, $obj->ms_hanhtrinh);
-            array_push($cell, $obj->ngay_khoi_hanh);
-            array_push($cell, $obj->ngay_ket_thuc_dukien);
-            array_push($cell, $obj->ngay_ket_thuc_thucte);
+            if($mode == "short"){
+                array_push($cell, $obj->ma_chuyen);
+                array_push($cell, $obj->ngay_khoi_hanh);
+                array_push($cell, $obj->ngay_ket_thuc_dukien);
+            }
+            else {
+                array_push($cell, $obj->ma_chuyen);
+                array_push($cell, $obj->so_dang_ky_xe);
+                array_push($cell, $obj->ms_hanhtrinh);
+                array_push($cell, $obj->ngay_khoi_hanh);
+                array_push($cell, $obj->ngay_ket_thuc_dukien);
+                array_push($cell, $obj->ngay_ket_thuc_thucte);
+            }
+
             $row = new stdClass();
             $row->id = $cell[0];
             $row->cell = $cell;
