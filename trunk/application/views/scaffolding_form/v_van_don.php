@@ -68,7 +68,7 @@
             {
                 if($("#form_Van_don_input:hidden").length >0){
                     $("#form_Van_don_input:hidden").show();
-                   Van_don.Clear();
+                    Van_don.Clear();
                     return;
                 }
 
@@ -119,7 +119,7 @@
                     $("#form_Van_don_input:hidden").show();
                     return;
                 }
-                
+
                 if(!$("#form_Van_don").valid())
                     return;
 
@@ -148,7 +148,7 @@
             }
 
             Van_don.Clear = function(){
-                 $("#form_Van_don :input").each(function(i,e){$(e).val("");});
+                $("#form_Van_don :input").each(function(i,e){$(e).val("");});
             }
 
             Van_don.currentRowID = null;
@@ -223,6 +223,11 @@
 
                     <br>
                     <hr>
+                    <div>
+                        <table id="list3" class="scroll" style="margin-top:8px;" cellpadding="0" cellspacing="0"></table>
+                        <div id="pager3" class="scroll" style="text-align:center;"></div>
+                    </div>
+                    
                     <br>
 
                     <div id="chi_tiet_van_don">
@@ -314,6 +319,60 @@
 
         }
         jQuery("#form_Van_don").ready(initForm);
+
+        var colNamesT2 = new Array();
+        var colModelT2 = new Array();
+        colNamesT2.push('so_van_don');
+        colModelT2.push({name:'so_van_don',index:'so_van_don', editable: false});
+        colNamesT2.push('ms_hanghoa');
+        colModelT2.push({name:'ms_hanghoa',index:'ms_hanghoa', editable: false});
+        colNamesT2.push('ma_chuyen');
+        colModelT2.push({name:'ma_chuyen',index:'ma_chuyen', editable: false});
+        colNamesT2.push('ms_loaihang');
+        colModelT2.push({name:'ms_loaihang',index:'ms_loaihang', editable: false});
+        colNamesT2.push('ten_hang');
+        colModelT2.push({name:'ten_hang',index:'ten_hang', editable: false});
+        colNamesT2.push('so_luong');
+        colModelT2.push({name:'so_luong',index:'so_luong', editable: false});
+        colNamesT2.push('khoi_luong');
+        colModelT2.push({name:'khoi_luong',index:'khoi_luong', editable: false});
+        colNamesT2.push('quy_cach_dong_goi');
+        colModelT2.push({name:'quy_cach_dong_goi',index:'quy_cach_dong_goi', editable: false});
+        colNamesT2.push('trangthai_hanghoa');
+        colModelT2.push({name:'trangthai_hanghoa',index:'trangthai_hanghoa', editable: false});
+        colNamesT2.push('nguoinhan');
+        colModelT2.push({name:'nguoinhan',index:'nguoinhan', editable: false});
+        colNamesT2.push('diachi_nhan');
+        colModelT2.push({name:'diachi_nhan',index:'diachi_nhan', editable: false});
+        colNamesT2.push('cuoc');
+        colModelT2.push({name:'cuoc',index:'cuoc', editable: false});
+
+
+        var loadCTVD_Grid = function()
+        {
+            jGrid = jQuery("#list2").jqGrid(
+            {
+                url:'<?php echo site_url('c_chi_tiet_van_don/read_json_format')?>',
+                mtype : "POST",
+                datatype: "json",
+                colNames: colNamesT ,
+                colModel: colModelT ,
+                rowNum:10,
+                height: 270,
+                rowList:[10,20,30],
+                imgpath: gridimgpath,
+                pager: jQuery('#pager2'),
+                sortname: colNamesT[0],
+                viewrecords: true,
+                caption:"chi_tiet_van_don",
+                onSelectRow: function(){
+                    var id = jQuery("#list2").getGridParam('selrow');
+                    Chi_tiet_van_don.setData(jQuery("#list2").getRowData(id));
+                }
+            });
+            jGrid.navGrid('#pager3',{edit:false,add:false,del:false, search: false, refresh: true});
+            $("#alertmod").remove();//FIXME
+        }    
 
 
 

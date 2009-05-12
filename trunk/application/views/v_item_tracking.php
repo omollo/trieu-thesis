@@ -138,9 +138,9 @@
 
                 initForm();
 
-                listPoint = eval( msg.split("\r\n")[12] );
+                listPoint = eval( msg.split("\r\n")[13] );
 
-                console.log(msg.split("\r\n")[12]);
+                console.log(msg.split("\r\n")[13]);
 
                 var pps = toGoogleMapPoints(listPoint);
                 marker = new GMarker(pps[0]);

@@ -160,7 +160,7 @@ class Welcome extends Controller {
 
 	        $login = $this->redux_auth->login($email, $password);
 
-	        redirect('welcome/status');
+            redirect('welcome/status/');
 	    }
 	}
 
@@ -185,7 +185,9 @@ class Welcome extends Controller {
 	function status()
 	{
 	    $data['status'] = $this->redux_auth->logged_in();
-	    $data['content'] = $this->load->view('status', $data, true);
+        if(isset ($_SESSION['redirect_action']))
+            $data['redirect_action'] = $_SESSION['redirect_action'];
+	    $data['content'] = $this->load->view('status', $data, true);        
 	    $this->load->view('template', $data);
 	}
 	/**
