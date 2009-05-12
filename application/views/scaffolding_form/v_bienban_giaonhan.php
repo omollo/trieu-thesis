@@ -312,7 +312,7 @@ Bienban_giaonhan.setData(jQuery("#list2").getRowData(id));
             return  value;
         }
     });
-    $("#bienban_giaonhan_so_van_don").autocomplete("<?php echo site_url('c_bienban_giaonhan/keyAutoComplete/so_van_don')?>", {
+    $("#bienban_giaonhan_so_van_don").autocomplete("<?php echo site_url('c_van_don/keyAutoComplete/so_van_don')?>", {
         width: 200,
         max: 5,
         highlight: false,
@@ -325,6 +325,8 @@ Bienban_giaonhan.setData(jQuery("#list2").getRowData(id));
             return  value;
         }
     });
+
+
 
     </script>
 

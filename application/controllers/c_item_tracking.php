@@ -43,7 +43,7 @@ class c_Item_Tracking extends Controller
         $url = $url."&from_datetime=".$from_datetime."&to_datetime=".$to_datetime;
         echo $url;
         $str = $this->loadHtml(($url));
-        echo $str;
+        echo $str['body'];
     }
 
     function readXe($priKey)
