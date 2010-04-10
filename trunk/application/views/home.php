@@ -63,6 +63,7 @@
         <div id="content">
             <div id="right">
                 <div id="intro_content">
+					<img src="http://localhost/vehicle1/bear.jpg" />
                     <h3>1. Giới thiệu:</h3>
                     Giới thiệu các chức năng chính
                     <br>
@@ -77,6 +78,7 @@
                 <iframe scrolling="auto" id="main_content" style="border: 0px none; width: 100%; height: 950px;" src="" frameborder="0" >
                 </iframe>
             </div>
+
 
             <div id="left">
                 <div class="box">
