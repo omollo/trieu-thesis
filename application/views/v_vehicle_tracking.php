@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <base href="http://localhost/vehicle/">
+        <base href="http://localhost/vehicle/" />
         <title>Tracking Vehicle</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -32,9 +32,7 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.utils.ui.min.js"></script>
 
-
-        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhTOZcpRi3x4ZlxAD9RZHN-OsRMWtxSQpid_-Bah1NKhpWC5zY29rrD77g"
-                type="text/javascript"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhRUVQb2docQPsZgy965zI7INwhRYhSwsYx6GPLkZew757LOTcZHMqJxrw" type="text/javascript"></script>
         <script  type="text/javascript">
 
         </script>
@@ -50,6 +48,15 @@
                 </tr>
             </thead>
             <tbody>
+                <tr align="center">
+                    <form action="#" onsubmit="showAddress(this.address.value); return false">
+                      <p>
+                        Tìm nhanh địa điểm:
+                        <input type="text" size="60" name="address" value="20 Ngô Đức Kế,  Bình Thạnh, Ho Chi Minh, Viet Nam" />
+                        <input type="submit" value="Tìm" />
+                      </p>                     
+                    </form>
+                </tr>
                 <tr>
                     <td VALIGN="top" width="40%">
                         <div>
@@ -291,7 +298,7 @@
         var point ;
         var rootPoint = new GLatLng(10.75340,106.62900);
         var marker = new GMarker(rootPoint, {draggable: true});
-
+        var geocoder = null;
 
         function updateGPSData(){
             var callback = function(msg){
@@ -301,7 +308,7 @@
 
                 listPoint = eval( msg.split("\r\n")[12] );
 
-                console.log(msg.split("\r\n")[12]);
+                //console.log(msg.split("\r\n")[12]);
 
                 var pps = toGoogleMapPoints(listPoint);
                 marker = new GMarker(pps[0]);
@@ -327,14 +334,14 @@
             $("#ajaxloader").show();
             $.ajax({
                 type: "GET",
-                url: "http://localhost/vehicle1/index.php/c_Vehicle_Tracking/getGPSDATA/" + sdkxe + "/" + from_datetime + "/" + to_datetime,
+                url: "<?php echo base_url()?>index.php/c_vehicle_tracking/getGPSDATA/" + sdkxe + "/" + from_datetime + "/" + to_datetime,
                 success: callback
             });
         }
 
 
         function test(){
-            setTimeout("updateGPSData()", 1088);
+            setTimeout("updateGPSData()", 1999);
 
             if($("#xe_so_dang_ky_xe").val() == "51-K12167"){
                 xe = 1;
@@ -408,15 +415,36 @@
                 map.addControl(new GMapTypeControl());
                 map.setMapType(G_NORMAL_MAP);
                 //map.openInfoWindow(point, text);
+
+                geocoder = new GClientGeocoder();
             }
 
         }
         jQuery("#main_form").ready(initForm);
 
         function logLatLon(){
-            if( console != null )
-                console.log( marker.getLatLng() );
+            if( console != null ){
+                //console.log( marker.getLatLng() );
+            }
         }
+
+         function showAddress(address) {
+              if (geocoder) {
+                geocoder.getLatLng( address,
+                  function(point) {
+                    if (!point) {
+                      alert(address + " not found");
+                    } else {
+                      map.setCenter(point, 13);
+                      var marker = new GMarker(point);
+                      map.addOverlay(marker);
+                      marker.openInfoWindowHtml(address);
+                    }
+                  }
+                );
+              }
+        }
+
 
         function updateVehicleMarker() {
             point = new GLatLng(10.75381,106.63014)
@@ -453,7 +481,7 @@
             var polyline = new GPolyline(pps, "#FF0000", 10);
             map.addOverlay(polyline);
             var distance = (polyline.getLength()/1000 )+"";
-            console.log(distance);
+            //console.log(distance);
             distance = distance.substring(0, distance.indexOf(".") +5 );
 
 
