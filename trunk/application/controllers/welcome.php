@@ -160,7 +160,7 @@ class Welcome extends Controller {
 
 	        $login = $this->redux_auth->login($email, $password);
 
-            redirect('welcome/status/');
+            redirect('admin');
 	    }
 	}
 
