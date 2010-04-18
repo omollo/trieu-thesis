@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <base href="http://localhost/vehicle/" />
@@ -16,6 +15,9 @@
             .toggler { width: 250px; height: 125px; }
             #drop { width: 240px; height: 105px; padding: 0.4em; }
             #drop .ui-widget-header { margin: 0; padding: 0.4em; text-align: center; }
+            input[type='text'] {
+                margin-top: 5px;
+            }}
         </style>
 
         <script type="text/javascript" src="<?php echo base_url()?>resources/jquery-1.3.1.js"></script>
@@ -32,96 +34,128 @@
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.json-1.3.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url()?>resources/utils/jquery.utils.ui.min.js"></script>
 
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhRUVQb2docQPsZgy965zI7INwhRYhSwsYx6GPLkZew757LOTcZHMqJxrw" type="text/javascript"></script>
-        <script  type="text/javascript">
+        <?php if(base_url() == "http://localhost/vehicle/") { ?>
+        <script src="http://maps.google.com/maps?file=api&v=2&amp;sensor=true&key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhRUVQb2docQPsZgy965zI7INwhRYhSwsYx6GPLkZew757LOTcZHMqJxrw" type="text/javascript"></script>
+            <?php }else { ?>
+        <script src="http://maps.google.com/maps?file=api&v=2&sensor=true&key=ABQIAAAARCn-s2Rb8Qeo5T853_i8KhRUVQb2docQPsZgy965zI7INwhRYhSwsYx6GPLkZew757LOTcZHMqJxrw" type="text/javascript"></script>
+            <?php } ?>
 
-        </script>
     </head>
 
     <body>
-
         <table border="0" cellspacing="1" cellpadding="1">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
             <tbody>
-                <tr align="center">
-                    <form action="#" onsubmit="showAddress(this.address.value); return false">
-                      <p>
-                        Tìm nhanh địa điểm:
-                        <input type="text" size="60" name="address" value="20 Ngô Đức Kế,  Bình Thạnh, Ho Chi Minh, Viet Nam" />
-                        <input type="submit" value="Tìm" />
-                      </p>                     
-                    </form>
-                </tr>
                 <tr>
                     <td VALIGN="top" width="40%">
-                        <div>
-                            <span>Thời gian từ ngày </span>
-                            <input type="text" id="filter_from_date" class="input-text"  />
-                            <span>Giờ GMT</span>
-                            <input type="text" id="filter_from_time" class="input-text "  />
-                        </div>
-                        <div style="margin-top:5px;" >
-                            <span>Đến ngày </span>
-                            <input type="text" id="filter_to_date" class="input-text"  />
-                            <span>Giờ GMT</span>
-                            <input type="text" id="filter_to_time" class="input-text "  />
-                        </div>
-                        <br>
-                        <div >
-                            <div class="box">
-                                <h1> Thông tin GPS của Xe </h1>
-                                <hr>
-
-                                <form method="POST" id="main_form" action="">
-                                    <label>
+                        <div id="mobile_location_tabs">
+                            <ul>
+                                <li><a href="#tabs-1">Quản lý hành trình của xe</a></li>
+                                <li><a href="#tabs-2">Vị trí các xe</a></li>
+                            </ul>
+                            <div id="tabs-1">
+                                <form action="#" onsubmit="sendMessageToPhone();return false;">
+                                    <div>
                                         <span>Số đăng ký xe</span>
-                                        <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text"  />
-                                        <div class="spacer" id="form_control" >
-                                            <input type="button" value="Tìm" style="width:70px; font: 14px bold"  onclick="test();"/>
+                                        <input type="text" name="receiverId" value=""  class="input-text xe_so_dang_ky_xe" id="receiverId" />
+                                    </div>
+                                    <div style="margin-top:5px;">
+                                        Địa điểm bắt đầu hành trình:
+                                        <input id="addressS" type="text" size="60" name="addressS" value="20 Ngô Đức Kế,  Bình Thạnh, Ho Chi Minh, Viet Nam" />
+                                        <input  style="display:none" type="button" value="Tìm" onclick="showAddress('#addressS');" />
+                                    </div>
+                                    <div style="margin-top:5px;">
+                                        Địa điểm kết thúc hành trình:
+                                        <input id="addressE" type="text" size="60" name="addressE" value="F31, Phú Lâm B, District 6, Ho Chi Minh, Viet Nam" />
+                                        <input  style="display:none" type="button" value="Tìm" onclick="showAddress('#addressE');" />
+                                    </div>
+                                    <div style="margin-top:5px;">
+                                        Nội dung:
+                                        <input id="message_content" type="text" size="60" name="content" value="Chuyển hàng" />
+                                    </div>
+                                    <div style="margin-top:5px;">
+                                        <input type="submit" value="Gửi" />
+                                    </div>
+                                </form>
+                                <div style="width: 100%;margin-top:15px;">
+                                    <div>
+                                        <b>Danh sách thông điệp</b>
+                                    </div>
+                                    <div>
+                                        <span>Cập nhật message box tự động:</span>
+                                        <input type="checkbox" id="auto_check_message_box" checked="checked"/>
+                                    </div>
+                                    <div id="message_list" style="margin-top:5px; height: 270px; overflow: auto;">
+                                    </div>
+                                    <!--
+                                    <iframe scrolling="auto" style="border: 0px none; width: 100%; max-height: 180px;" src="<?php echo site_url("c_message_handler") ?>"></iframe>
+                                    -->
+                                </div>
+                            </div>
+                            <div id="tabs-2">                                
+
+                                <div class="">
+                                    <b> Tìm thông tin vị trí</b>
+                                    <hr/>
+
+                                    <form method="POST" action="">
+                                        <div>
+                                            <span>Số đăng ký xe</span>
+                                            <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe_2" class="input-text xe_so_dang_ky_xe"  />
                                         </div>
+                                        <div style="margin-top:8px;">
+                                            <span>Lịch trình hoạt động </span><br/>
+                                            <span>Từ ngày </span>
+                                            <input type="text" id="filter_from_date" class="input-text"  />
+                                            <br/>
+                                            <span>Giờ GMT</span>
+                                            <input type="text" id="filter_from_time" class="input-text "  />
+                                        </div>
+                                        <div style="margin-top:8px;" >
+                                            <span>Đến ngày </span>
+                                            <input type="text" id="filter_to_date" class="input-text"  />
+                                            <br/>
+                                            <span>Giờ GMT</span>
+                                            <input type="text" id="filter_to_time" class="input-text "  />
+                                        </div>
+                                        <br/>
+
+                                        <div style="margin-top: 5px ">
+                                            <input type="button" value="Tìm vị trí xe" onclick="searchObjectLocation();"/>
+                                         </div>
                                         <div id="ajaxloader" style="display:none" >
                                             <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
                                         </div>
-                                    </label>
-                                    <label>
+                                        <div>
                                         <span>Theo dõi thời gian thực:</span>
-                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" checked="false" />
-                                    </label>
+                                        <input type="checkbox" name="real_time_tracking" id="real_time_tracking" />
+                                        </div>
+                                    </form>
 
-                                </form>
+                                    <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+                                    </div>
 
-                                <div id="gps_msg_logs" style="background-color: gray;color:yellow" >
+                                    <div  style="background-color: gray;color:yellow" >
+                                        Tổng số điểm GPS nhận: <strong><span id="total_gps_points_of_vehicle" >0</span></strong>
+                                    </div>
+
+                                    <fieldset>
+                                        <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
+                                        <div  style="background-color: gray;color:yellow" >
+                                            Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
+                                        </div>
+                                        <div  style="background-color: gray;color:yellow" >
+                                            Longitude (Kinh độ): <strong><span id="current_lng_of_vehicle" >0</span></strong>
+                                        </div>
+                                        <div  style="background-color: gray;color:yellow" >
+                                            Giờ GMT theo vệ tinh : <strong><span id="current_gpstime_of_vehicle" ></span></strong>
+                                        </div>
+                                        <div  style="background-color: gray;color:yellow" >
+                                            Số Km đã đi: <strong><span id="current_totals_kms" >0</span></strong> Km
+                                        </div>
+                                    </fieldset>
                                 </div>
-
-                                <div  style="background-color: gray;color:yellow" >
-                                    Tổng số điểm GPS nhận: <strong><span id="total_gps_points_of_vehicle" >0</span></strong>
-                                </div>
-
-                                <fieldset>
-                                    <legend><strong>Thông tin vị trí hiện tại:</strong></legend>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Latitude (Vĩ độ): <strong><span id="current_lat_of_vehicle" >0</span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Longitude (Kinh độ): <strong><span id="current_lng_of_vehicle" >0</span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Giờ GMT theo vệ tinh : <strong><span id="current_gpstime_of_vehicle" ></span></strong>
-                                    </div>
-                                    <div  style="background-color: gray;color:yellow" >
-                                        Số Km đã đi: <strong><span id="current_totals_kms" >0</span></strong> Km
-                                    </div>
-                                </fieldset>
-
                             </div>
-                            <hr>
                         </div>
-
                     </td>
                     <td VALIGN="top" width="60%">
                         <div id="map_canvas" style="width: 690px; height: 550px;">
@@ -130,166 +164,13 @@
                 </tr>
             </tbody>
         </table>
-
-
-
-
-
-        <div id="map_container" style="width: 60%; display:inline;"  >
-            <table border="0">
-                <tbody>
-                    <tr>
-                        <td width="50%" >
-
-                        </td>
-                        <td VALIGN="top" width="50%">
-
-                            <div id="hanghoa" >
-                                <div id="map_details1" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details2" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H078-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H006-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H004-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details3" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="map_details4" style="width: 40%; height: 550px; display:none">
-                                    <table border="1">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã hãng</th>
-                                                <th>Loai hang</th>
-                                                <th>Tinh trang</th>
-                                                <th>So luong</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>H001-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-SG1</td>
-                                                <td>Buu pham</td>
-                                                <td>Dang chuyen</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>H002-BD1</td>
-                                                <td>Buu pham</td>
-                                                <td>Da chuyen xong</td>
-                                                <td>1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-
-        </div>
-
-        <br>
-
-
-        <input type="button" value="tt" id="calendar1_alert" />
-
     </body>
+    
+    <script type="text/javascript">
+        $(function() {
+            $("#mobile_location_tabs").tabs();
+        });
+    </script>
 
     <script type="text/javascript">
         var xe = 1;
@@ -340,38 +221,8 @@
         }
 
 
-        function test(){
-            setTimeout("updateGPSData()", 1999);
-
-            if($("#xe_so_dang_ky_xe").val() == "51-K12167"){
-                xe = 1;
-
-                $("#map_details1").show();
-                $("#map_details2").hide();
-                $("#map_details3").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "55-M18818"){
-                xe = 2;
-                $("#map_details2").show();
-                $("#map_details1").hide();
-                $("#map_details3").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "51-K18142"){
-                xe = 3;
-                $("#map_details3").show();
-                $("#map_details1").hide();
-                $("#map_details2").hide();
-                $("#map_details4").hide();
-            }
-            else if($("#xe_so_dang_ky_xe").val() == "52-KA3775"){
-                xe = 4;
-                $("#map_details4").show();
-                $("#map_details2").hide();
-                $("#map_details3").hide();
-                $("#map_details1").hide();
-            }
+        function searchObjectLocation(){
+            setTimeout("updateGPSData()", 2100);
             initForm();
         }
 
@@ -385,7 +236,7 @@
             $('#filter_to_time').timepickr({convention:24});
             $('#filter_to_time').mask('99:99');
 
-            $("#xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
+            $(".xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
                 width: 200,
                 max: 10,
                 highlight: false,
@@ -427,24 +278,6 @@
                 //console.log( marker.getLatLng() );
             }
         }
-
-         function showAddress(address) {
-              if (geocoder) {
-                geocoder.getLatLng( address,
-                  function(point) {
-                    if (!point) {
-                      alert(address + " not found");
-                    } else {
-                      map.setCenter(point, 13);
-                      var marker = new GMarker(point);
-                      map.addOverlay(marker);
-                      marker.openInfoWindowHtml(address);
-                    }
-                  }
-                );
-              }
-        }
-
 
         function updateVehicleMarker() {
             point = new GLatLng(10.75381,106.63014)
@@ -496,17 +329,97 @@
 
         function drawGreatCircle(p1,p2){
             //(10.77578609275558, 106.69043576752301)
+            var polyOptions = {geodesic:true};
+            var polyline = new GPolyline([
+                p1,
+                p2
+            ], "#ff0000", 10, 1, polyOptions);
+            map.addOverlay(polyline);
         };
 
         function showInfoBox(p,time){
-            var img = "<img width='83'  src='http://localhost/vehicle1/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
+            var img = "<img width='83'  src='<?php echo base_url()?>/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
             var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + $("#xe_so_dang_ky_xe").val() +  times[p] + "-" + img +"</span>";
             map.openInfoWindowHtml(p, text);
         }
         //pps[0].distanceFrom(pps[1])
 
 
+
+        var addressS = false, addressE = false, sendMessageFunction = false;
+        function showAddress(id) {
+            var address = jQuery(id).val();
+            if (geocoder) {
+                geocoder.getLatLng( address,
+                function(point) {
+                    if (!point) {
+                        alert(address + " not found");
+                    } else {
+                        map.setCenter(point, 13);
+                        var marker = new GMarker(point);
+                        map.addOverlay(marker);
+                        marker.openInfoWindowHtml(address);
+
+                        if(id == "#addressS"){
+                            addressS = point;
+                        }
+                        if(id == "#addressE"){
+                            addressE = point;
+                        }
+                        if(addressS != false && addressE != false){
+                            drawGreatCircle(addressS, addressE);
+                            if(sendMessageFunction instanceof Function){
+                                sendMessageFunction.apply({}, []);
+                            }
+                        }
+                    }
+                }
+            );
+            }
+        }
+
+        function sendMessageToPhone(){
+            var f = function(){
+                if(addressS != false && addressE != false){
+                    var latS = addressS.lat();
+                    var lngS = addressS.lng();
+                    var latE = addressE.lat();
+                    var lngE = addressE.lng();
+                    var content = latS + "," + lngS + ";" + latE + "," + lngE;
+                    content = content + ";" + jQuery("#message_content").val();
+                   
+                    var handler = function(rs){
+                        alert("Nội dung đã gửi "+content);
+                        alert(rs);
+                    };
+                    var url = "<?php echo site_url('c_message_handler/create')?>";
+                    var data = {'status':1};
+                    data['senderId'] = 'server1';
+                    data['receiverId'] = jQuery("#receiverId").val();
+                    data['content'] = content;
+                    jQuery.post(url, data, handler);
+                }
+            };
+            sendMessageFunction = f;
+            showAddress('#addressS');
+            showAddress('#addressE');
+
+            return false;
+        }
+
+        function getMessageList(){
+            if( jQuery("#auto_check_message_box").attr("checked") ) {
+                var handler = function(rs){
+                     jQuery("#message_list").html(rs);
+                };
+                var url = "<?php echo site_url('c_message_handler/getMessageList')?>";
+                var data = {};
+                jQuery.post(url, data, handler);
+            }
+        }
+        setInterval(getMessageList, 3000);
+
     </script>
 
-    
+
 </html>

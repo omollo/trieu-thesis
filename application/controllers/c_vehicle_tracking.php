@@ -13,13 +13,13 @@
 * @property Gps_markers $gps_markers
  */
 
-class c_Vehicle_Tracking extends Controller
+class c_vehicle_tracking extends Controller
 {
     //message in vietnamese, TODO: add I18N later
     var $messageSuccess = "Thành công";
     var $messageFail    = "Thất bại";
 
-    function c_Vehicle_Tracking()
+    function c_vehicle_tracking()
     {
         parent::Controller();
         $this->load->model('xe');

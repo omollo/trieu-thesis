@@ -12,26 +12,26 @@
     <body>
         <ul class="sf-menu">
             <li class="current">
-                <a href="javascript:void(0)">Danh mục</a>
+                <a href="javascript:void(0)">Danh mục quản lý chung</a>
                 <ul>
                     <li>
-                        <a href="javascript:Menu.open('c_khach_hang')">Danh sách Khách Hàng</a>
+                        <a href="javascript:Menu.open('c_khach_hang')">Khách Hàng</a>
                     </li>
                     <li>
                         <a href="javascript:Menu.open('c_loaihang')">Loại Hàng</a>
                     </li>
                     <li>
-                        <a href="javascript:Menu.open('c_dm_hanhtrinh')">Danh mục hành trình</a>
+                        <a href="javascript:Menu.open('c_dm_hanhtrinh')">Hành trình chuyến xe</a>
                     </li>
                     <hr>
-                    <li class="current">
+                    <li >
                         <a href="javascript:Menu.open('c_thiet_bi')">Thiết bị</a>
                         <ul>
                             <li><a href="javascript:Menu.open('c_thiet_bi')">Nhập thiết bị</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:Menu.open('c_bat_thuong')">Bất thường</a>
+                        <a href="javascript:Menu.open('c_bat_thuong')">Bất thường của xe</a>
                     </li>
                     <li>
                         <a href="javascript:Menu.open('c_bao_duong_xe')">Bảo dưỡng xe</a>
@@ -40,32 +40,33 @@
                         <a href="javascript:Menu.open('c_model_xe')">Model xe</a>
                     </li>
                     <li>
-                        <a href="javascript:Menu.open('c_chi_nhanh')">Chi nhánh</a>
+                        <a href="javascript:Menu.open('c_chi_nhanh')">Chi nhánh và các trạm xe</a>
                     </li>
                     <li>
                         <a href="javascript:Menu.open('c_xe')">Xe</a>
                     </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:void(0)">Tra cứu</a>
-                <ul>
                     <li>
                         <a href="javascript:Menu.open('c_van_don')">Vận đơn</a>
                         <ul>
                             <li>
-                                <a href="javascript:Menu.open('c_Item_Tracking')">Hành Trình hàng hoá</a>
+                                <a href="javascript:Menu.open('c_Item_Tracking')">Hành trình hàng hoá</a>
                             </li>
                             <li>
-                                <a href="javascript:Menu.open('c_van_don')">Danh mục vận đơn</a>
+                                <a href="javascript:Menu.open('c_van_don')">Chi tiết vận đơn</a>
                             </li>
                         </ul>
                     </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)">Quản lý các quy trình</a>
+                <ul>
+                    
                     <li>
-                        <a href="javascript:Menu.open('c_van_chuyen')">Vận chuyển</a>
+                        <a href="javascript:Menu.open('c_van_chuyen')">Vận chuyển hàng</a>
                     </li>
                     <li>
-                        <a href="javascript:Menu.open('c_Vehicle_Tracking')">Hành trình Xe</a>
+                        <a href="javascript:Menu.open('c_vehicle_tracking')">Sử dụng xe</a>
                     </li>
                 </ul>
             </li>
@@ -84,10 +85,8 @@
 
         Menu = {};
         Menu.open = function(cmd){
-
             var url = "<?php echo base_url()?>/index.php/" + cmd;
             $("#main_content").attr("src", url);
-
         };
 
     </script>
