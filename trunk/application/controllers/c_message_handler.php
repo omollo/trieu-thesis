@@ -73,6 +73,7 @@ class c_message_handler extends Controller {
     }
 
 
+    // for server
     public function create() {
         if($this->m_message->create()) {
             echo $this->messageSuccess;
@@ -82,8 +83,28 @@ class c_message_handler extends Controller {
         }
     }
 
+    //for mobile
+    public function getMessageByReceiverID($requesterID) {
+        $data["messages"] = $this->m_message->getMessageByReceiverID($requesterID);
+        $data["for_mobile"] = TRUE;
+        $data["requesterID"] = $requesterID;
+        $this->load->view("comet-ajax/v_message_list", $data);
+    }
+
+    public function updateMessageStatus(){
+        if( $this->m_message->updateMessageStatus() ){
+            echo "cập nhật thành công";
+        }
+        else {
+            echo "cập nhật thất bại";
+        }
+    }
+
+
+    //for server
     public function getMessageList() {
         $data["messages"] = $this->m_message->read();
+        $data["for_mobile"] = FALSE;
         $this->load->view("comet-ajax/v_message_list", $data);
     }
 

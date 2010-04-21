@@ -69,6 +69,12 @@ class m_message extends Model {
         return $query->result();
     }
 
+   function getMessageByReceiverID($receiverId) {
+        $this->db->where("receiverId", $receiverId);
+        $query = $this->db->get("message_box");
+        return $query->result();
+    }
+
 
     private function isUsedKey($table,$keyName, $keyValue) {
         if($keyValue) {
@@ -126,6 +132,23 @@ class m_message extends Model {
     function update() {
         $this->readDataFromHTTPRequest();
         return $this->save();
+    }
+
+    function updateMessageStatus() {
+        $this->id = trim( $this->input->xss_clean($this->input->post('id')) );
+        $this->status = trim( $this->input->xss_clean( $this->input->post('status')) );
+        $db_array = array(
+                "id" => $this->id,
+                "status" => $this->status
+        );
+        $this->db->where("id", $this->id);
+        $this->db->update("message_box", $db_array);
+        if($this->db->affected_rows() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     function delete() {

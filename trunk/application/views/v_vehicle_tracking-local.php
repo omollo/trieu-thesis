@@ -437,8 +437,9 @@
 
             var points = new Array();
             for(var i = 0 ; i< list.length; i++){
-                points.push(new GLatLng(list[i].lat,list[i].lng));
-                marker = new GMarker(new GLatLng(list[i].lat,list[i].lng));
+                var p = new GLatLng(list[i].lat,list[i].lng);
+                points.push(p);
+                marker = new GMarker(p);
                 times[marker.getLatLng()] = list[i].gps_time;
                 GEvent.addListener(marker,"click", function() {
                     showInfoBox(this.getLatLng());

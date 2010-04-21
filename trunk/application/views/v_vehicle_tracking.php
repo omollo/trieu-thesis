@@ -43,6 +43,9 @@
     </head>
 
     <body>
+        <div id="ajaxloader" style="display:none" >
+             <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
+        </div>
         <table border="0" cellspacing="1" cellpadding="1">
             <tbody>
                 <tr>
@@ -56,17 +59,20 @@
                                 <form action="#" onsubmit="sendMessageToPhone();return false;">
                                     <div>
                                         <span>Số đăng ký xe</span>
-                                        <input type="text" name="receiverId" value=""  class="input-text xe_so_dang_ky_xe" id="receiverId" />
+                                        <input type="text" name="receiverId" value=""  class="input-text xe_so_dang_ky_xe" id="receiverId"  />
+                                        <input type="button" value="Định vị" onclick="currentVehicleLocation(jQuery('#receiverId').val());" />
                                     </div>
                                     <div style="margin-top:5px;">
                                         Địa điểm bắt đầu hành trình:
+                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">S</span>
                                         <input id="addressS" type="text" size="60" name="addressS" value="20 Ngô Đức Kế,  Bình Thạnh, Ho Chi Minh, Viet Nam" />
-                                        <input  style="display:none" type="button" value="Tìm" onclick="showAddress('#addressS');" />
+                                        <input  type="button" value="Tìm" onclick="showAddress('#addressS');" />
                                     </div>
                                     <div style="margin-top:5px;">
                                         Địa điểm kết thúc hành trình:
+                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">F</span>
                                         <input id="addressE" type="text" size="60" name="addressE" value="F31, Phú Lâm B, District 6, Ho Chi Minh, Viet Nam" />
-                                        <input  style="display:none" type="button" value="Tìm" onclick="showAddress('#addressE');" />
+                                        <input  type="button" value="Tìm" onclick="showAddress('#addressE');" />
                                     </div>
                                     <div style="margin-top:5px;">
                                         Nội dung:
@@ -100,7 +106,8 @@
                                     <form method="POST" action="">
                                         <div>
                                             <span>Số đăng ký xe</span>
-                                            <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe_2" class="input-text xe_so_dang_ky_xe"  />
+                                            <input type="text" name="so_dang_ky_xe" value="" id="xe_so_dang_ky_xe" class="input-text xe_so_dang_ky_xe"  />
+                                            <input type="button" value="Định vị" onclick="currentVehicleLocation(jQuery('#xe_so_dang_ky_xe').val());" />
                                         </div>
                                         <div style="margin-top:8px;">
                                             <span>Lịch trình hoạt động </span><br/>
@@ -108,23 +115,21 @@
                                             <input type="text" id="filter_from_date" class="input-text"  />
                                             <br/>
                                             <span>Giờ GMT</span>
-                                            <input type="text" id="filter_from_time" class="input-text "  />
+                                            <input type="text" id="filter_from_time" class="input-text"  value="00:00" />
                                         </div>
                                         <div style="margin-top:8px;" >
                                             <span>Đến ngày </span>
                                             <input type="text" id="filter_to_date" class="input-text"  />
                                             <br/>
                                             <span>Giờ GMT</span>
-                                            <input type="text" id="filter_to_time" class="input-text "  />
+                                            <input type="text" id="filter_to_time" class="input-text"  value="23:59" />
                                         </div>
                                         <br/>
 
                                         <div style="margin-top: 5px ">
-                                            <input type="button" value="Tìm vị trí xe" onclick="searchObjectLocation();"/>
+                                            <input type="button" value="Hành trình của xe" onclick="searchObjectLocation();"/>
                                          </div>
-                                        <div id="ajaxloader" style="display:none" >
-                                            <img  src="<?php echo base_url()?>resources/css/img/ajax-loader.gif" />
-                                        </div>
+                                       
                                         <div>
                                         <span>Theo dõi thời gian thực:</span>
                                         <input type="checkbox" name="real_time_tracking" id="real_time_tracking" />
@@ -167,8 +172,10 @@
     </body>
     
     <script type="text/javascript">
-        $(function() {
-            $("#mobile_location_tabs").tabs();
+        jQuery(function() {
+            jQuery("#mobile_location_tabs").tabs({
+                select: function(event, ui) { initMap(); }
+            });
         });
     </script>
 
@@ -182,50 +189,91 @@
         var geocoder = null;
 
         function updateGPSData(){
+            var sdkxe = jQuery("#xe_so_dang_ky_xe").val();
+            var from_datetime = $("#filter_from_date").val()+ "time" + $("#filter_from_time").val();
+            var to_datetime = $("#filter_to_date").val()+ "time" + $("#filter_to_time").val();
+            
+            if(jQuery.trim(sdkxe).length == 0){
+                alert("Bạn cần nhập số đăng ký xe!");
+                return;
+            }
+            
             var callback = function(msg){
-                $("#ajaxloader").hide();
-
-                initForm();
-
+                jQuery("#ajaxloader").hide(); 
                 listPoint = eval( msg.split("\r\n")[12] );
 
                 //console.log(msg.split("\r\n")[12]);
 
                 var pps = toGoogleMapPoints(listPoint);
+                if(pps.length == 0){
+                    alert("Dữ liệu GPS của số đăng ký xe " + sdkxe + " chưa có");
+                    return;
+                }
                 marker = new GMarker(pps[0]);
                 map.addOverlay(marker);
-                map.setCenter(pps[0] , 15);
-                markAllPoints(pps);
+                map.setCenter(pps[0] , 14);                
 
-                //                 $("#gps_msg_logs").html($.toJSON(listPoint[0]));
-                $("#current_lat_of_vehicle").html(listPoint[0].lat);
-                $("#current_lng_of_vehicle").html(listPoint[0].lng);
-                $("#current_gpstime_of_vehicle").html(listPoint[0].gps_time);
-                $("#current_totals_kms").html(drawPolyline(pps));
+                // $("#gps_msg_logs").html($.toJSON(listPoint[0]));
+                jQuery("#current_lat_of_vehicle").html(listPoint[0].lat);
+                jQuery("#current_lng_of_vehicle").html(listPoint[0].lng);
+                jQuery("#current_gpstime_of_vehicle").html(listPoint[0].gps_time);
+                jQuery("#current_totals_kms").html(drawPolyline(pps));
 
                 //console.log(listPoint);
-
-                if($("#real_time_tracking").attr("checked"))
-                    setTimeout("updateGPSData()", 9999);
-            };
-
-            var sdkxe = $("#xe_so_dang_ky_xe").val();
-            var from_datetime = $("#filter_from_date").val()+ "time" + $("#filter_from_time").val();
-            var to_datetime = $("#filter_to_date").val()+ "time" + $("#filter_to_time").val();
-            $("#ajaxloader").show();
-            $.ajax({
+                real_time_update();
+            };            
+            jQuery("#ajaxloader").show();
+            jQuery.ajax({
                 type: "GET",
                 url: "<?php echo base_url()?>index.php/c_vehicle_tracking/getGPSDATA/" + sdkxe + "/" + from_datetime + "/" + to_datetime,
                 success: callback
             });
         }
 
+        function real_time_update(){
+            if(jQuery("#real_time_tracking").attr("checked")) {
+                setTimeout("updateGPSData()", 9999);
+            }
+        }
+
+        function currentVehicleLocation(sdkxe){
+            if(jQuery.trim(sdkxe).length == 0){
+                alert("Bạn cần nhập số đăng ký xe!");
+                return;
+            }
+
+            var callback = function(msg){
+                listPoint = eval( msg.split("\r\n")[12] );
+                var pps = toGoogleMapPoints(listPoint);
+                var cIcon = new GIcon(G_DEFAULT_ICON);
+                cIcon.image = "http://icons2.iconarchive.com/icons/icons-land/transport/256/TruckYellow-icon.png";
+                cIcon.iconSize = new GSize(38, 50);
+                cIcon.shadowSize = new GSize(37, 34);
+
+                marker = new GMarker(pps[0], cIcon, false);
+                var img = "<img width='83'  src='<?php echo base_url()?>/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
+                var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + sdkxe + img +"</span>";
+                GEvent.addListener(marker, "click", function() {                     
+                     map.openInfoWindowHtml(pps[0], text);
+                });
+                             
+                map.addOverlay(marker);
+                map.setCenter(pps[0] , 15);
+                currentLatLng = pps[0];
+                marker.openInfoWindowHtml(text);
+            };
+
+            jQuery.ajax({
+                type: "GET",
+                url: "<?php echo base_url()?>index.php/c_vehicle_tracking/getLatestVehicleGPS/" + sdkxe,
+                success: callback
+            });
+        }
 
         function searchObjectLocation(){
             setTimeout("updateGPSData()", 2100);
             initForm();
         }
-
 
         var initForm = function(){
             $("#filter_from_date").datepicker({dateFormat:"yy-mm-dd"});
@@ -235,6 +283,8 @@
             $('#filter_from_time').mask('99:99');
             $('#filter_to_time').timepickr({convention:24});
             $('#filter_to_time').mask('99:99');
+
+            jQuery("#real_time_tracking").click(real_time_update);
 
             $(".xe_so_dang_ky_xe").autocomplete("<?php echo site_url('c_xe/keyAutoComplete/so_dang_ky_xe')?>", {
                 width: 200,
@@ -250,8 +300,9 @@
                 }
             });
 
-            //init input mask
-
+           initMap();
+        }
+        var initMap = function(){
             if (GBrowserIsCompatible()) {
                 map = new GMap2(document.getElementById("map_canvas"));
                 //                GEvent.bind(map, "click", this, function(overlay, latlng) {
@@ -266,11 +317,10 @@
                 map.addControl(new GMapTypeControl());
                 map.setMapType(G_NORMAL_MAP);
                 //map.openInfoWindow(point, text);
-
                 geocoder = new GClientGeocoder();
             }
+        };
 
-        }
         jQuery("#main_form").ready(initForm);
 
         function logLatLon(){
@@ -297,35 +347,36 @@
 
             var points = new Array();
             for(var i = 0 ; i< list.length; i++){
-                points.push(new GLatLng(list[i].lat,list[i].lng));
-                marker = new GMarker(new GLatLng(list[i].lat,list[i].lng));
-                times[marker.getLatLng()] = list[i].gps_time;
-                GEvent.addListener(marker,"click", function() {
-                    showInfoBox(this.getLatLng());
-                });
-                map.addOverlay(marker);
+                var p = new GLatLng( list[i].lat , list[i].lng );
+                points.push(p);
+                var m = new GMarker(p);
+                map.addOverlay(m);
+                times[m.getLatLng()] = list[i].gps_time;
+                GEvent.addListener(m,"click", function() {
+                    showInfoBox(p);
+                });                          
                 // console.log(list[i].gps_time);
             }
-            $("#total_gps_points_of_vehicle").html(points.length)
+
+            var p = new GLatLng(list[ 0 ].lat,list[ 0 ].lng );
+            var m = new GMarker(p);
+            map.addOverlay(m);
+            m.openInfoWindowHtml("Hành trình của xe");
+
+            jQuery("#total_gps_points_of_vehicle").html(points.length)
             return points;
         }
 
         function drawPolyline(pps){
-            var polyline = new GPolyline(pps, "#FF0000", 10);
+            var polyOptions = {geodesic:true};
+            var polyline = new GPolyline(pps, "#ff0000", 4, 1, polyOptions);
             map.addOverlay(polyline);
             var distance = (polyline.getLength()/1000 )+"";
             //console.log(distance);
             distance = distance.substring(0, distance.indexOf(".") +5 );
-
-
             return distance;
         }
-
-        function markAllPoints(pps){
-            for(var i = 0 ; i< pps.length; i++){
-
-            }
-        }
+       
 
         function drawGreatCircle(p1,p2){
             //(10.77578609275558, 106.69043576752301)
@@ -333,13 +384,19 @@
             var polyline = new GPolyline([
                 p1,
                 p2
-            ], "#ff0000", 10, 1, polyOptions);
+            ], "#ff0000", 4, 1, polyOptions);
             map.addOverlay(polyline);
+
+
         };
 
-        function showInfoBox(p,time){
+        function showInfoBox(p){
             var img = "<img width='83'  src='<?php echo base_url()?>/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
-            var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + $("#xe_so_dang_ky_xe").val() +  times[p] + "-" + img +"</span>";
+            var text = "<span style='color:red;font-weight:bold'>" ;
+            text += ( img );
+            text += ( "<br> Hành trình của xe: " + $("#xe_so_dang_ky_xe").val() );
+           // text += ( "<br> Thời gian ghi nhận: " + times[p]);
+            text += ( "</span>" );
             map.openInfoWindowHtml(p, text);
         }
         //pps[0].distanceFrom(pps[1])
@@ -347,6 +404,7 @@
 
 
         var addressS = false, addressE = false, sendMessageFunction = false;
+        var currentLatLng = false;
         function showAddress(id) {
             var address = jQuery(id).val();
             if (geocoder) {
@@ -356,21 +414,37 @@
                         alert(address + " not found");
                     } else {
                         map.setCenter(point, 13);
-                        var marker = new GMarker(point);
-                        map.addOverlay(marker);
-                        marker.openInfoWindowHtml(address);
+                        var baseIcon = new GIcon(G_DEFAULT_ICON);
+                        var marker;
+                        var text = "";
 
-                        if(id == "#addressS"){
+                        if(id == "#addressS" ){                            
+                            baseIcon.image = "http://www.google.com/mapfiles/markerS.png";
+                            marker = new GMarker(point,baseIcon,false);
                             addressS = point;
+                            text = "Điểm bắt đầu, địa chỉ: " + address;
                         }
                         if(id == "#addressE"){
+                            baseIcon.image = "http://www.google.com/mapfiles/markerF.png";
+                            marker = new GMarker(point,baseIcon,false);
                             addressE = point;
+                            text = "Điểm kết thúc, địa chỉ: " + address;
                         }
+
+                        map.addOverlay(marker);
+                        marker.openInfoWindowHtml(text);
+                        GEvent.addListener(marker, "click", function() {
+                             map.openInfoWindowHtml(point, text);
+                        });
+                       
                         if(addressS != false && addressE != false){
                             drawGreatCircle(addressS, addressE);
                             if(sendMessageFunction instanceof Function){
                                 sendMessageFunction.apply({}, []);
                             }
+                        }
+                        if(currentLatLng != false && addressS != false){
+                            drawGreatCircle(currentLatLng, addressS);
                         }
                     }
                 }
@@ -417,7 +491,7 @@
                 jQuery.post(url, data, handler);
             }
         }
-        setInterval(getMessageList, 3000);
+        setInterval(getMessageList, 9000);
 
     </script>
 
