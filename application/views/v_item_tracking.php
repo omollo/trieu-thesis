@@ -136,7 +136,7 @@
             var callback = function(msg){
                 $("#ajaxloader").hide();
 
-                initForm();
+                initMap();
 
                 listPoint = eval( msg.split("\r\n")[13] );
 
@@ -181,9 +181,6 @@
             jQuery("#list2").setGridParam({postData:{so_van_don :$("#van_don_so_van_don").val(), mode:"short"}}).trigger("reloadGrid"); 
         }
 
-
-
-
         var initForm = function(){
             $("#filter_from_date").datepicker({dateFormat:"yy-mm-dd"});
             $("#filter_to_date").datepicker({dateFormat:"yy-mm-dd"});
@@ -207,8 +204,10 @@
                 }
             });
 
-            //init input mask
+           initMap();
+        }
 
+        var initMap = function(){
             if (GBrowserIsCompatible()) {
                 map = new GMap2(document.getElementById("map_canvas"));
                 //                GEvent.bind(map, "click", this, function(overlay, latlng) {
@@ -224,8 +223,8 @@
                 map.setMapType(G_NORMAL_MAP);
                 //map.openInfoWindow(point, text);
             }
+        };
 
-        }
         jQuery("#main_form").ready(initForm);
 
         function logLatLon(){

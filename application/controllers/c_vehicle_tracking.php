@@ -46,6 +46,15 @@ class c_vehicle_tracking extends Controller
         echo $str;
     }
 
+     function getLatestVehicleGPS($sdkxe){
+        ini_set ('allow_url_fopen', '1');
+        $url = "http://tantrieuf31.summerhost.info/getGPSByVehicle.php?so_dang_ky_xe=".$sdkxe;
+        $url = $url."&just_latest_location=true";
+       // echo $url;
+        $str = $this->loadHtml(($url));
+        echo $str;
+    }
+
     function readXe($priKey)
     {
         if(isset($priKey) )
