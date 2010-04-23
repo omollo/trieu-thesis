@@ -64,13 +64,13 @@
                                     </div>
                                     <div style="margin-top:5px;">
                                         Địa điểm bắt đầu hành trình:
-                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">S</span>
+                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">Điểm A</span>
                                         <input id="addressS" type="text" size="60" name="addressS" value="20 Ngô Đức Kế,  Bình Thạnh, Ho Chi Minh, Viet Nam" />
                                         <input  type="button" value="Tìm" onclick="showAddress('#addressS');" />
                                     </div>
                                     <div style="margin-top:5px;">
                                         Địa điểm kết thúc hành trình:
-                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">F</span>
+                                        <span style="background-color: #FF6633; color: #FFFFFF; width: 20px; ">Điểm B</span>
                                         <input id="addressE" type="text" size="60" name="addressE" value="F31, Phú Lâm B, District 6, Ho Chi Minh, Viet Nam" />
                                         <input  type="button" value="Tìm" onclick="showAddress('#addressE');" />
                                     </div>
@@ -83,18 +83,28 @@
                                     </div>
                                 </form>
                                 <div style="width: 100%;margin-top:15px;">
-                                    <div>
-                                        <b>Danh sách thông điệp</b>
+                                    <div id="accordion_vehicle_control_2">
+                                        <h3><a href="#"><b>Danh sách thông điệp</b></a></h3>
+                                        <div>
+                                            <p>
+                                            <div>
+                                                <span>Cập nhật message box tự động:</span>
+                                                <input type="checkbox" id="auto_check_message_box" checked="checked"/>
+                                            </div>
+                                            <div id="message_list" style="margin-top:5px; height: 270px; overflow: auto;">
+                                            </div>
+                                            <!--
+                                            <iframe scrolling="auto" style="border: 0px none; width: 100%; max-height: 180px;" src="<?php echo site_url("c_message_handler") ?>"></iframe>
+                                            -->
+                                            </p>
+                                        </div>
+                                        <h3><a href="#">Thông tin đường đi</a></h3>
+                                        <div>
+                                            <p>
+                                              <div id="directions" style="width: 100%"></div>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span>Cập nhật message box tự động:</span>
-                                        <input type="checkbox" id="auto_check_message_box" checked="checked"/>
-                                    </div>
-                                    <div id="message_list" style="margin-top:5px; height: 270px; overflow: auto;">
-                                    </div>
-                                    <!--
-                                    <iframe scrolling="auto" style="border: 0px none; width: 100%; max-height: 180px;" src="<?php echo site_url("c_message_handler") ?>"></iframe>
-                                    -->
                                 </div>
                             </div>
                             <div id="tabs-2">                                
@@ -163,8 +173,7 @@
                         </div>
                     </td>
                     <td VALIGN="top" width="60%">
-                        <div id="map_canvas" style="width: 690px; height: 550px;">
-                        </div>
+                        <div id="map_canvas" style="width: 690px; height: 550px;"></div>                        
                     </td>
                 </tr>
             </tbody>
@@ -176,13 +185,15 @@
             jQuery("#mobile_location_tabs").tabs({
                 select: function(event, ui) { initMap(); }
             });
+            //jQuery("#accordion_vehicle_control").accordion();
+            jQuery("img[src='http://www.000webhost.com/images/banners/other/banner11.gif'").remove();
         });
     </script>
 
     <script type="text/javascript">
         var xe = 1;
         var listPoint ;
-        var map;
+        var map = false;
         var point ;
         var rootPoint = new GLatLng(10.75340,106.62900);
         var marker = new GMarker(rootPoint, {draggable: true});
@@ -251,8 +262,10 @@
                 cIcon.shadowSize = new GSize(37, 34);
 
                 marker = new GMarker(pps[0], cIcon, false);
+                rootPoint = pps[0];
                 var img = "<img width='83'  src='<?php echo base_url()?>/resources/images/66e39872b7986a393e05f2fa629d4f48.jpg' />"
                 var text = "<span id='vehicle_marker' style='color:red;font-weight:bold'>" + sdkxe + img +"</span>";
+                text += ("<br> Vị trí hiện tại của xe");
                 GEvent.addListener(marker, "click", function() {                     
                      map.openInfoWindowHtml(pps[0], text);
                 });
@@ -318,7 +331,9 @@
                 map.setMapType(G_NORMAL_MAP);
                 //map.openInfoWindow(point, text);
                 geocoder = new GClientGeocoder();
+                return map;
             }
+            return null;
         };
 
         jQuery("#main_form").ready(initForm);
@@ -442,6 +457,7 @@
                             if(sendMessageFunction instanceof Function){
                                 sendMessageFunction.apply({}, []);
                             }
+                            showDirection(jQuery("#addressS").val(), jQuery("#addressE").val() );
                         }
                         if(currentLatLng != false && addressS != false){
                             drawGreatCircle(currentLatLng, addressS);
@@ -451,6 +467,44 @@
             );
             }
         }
+
+        var gdir;
+        function showDirection(fromAddress, toAddress ){
+            if(map && fromAddress.length > 0 && toAddress.length > 0){
+                gdir = new GDirections(map, document.getElementById("directions"));
+                GEvent.addListener(gdir, "error", handleErrors);
+                setDirections(fromAddress, toAddress, "en_US");
+            }
+            else {
+                alert("Sorry, you enter invalid argurments!");
+            }
+        }
+        function setDirections(fromAddress, toAddress, locale) {
+            gdir.load("from: " + fromAddress + " to: " + toAddress,
+                    { "locale": locale });
+        }
+
+        function handleErrors(){
+	   if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
+                alert("No corresponding geographic location could be found for one of the specified addresses. This may be due to the fact that the address is relatively new, or it may be incorrect.\nError code: " + gdir.getStatus().code);
+	   else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
+                alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code);
+
+	   else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
+                alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code);
+
+	//   else if (gdir.getStatus().code == G_UNAVAILABLE_ADDRESS)  <--- Doc bug... this is either not defined, or Doc is wrong
+	//     alert("The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.\n Error code: " + gdir.getStatus().code);
+
+	   else if (gdir.getStatus().code == G_GEO_BAD_KEY)
+                alert("The given key is either invalid or does not match the domain for which it was given. \n Error code: " + gdir.getStatus().code);
+
+	   else if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
+                alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code);
+
+	   else alert("An unknown error occurred.");
+	}
+
 
         function sendMessageToPhone(){
             var f = function(){
@@ -491,7 +545,7 @@
                 jQuery.post(url, data, handler);
             }
         }
-        setInterval(getMessageList, 9000);
+        setInterval(getMessageList, 9999);
 
     </script>
 

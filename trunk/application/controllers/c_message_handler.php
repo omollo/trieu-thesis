@@ -93,10 +93,10 @@ class c_message_handler extends Controller {
 
     public function updateMessageStatus(){
         if( $this->m_message->updateMessageStatus() ){
-            echo "cập nhật thành công";
+            echo "Cap nhat thanh cong";
         }
         else {
-            echo "cập nhật thất bại";
+            echo "Cap nhat thanh cong";
         }
     }
 
