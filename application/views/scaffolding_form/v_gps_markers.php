@@ -28,113 +28,113 @@
         <script  type="text/javascript">
             var Gps_markers = {};
 
-Gps_markers.data = {};
-Gps_markers.setDataField = function(fieldName,fieldValue)
-    {
-Gps_markers.data[fieldName] = fieldValue;
-    }
-
-Gps_markers.setData = function(data)
-    {
-        jQuery.each(data, function(name, value) {
-Gps_markers.data[name] = value;
-            $("#form_Gps_markers input[name="+ name +"]").setValue(value);
-        });
-    }
-
-
-Gps_markers.getData = function()
-    {
-        var obj = {};
-        $.each( $("#form_Gps_markers").formSerialize().split("&"), function(i,n)
-        {
-            var toks = n.split("=");
-            obj[toks[0]] = toks[1];
-        }
-    );
-Gps_markers.data = obj;
-        return Gps_markers.data;
-    }
-
-    //create
-Gps_markers.Create = function()
-    {
-        if(!$("#form_Gps_markers").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_gps_markers/create')?>", $("#form_Gps_markers").formToArray() ,
-        function(message){
-            if(message != null){
-                InlineBox.hideAjaxLoader();
-                $("#list2").trigger("reloadGrid");
-                InlineBox.showModalBox("Tạo Gps_markers " + message);
+            Gps_markers.data = {};
+            Gps_markers.setDataField = function(fieldName,fieldValue)
+            {
+                Gps_markers.data[fieldName] = fieldValue;
             }
-        });
-    }
 
-    //refresh grid
-Gps_markers.Read = function()
-    {
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo base_url()?>index.php/c_gps_markers/read_json_format", {},
-        function(data){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-        });
-    }
-
-    // Filter the Grid and refresh
-Gps_markers.Filter = function()
-    {
-        //var name_field = $("#"+id).attr("name");
-        //var value_field =  $("#"+id).val();
-        //jQuery("#list2").setPostData({name_field:value_field});
-        var post_data = Gps_markers.getData();
-
-        for(var e in post_data){
-            if($.trim(post_data[e]) == "")
-                delete post_data[e];
-        }
-        jQuery("#list2").setPostData(post_data);
-        $("#list2").trigger("reloadGrid");
-    }
-
-    //update
-Gps_markers.Update = function()
-    {
-        if(!$("#form_Gps_markers").valid())
-        return;
-
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_gps_markers/update')?>", $("#form_Gps_markers").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Cập nhật Gps_markers " + message);
-        });
-    }
+            Gps_markers.setData = function(data)
+            {
+                jQuery.each(data, function(name, value) {
+                    Gps_markers.data[name] = value;
+                    $("#form_Gps_markers input[name="+ name +"]").setValue(value);
+                });
+            }
 
 
-    //delete
-Gps_markers.Delete = function()
-    {
-        if(!$("#form_Gps_markers").valid())
-        return;
-        InlineBox.showAjaxLoader();
-        jQuery.post("<?php echo site_url('c_gps_markers/delete')?>",$("#form_Gps_markers").formToArray() ,
-        function(message){
-            InlineBox.hideAjaxLoader();
-            $("#list2").trigger("reloadGrid");
-            InlineBox.showModalBox("Xoá Gps_markers " + message);
-        });
-    }
+            Gps_markers.getData = function()
+            {
+                var obj = {};
+                $.each( $("#form_Gps_markers").formSerialize().split("&"), function(i,n)
+                {
+                    var toks = n.split("=");
+                    obj[toks[0]] = toks[1];
+                }
+            );
+                Gps_markers.data = obj;
+                return Gps_markers.data;
+            }
 
-Gps_markers.currentRowID = null;
+            //create
+            Gps_markers.Create = function()
+            {
+                if(!$("#form_Gps_markers").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_gps_markers/create')?>", $("#form_Gps_markers").formToArray() ,
+                function(message){
+                    if(message != null){
+                        InlineBox.hideAjaxLoader();
+                        $("#list2").trigger("reloadGrid");
+                        InlineBox.showModalBox("Tạo Gps_markers " + message);
+                    }
+                });
+            }
 
-Gps_markers.setSelectedRow = function(id)
-    {
-Gps_markers.currentRowID = id;
-    }
+            //refresh grid
+            Gps_markers.Read = function()
+            {
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo base_url()?>index.php/c_gps_markers/read_json_format", {},
+                function(data){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                });
+            }
+
+            // Filter the Grid and refresh
+            Gps_markers.Filter = function()
+            {
+                //var name_field = $("#"+id).attr("name");
+                //var value_field =  $("#"+id).val();
+                //jQuery("#list2").setPostData({name_field:value_field});
+                var post_data = Gps_markers.getData();
+
+                for(var e in post_data){
+                    if($.trim(post_data[e]) == "")
+                        delete post_data[e];
+                }
+                jQuery("#list2").setPostData(post_data);
+                $("#list2").trigger("reloadGrid");
+            }
+
+            //update
+            Gps_markers.Update = function()
+            {
+                if(!$("#form_Gps_markers").valid())
+                    return;
+
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_gps_markers/update')?>", $("#form_Gps_markers").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Cập nhật Gps_markers " + message);
+                });
+            }
+
+
+            //delete
+            Gps_markers.Delete = function()
+            {
+                if(!$("#form_Gps_markers").valid())
+                    return;
+                InlineBox.showAjaxLoader();
+                jQuery.post("<?php echo site_url('c_gps_markers/delete')?>",$("#form_Gps_markers").formToArray() ,
+                function(message){
+                    InlineBox.hideAjaxLoader();
+                    $("#list2").trigger("reloadGrid");
+                    InlineBox.showModalBox("Xoá Gps_markers " + message);
+                });
+            }
+
+            Gps_markers.currentRowID = null;
+
+            Gps_markers.setSelectedRow = function(id)
+            {
+                Gps_markers.currentRowID = id;
+            }
 
 
 
@@ -159,39 +159,39 @@ Gps_markers.currentRowID = id;
                     <hr>
 
                     <form method="POST" id="form_Gps_markers" action="">
-                                                                        <label>
+                        <label>
                             <span>stt_diem</span>
                             <input type="text" name="stt_diem" value="" id="gps_markers_stt_diem" class="input-text " onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>stt_nkht</span>
                             <input type="text" name="stt_nkht" value="" id="gps_markers_stt_nkht" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>so_dang_ky_xe</span>
                             <input type="text" name="so_dang_ky_xe" value="" id="gps_markers_so_dang_ky_xe" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>ngay_khoi_hanh</span>
                             <input type="text" name="ngay_khoi_hanh" value="" id="gps_markers_ngay_khoi_hanh" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>lat</span>
                             <input type="text" name="lat" value="" id="gps_markers_lat" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>lng</span>
                             <input type="text" name="lng" value="" id="gps_markers_lng" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>type</span>
                             <input type="text" name="type" value="" id="gps_markers_type" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                                                <label>
+                        <label>
                             <span>gps_time</span>
                             <input type="text" name="gps_time" value="" id="gps_markers_gps_time" class="input-text keyAutoComplete" onchange="Gps_markers.setDataField(this.name,this.value);"  />
                         </label>
-                                                                    </form>
+                    </form>
 
                     <div class="spacer" id="form_control" >
                         <a href="javascript:void(0)" onclick="Gps_markers.Create()" class="green"> Thêm </a>
@@ -211,7 +211,7 @@ Gps_markers.currentRowID = id;
                 <div id="drop" class="ui-widget-content ui-corner-all">
                     <h3 class="ui-widget-header ui-corner-all" id="info-box-header">info box</h3>
                     <p>
-                        <div id="info-box-msg" align="center" style="font-size:13px;font-weight: bold;"> content </div>
+                    <div id="info-box-msg" align="center" style="font-size:13px;font-weight: bold;"> content </div>
                     </p>
                     <center>
                         <input type="button" value="Đóng" id="inform-box-close" onclick="$('.info-box').toggle('drop')" />
@@ -227,77 +227,77 @@ Gps_markers.currentRowID = id;
         var colModelT = new Array();
         var gridimgpath = '<?php echo base_url()?>resources/jqGrid/themes/basic/images';
 
-    colNamesT.push('stt_diem');
-    colModelT.push({name:'stt_diem',index:'stt_diem', editable: false});
-
-  
-    colNamesT.push('stt_nkht');
-    colModelT.push({name:'stt_nkht',index:'stt_nkht', editable: false});
-
-    colNamesT.push('so_dang_ky_xe');
-    colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
-
-    colNamesT.push('ngay_khoi_hanh');
-    colModelT.push({name:'ngay_khoi_hanh',index:'ngay_khoi_hanh', editable: false});
-
-    colNamesT.push('lat');
-    colModelT.push({name:'lat',index:'lat', editable: false});
-
-    colNamesT.push('lng');
-    colModelT.push({name:'lng',index:'lng', editable: false});
-
-    colNamesT.push('type');
-    colModelT.push({name:'type',index:'type', editable: false});
-
-    colNamesT.push('gps_time');
-    colModelT.push({name:'gps_time',index:'gps_time', editable: false});
+        colNamesT.push('stt_diem');
+        colModelT.push({name:'stt_diem',index:'stt_diem', editable: false});
 
 
-    var loadView = function()
-    {
-        jGrid = jQuery("#list2").jqGrid(
+        colNamesT.push('stt_nkht');
+        colModelT.push({name:'stt_nkht',index:'stt_nkht', editable: false});
+
+        colNamesT.push('so_dang_ky_xe');
+        colModelT.push({name:'so_dang_ky_xe',index:'so_dang_ky_xe', editable: false});
+
+        colNamesT.push('ngay_khoi_hanh');
+        colModelT.push({name:'ngay_khoi_hanh',index:'ngay_khoi_hanh', editable: false});
+
+        colNamesT.push('lat');
+        colModelT.push({name:'lat',index:'lat', editable: false});
+
+        colNamesT.push('lng');
+        colModelT.push({name:'lng',index:'lng', editable: false});
+
+        colNamesT.push('type');
+        colModelT.push({name:'type',index:'type', editable: false});
+
+        colNamesT.push('gps_time');
+        colModelT.push({name:'gps_time',index:'gps_time', editable: false});
+
+
+        var loadView = function()
         {
-            url:'<?php echo site_url('c_gps_markers/read_json_format')?>',
-            mtype : "POST",
-            datatype: "json",
-            colNames: colNamesT ,
-            colModel: colModelT ,
-            rowNum:10,
-            height: 270,
-            rowList:[10,20,30],
-            imgpath: gridimgpath,
-            pager: jQuery('#pager2'),
-            sortname: colNamesT[0],
-            viewrecords: true,
-            caption:"gps_markers",
-            onSelectRow: function(){
-                var id = jQuery("#list2").getGridParam('selrow');
-Gps_markers.setData(jQuery("#list2").getRowData(id));
-            }
+            jGrid = jQuery("#list2").jqGrid(
+            {
+                url:'<?php echo site_url('c_gps_markers/read_json_format')?>',
+                mtype : "POST",
+                datatype: "json",
+                colNames: colNamesT ,
+                colModel: colModelT ,
+                rowNum:10,
+                height: 270,
+                rowList:[10,20,30],
+                imgpath: gridimgpath,
+                pager: jQuery('#pager2'),
+                sortname: colNamesT[0],
+                viewrecords: true,
+                caption:"gps_markers",
+                onSelectRow: function(){
+                    var id = jQuery("#list2").getGridParam('selrow');
+                    Gps_markers.setData(jQuery("#list2").getRowData(id));
+                }
+            });
+            jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
+            $("#alertmod").remove();//FIXME
+        }
+        jQuery("#list2").ready(loadView);
+
+
+        var initForm = function(){
+            //init validation form
+            $("#form_Gps_markers").validate();
+            $('#container-1 > ul').tabs();
+
+        }
+        jQuery("#form_Gps_markers").ready(initForm);
+
+
+
+
+        var inputDate = {};
+        $( function() {
+            inputDate['gps_markers_ngay_khoi_hanh'] = $("#gps_markers_ngay_khoi_hanh").datepicker({dateFormat:"yy/mm/dd"});
+            $('#gps_markers_ngay_khoi_hanh').mask('9999/99/99');
+            $('#gps_markers_ngay_khoi_hanh').validate({rules:{ require: true, date: true}});
         });
-        jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
-        $("#alertmod").remove();//FIXME
-    }
-    jQuery("#list2").ready(loadView);
-
-
-    var initForm = function(){
-        //init validation form
-        $("#form_Gps_markers").validate();
-        $('#container-1 > ul').tabs();
-
-    }
-    jQuery("#form_Gps_markers").ready(initForm);
-
-
-
-
-    var inputDate = {};
-    $( function() {
-        inputDate['gps_markers_ngay_khoi_hanh'] = $("#gps_markers_ngay_khoi_hanh").datepicker({dateFormat:"yy/mm/dd"});
-        $('#gps_markers_ngay_khoi_hanh').mask('9999/99/99');
-        $('#gps_markers_ngay_khoi_hanh').validate({rules:{ require: true, date: true}});
-    });
 
 
     </script>
@@ -326,19 +326,19 @@ Gps_markers.setData(jQuery("#list2").getRowData(id));
             });
         });
 
-    $("#gps_markers_stt_diem").autocomplete("<?php echo site_url('c_gps_markers/keyAutoComplete/stt_diem')?>", {
-        width: 200,
-        max: 5,
-        highlight: false,
-        scroll: true,
-        scrollHeight: 300,
-        formatItem: function(data, i, n, value) {
-            return value;
-        },
-        formatResult: function(data, value) {
-            return  value;
-        }
-    });
+        $("#gps_markers_stt_diem").autocomplete("<?php echo site_url('c_gps_markers/keyAutoComplete/stt_diem')?>", {
+            width: 200,
+            max: 5,
+            highlight: false,
+            scroll: true,
+            scrollHeight: 300,
+            formatItem: function(data, i, n, value) {
+                return value;
+            },
+            formatResult: function(data, value) {
+                return  value;
+            }
+        });
 
     </script>
 
