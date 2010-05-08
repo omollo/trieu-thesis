@@ -43,6 +43,10 @@
                     $("#main_content").attr("src", url);
                 }
             };
+
+            jQuery(document).ready(function(){
+               // jQuery("#footer").next().remove();
+            });
         </script>
     </head>
     <body>
@@ -60,7 +64,7 @@
             <div class="wrap">
                 <div id="image"></div>
                 <div class="box">
-                    <div id="intro_content">
+                    <div >
                         <h3> Các chức năng chính: </h3>
                         <ul>
                             <li>Sử dụng hệ thống định vị toàn cầu GPS để quản lý lịch trình, hành trình xe chạy.</li>
@@ -93,7 +97,7 @@
             <div class="col last">
                 <h3>Tối ưu quy trình <span class="red">vận chuyển</span></h3>
                 <p>Các xe sẽ được thông báo và liên lạc nhau về đường đi.
-                    Các dữ liệu đường đi được phân tích ở trạm và gửi về xe theo thời gian thật.
+                    Các dữ liệu đường đi được phân tích ở trạm và gửi về xe theo thời gian thực.
                 </p>
                 <p class="info">Phiên bản Demo</p>
             </div>
@@ -102,9 +106,9 @@
         <iframe scrolling="auto" id="main_content" style="display: none; border: 0px none; width: 100%; height: 950px;" src="" frameborder="0" ></iframe>
 
         <div id="footer">
-            <p class="right">Design: <a title="" href="#">Trieu Nguyen</a></p>
+            <p class="right">Design: <a title="" href="http://www.solucija.com/templates/free">http://www.solucija.com</a></p>
             <p>&copy; Copyright 2010
-			Lead Deveveloper    <a href="mailto: tantrieuf31@gmail.com">Trieu Nguyen</a>
+			Lead Developer    <a href="mailto: tantrieuf31@gmail.com">Trieu Nguyen</a>
             </p>
         </div>
     </body>
