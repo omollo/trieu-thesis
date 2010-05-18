@@ -201,11 +201,11 @@
                 <li><a href="#fragment-2"><span>Thiết bị </span></a></li>
                 <li><a href="#fragment-3"><span>Ghi nhận bất thường</span></a></li>
                 <li><a href="#fragment-4"><span>Bảo dưỡng</span></a></li>
-                <li><a href="#fragment-5"><span>Nhật ký hành trình</span></a></li>
-                <li><a href="#fragment-6"><span>Chuyến hàng</span></a></li>
+                <li style="display: none;" ><a href="#fragment-5"><span>Nhật ký hành trình</span></a></li>
+                <li ><a href="#fragment-6"><span>Chuyến hàng</span></a></li>
                 <li><a href="#fragment-7"><span>Hợp đồng thuê xe</span></a></li>
-                <li><a href="#fragment-8"><span>Lịch sử cập nhật</span></a></li>
-                <li><a href="#fragment-9"><span>Thuộc tính mở rộng của xe</span></a></li>
+                <li style="display: none;"  ><a href="#fragment-8"><span>Lịch sử cập nhật</span></a></li>
+                <li style="display: none;" ><a href="#fragment-9"><span>Thuộc tính mở rộng của xe</span></a></li>
             </ul>
             <div id="fragment-1" style="width: 930px;">
                 <div>
@@ -245,6 +245,10 @@
                         <label>
                             <span>Speedometer</span>
                             <input type="text" name="speedometer" value="" id="xe_speedometer" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
+                        </label>
+                         <label>
+                            <span>Số điện thoại xe</span>
+                            <input type="text" name="so_dien_thoai_tai_xe" value="" id="xe_so_dien_thoai_tai_xe" class="input-text keyAutoComplete" onchange="Xe.setDataField(this.name,this.value);"  />
                         </label>
                     </form>
 
@@ -427,6 +431,9 @@
 
         colNamesT.push('speedometer');
         colModelT.push({name:'speedometer',index:'speedometer', editable: false});
+
+        colNamesT.push('so_dien_thoai_tai_xe');
+        colModelT.push({name:'so_dien_thoai_tai_xe',index:'so_dien_thoai_tai_xe', editable: false});
 
 
         var loadView = function()

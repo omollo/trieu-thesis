@@ -57,7 +57,7 @@
                             <h1> Thông tin hàng hoá </h1>
                             <hr>
 
-                            <form method="POST" id="main_form" action="">
+                            <form method="post" id="main_form" action="">
                                 <label>
                                     <span>Số vận đơn</span>
                                     <input type="text" name="van_don_so_van_don" value="" id="van_don_so_van_don" class="input-text"  />
@@ -353,7 +353,7 @@
             });
             jGrid.navGrid('#pager2',{edit:false,add:false,del:false, search: false, refresh: true});
             $("#alertmod").remove();//FIXME
-        }
+        };
         jQuery("#list2").ready(loadView);
     </script>
 

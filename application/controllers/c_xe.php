@@ -49,6 +49,7 @@ class c_Xe extends Controller
                 echo $row->url_image."<br>";
                 echo $row->so_suon."<br>";
                 echo $row->speedometer."<br>";
+                echo $row->so_dien_thoai_tai_xe."<br>";
             }
         }
     }
