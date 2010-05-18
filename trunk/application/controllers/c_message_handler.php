@@ -6,7 +6,7 @@
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
  * @property CI_Email $email
- * @property CI_DB_active_record $db 
+ * @property CI_DB_active_record $db
  * @property VehicleDBUtils $VehicleDBUtils
  * @property Xe $xe
  * @property Gps_markers $gps_markers
@@ -91,8 +91,22 @@ class c_message_handler extends Controller {
         $this->load->view("comet-ajax/v_message_list", $data);
     }
 
-    public function updateMessageStatus(){
-        if( $this->m_message->updateMessageStatus() ){
+    //for mobile
+    public function getMapViewByReceiverID($requesterID) {
+        $data = array();
+        $data["is_browser"] = FALSE;
+
+        $this->load->library('user_agent');        
+        if ($this->agent->is_browser()) {
+            $data["is_browser"] = TRUE;
+        }        
+        
+        $data["requesterID"] = $requesterID;
+        $this->load->view("comet-ajax/v_map_mobile", $data);
+    }
+
+    public function updateMessageStatus() {
+        if( $this->m_message->updateMessageStatus() ) {
             echo "Cap nhat thanh cong";
         }
         else {
@@ -100,6 +114,14 @@ class c_message_handler extends Controller {
         }
     }
 
+    public function updateMessagePriorityForReceiver() {
+        if( $this->m_message->updateMessagePriorityForReceiver() ) {
+            echo "1";
+        }
+        else {
+            echo "0";
+        }
+    }
 
     //for server
     public function getMessageList() {

@@ -28,6 +28,8 @@ class Xe extends Model {
     //Type: Double
     var $speedometer = '';
 
+    var $so_dien_thoai_tai_xe = '';
+
 
     function Xe() {
         parent::Model();
@@ -40,6 +42,7 @@ class Xe extends Model {
         $this->xe->url_image = $this->input->xss_clean($this->input->post('url_image'));
         $this->xe->so_suon = $this->input->xss_clean($this->input->post('so_suon'));
         $this->xe->speedometer = $this->input->xss_clean($this->input->post('speedometer'));
+        $this->xe->so_dien_thoai_tai_xe = $this->input->xss_clean($this->input->post('so_dien_thoai_tai_xe'));
 
 
         // BEGIN FILTER CRITERIA CHECK
@@ -63,6 +66,9 @@ class Xe extends Model {
         }
         if ($this->speedometer) {
             $this->db->where("speedometer", $this->speedometer);
+        }
+        if ($this->so_dien_thoai_tai_xe) {
+            $this->db->where("so_dien_thoai_tai_xe", $this->so_dien_thoai_tai_xe);
         }
 
         // END FILTER CRITERIA CHECK
@@ -131,6 +137,7 @@ class Xe extends Model {
             array_push($cell, $obj->url_image);
             array_push($cell, $obj->so_suon);
             array_push($cell, $obj->speedometer);
+            array_push($cell, $obj->so_dien_thoai_tai_xe);
             $row = new stdClass();
             $row->id = $cell[0];
             $row->cell = $cell;
@@ -164,6 +171,7 @@ class Xe extends Model {
                 "url_image" => $this->url_image,
                 "so_suon" => $this->so_suon,
                 "speedometer" => $this->speedometer,
+                "so_dien_thoai_tai_xe" => $this->so_dien_thoai_tai_xe
         );
 
         $saveSuccess = false;
@@ -203,6 +211,7 @@ class Xe extends Model {
         $this->xe->url_image = $this->input->xss_clean($this->input->post('url_image'));
         $this->xe->so_suon = $this->input->xss_clean($this->input->post('so_suon'));
         $this->xe->speedometer = $this->input->xss_clean($this->input->post('speedometer'));
+        $this->xe->so_dien_thoai_tai_xe = $this->input->xss_clean($this->input->post('so_dien_thoai_tai_xe'));
 
         return $this->save();
     }
@@ -214,6 +223,7 @@ class Xe extends Model {
         $this->xe->url_image = $this->input->xss_clean($this->input->post('url_image'));
         $this->xe->so_suon = $this->input->xss_clean($this->input->post('so_suon'));
         $this->xe->speedometer = $this->input->xss_clean($this->input->post('speedometer'));
+        $this->xe->so_dien_thoai_tai_xe = $this->input->xss_clean($this->input->post('so_dien_thoai_tai_xe'));
 
         return $this->save();
     }

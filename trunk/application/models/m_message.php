@@ -24,6 +24,8 @@ class m_message extends Model {
     //Type: Integer
     var $status = 1;
 
+    var $isCurrent = 0;
+
 
     function m_message() {
         parent::Model();
@@ -35,6 +37,7 @@ class m_message extends Model {
         $this->receiverId = $this->input->xss_clean($this->input->post('receiverId'));
         $this->content = $this->input->xss_clean($this->input->post('content'));
         $this->status = $this->input->xss_clean($this->input->post('status'));
+        $this->isCurrent = $this->input->xss_clean($this->input->post('isCurrent'));
     }
 
     function setFilterField() {
@@ -58,6 +61,9 @@ class m_message extends Model {
         if ($this->status) {
             $this->db->where("status", $this->status);
         }
+        if ($this->isCurrent) {
+            $this->db->where("isCurrent", $this->isCurrent);
+        }
 
         // END FILTER CRITERIA CHECK
     }
@@ -65,7 +71,7 @@ class m_message extends Model {
     function read() {
         $this->setFilterField();
         // This will execute the query and collect the results and other properties of the query into an object.
-        $query = $this->db->get("message_box");
+        $query = $this->db->get("message_box");        
         return $query->result();
     }
 
@@ -75,6 +81,11 @@ class m_message extends Model {
         return $query->result();
     }
 
+       function getCurrentMessageByReceiverID($receiverId) {
+        $this->db->where("receiverId", $receiverId);
+        $query = $this->db->get("message_box");
+        return $query->result();
+    }
 
     private function isUsedKey($table,$keyName, $keyValue) {
         if($keyValue) {
@@ -92,7 +103,8 @@ class m_message extends Model {
                 "senderId" => $this->senderId,
                 "receiverId" => $this->receiverId,
                 "content" => $this->content,
-                "status" => $this->status
+                "status" => $this->status ,
+                "isCurrent" => $this->isCurrent 
         );
         $saveSuccess = false;
 
@@ -143,6 +155,41 @@ class m_message extends Model {
         );
         $this->db->where("id", $this->id);
         $this->db->update("message_box", $db_array);
+        if($this->db->affected_rows() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function resetMessagePriorityForReceiver($receiverId) {
+        $db_array = array(                
+                "isCurrent" => 0
+        );
+        $this->db->where("receiverId", $receiverId);
+        $this->db->update("message_box", $db_array);
+        echo $this->db->last_query();
+        if($this->db->affected_rows() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function updateMessagePriorityForReceiver() {
+        $this->id = trim( $this->input->xss_clean($this->input->post('id')) );
+        $this->isCurrent = trim( $this->input->xss_clean( $this->input->post('isCurrent')) );
+        $receiverId = trim( $this->input->xss_clean( $this->input->post('receiverId')) );
+        $this->resetMessagePriorityForReceiver($receiverId);
+
+        $db_array = array(
+              "isCurrent" => $this->isCurrent
+        );
+        $this->db->where("id", $this->id);
+        $this->db->update("message_box", $db_array);
+        echo $this->db->last_query();
         if($this->db->affected_rows() > 0) {
             return true;
         }

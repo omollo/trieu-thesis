@@ -116,7 +116,7 @@
                                     <b> Tìm thông tin vị trí</b>
                                     <hr/>
 
-                                    <form method="POST" action="">
+                                    <form method="post" action="">
                                         <div>
                                             <span>Số đăng ký xe</span>
                                             <input type="text" name="so_dang_ky_xe" value="52-KA3775" id="xe_so_dang_ky_xe" class="input-text xe_so_dang_ky_xe"  />
@@ -176,7 +176,7 @@
                         </div>
                     </td>
                     <td VALIGN="top" width="60%">
-                        <div id="map_canvas" style="width: 690px; height: 550px;"></div>                        
+                        <div id="map_canvas" style="width: 690px; height: 1050px;"></div>
                     </td>
                 </tr>
             </tbody>
@@ -234,7 +234,7 @@
                     }
                     marker = new GMarker(pps[0]);
                     map.addOverlay(marker);
-                    map.setCenter(pps[0] , 14);
+                    map.panTo(pps[0]);
 
                     jQuery("#current_lat_of_vehicle").html(listPoint[0].lat);
                     jQuery("#current_lng_of_vehicle").html(listPoint[0].lng);
